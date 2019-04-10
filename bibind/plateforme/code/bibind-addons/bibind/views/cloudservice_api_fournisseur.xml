@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	     <!-- api api fournisseur object -->
+  
+  <record model="ir.ui.view" id="view_cloud_service_api_fournisseur_form">
+        <field name="name">cloud.service.api.fournisseur.form</field>
+        <field name="model">cloud.service.api.fournisseur</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="cloud.service.api.fournisseur">
+            <header>
+            <button name="get_model_api_ref" string="get api model"
+							type="object" />
+            
+            
+            
+            </header>
+            <group name="infos" string="Information general">
+				<field name="name"/>
+				<field name="res_partner_id" domain="[('supplier','=',True)]" />
+				
+                <field name="ref_api"/>
+                <field name="description"></field>
+             </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_cloud_service_api_fournisseur_tree">
+        <field name="name">cloud.service.api.fournisseur.tree</field>
+        <field name="model">cloud.service.api.fournisseur</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="cloud.service.api.fournisseur">
+				<field name="name"/>
+				
+                <field name="res_partner_id"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_api_fournisseur">
+        <field name="name">Api fournisseur</field>
+        <field name="res_model">cloud.service.api.fournisseur</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="Service api fournisseur" 
+    id="menu_cloud_service_api_fournisseur" 
+    parent="menu_cloudservice_config"
+    groups="bibind.group_administrateur" 
+    action="action_cloud_service_api_fournisseur"/>
+  
+  
+   <!--fin api object fournissseur -->
+   
+   
+   <!-- api object bibind  -->
+    <record model="ir.ui.view" id="view_cloud_service_api_bibind_form">
+        <field name="name">cloud.service.api.bibind.form</field>
+        <field name="model">cloud.service.api.bibind</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="cloud.service.api.bibind">
+            <header>
+            
+            
+            
+            </header>
+            <sheet>
+            <group>
+            <field name="importimages" />
+            <field name="importsize"  />
+             <field name="importlocation" />
+            <field name="importnode"  />
+            <button attrs="{'invisible':[('importimages','=', 1)]}" name="import_list_images" string="Importer list image"
+							type="object" />
+			<button name="import_list_size"
+					string="Importer list size"
+					attrs="{'invisible':[('importsize','=', 1)]}"
+					type="object" />
+			<button name="import_list_location"
+					string="Importer list location"
+					attrs="{'invisible':[('importlocation','=', 1)]}"
+					type="object" />
+			<button name="import_list_node"
+					string="Importer list node"
+					attrs="{'invisible':[('importnode','=', 1)]}"
+					type="object" />
+	            <group name="info general">
+	            <field name="name"/>
+				<field name="description"/>
+	             <field name="endpoint"/>
+	            
+	            </group>
+	            <group name="authentification">
+	            	<field name="location"/>
+				
+	                <field name="applicationkey"/>
+	                 <field name="secretkey"/>   
+	                 <field name="consumerkey"/>    
+	                 <field name="projetid"/>   
+	                 <field name="driver_cloud"/>
+	            </group>
+            </group>
+            <group>
+           <field name="logge" />
+            </group>
+				</sheet>
+                
+                
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_cloud_service_api_bibind_tree">
+        <field name="name">cloud.service.api.bibind.tree</field>
+        <field name="model">cloud.service.api.bibind</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="cloud.service.api.bibind">
+				<field name="name"/>
+				
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_api_bibind">
+        <field name="name">Api bibind</field>
+        <field name="res_model">cloud.service.api.bibind</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="Api bibind" 
+    id="menu_cloud_service_api_bibind" 
+    parent="menu_cloudservice_api_config"
+    groups="bibind.group_administrateur" 
+    action="action_cloud_service_api_bibind"/>
+  
+  
+  <!-- fin api object bibind rancher test -->
+  
+  
+  
+  
+   <!-- api object bibind  -->
+    <record model="ir.ui.view" id="view_cloud_service_api_rancher_form">
+        <field name="name">bibind.api.container.form</field>
+        <field name="model">bibind.api.container</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="bibind.api.container">
+            <header>
+            
+            
+            
+            </header>
+            <sheet>
+            <group>
+           
+	            <group name="info general">
+	            <field name="name"/>
+				<field name="description"/>
+	            
+	            </group>
+	            <group name="authentification">
+	            	
+	                 <field name="driver_cloud"/>
+	            </group>
+            </group>
+            <group>
+           <field name="logge" />
+            </group>
+				</sheet>
+                
+                
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_cloud_service_api_bibind_tree">
+        <field name="name">bibind.api.container.tree</field>
+        <field name="model">bibind.api.container</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="bibind.api.container">
+				<field name="name"/>
+				
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_api_bibind_rancher">
+        <field name="name">Bibind container</field>
+        <field name="res_model">bibind.api.container</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="Bibind Container api" 
+    id="menu_cloud_service_api_bibind_rancher" 
+    parent="menu_cloudservice_api_config"
+    groups="bibind.group_administrateur" 
+    action="action_cloud_service_api_bibind_rancher"/>
+  
+  
+  <!-- fin api object bibind container test -->
+   
+    </data>
+</openerp>

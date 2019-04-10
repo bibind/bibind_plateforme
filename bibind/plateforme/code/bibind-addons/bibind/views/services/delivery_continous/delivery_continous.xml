@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	
+
+ <!-- Cloud Manager service delivery -->
+	 <record model="ir.ui.view" id="bibind_service_delivery_continous_form">
+        <field name="name">bibind.service.delivery.form</field>
+        <field name="model">bibind.service.delivery</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form  string="Environement | Intégration continue">
+            <header>
+               <button class="" type="object"  name="create_depot" string="create depot" />
+                <button class=" " type="object"  name="get_branch_env" string="get branche" />
+              <button class=" " type="object"  name="create_stack" string="create stack" />
+              <button class=" " type="object"  name="delete_stack" string="delete stack" />
+              
+              <button class=" " type="object"  name="get_rancher_env_id" string="get rancher env id" />
+              <button class=" " type="object"  name="deploy_dev_env" string="deploy dev env" />
+               
+                <button class=" " type="object"  name="get_rancher_stack_id" string="get rancher stack id" />
+              <button class=" " type="object"  name="get_service_lb" string="get lb" />
+              
+               <button class=" " type="object"  name="update_lb" string="update lb" />
+              <button class=" " type="object"  name="create_lb" string="create lb" />
+              
+               <button class=" " type="object"  name="deploy_dev_to_test" string="deploy dev to test (create test)" />
+              <button class=" " type="object"  name="deploy_test_to_live" string="deploy test to live (create live)" />
+               </header>
+            <sheet>
+            <h1>
+            <field name="site_name" />
+            </h1>
+            
+         <group>
+         <group>
+          <field name="service_id" />
+                <field name="fournisseur_id" />
+                <field name="projet_id" />
+         </group>
+          <group>
+          		<field name="application" />
+          		<field name="depot_id" />
+              	<field name="depot_url" />
+              	<field name="depot_is_created" />
+              	
+               
+           </group>
+           <group>
+              		<field name="odoo_user_id" />
+            		<field name="odoo_partner_id" />
+              		<field name="bibind_user_id" />
+                <field name="chose_driver" />
+           </group>    
+                
+			<group>
+				<field name="hosts" />
+                   
+                   
+			</group> 
+         </group>
+         <group>
+      <notebook>
+	          <page string="Environnement" >
+		          <group>
+		           <field name="environnement" />
+		          </group>
+	          </page>
+	          <page string="Rancher" >
+		          <group>
+		           <field name="rancher_servicelb" />
+            		<field name="rancher_env_id" />
+              		<field name="rancher_stack_id" />
+		          </group>
+	          </page>
+	          <page string="Teams" >
+		          <group>
+		           	<field name="bibind_team_ids" />
+		          </group>
+	          </page>
+	          <page string="logs" >
+		          <group>
+		           	<field name="log" />
+		          </group>
+	          </page>
+          </notebook>
+    
+     </group>
+				</sheet>
+            </form>
+        </field>
+    </record>
+    
+   
+    	
+    
+    
+    
+        <record model="ir.ui.view" id="bibind_services_delivery_tree">
+        <field name="name">bibind.service.delivery.tree</field>
+        <field name="model">bibind.service.delivery</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+       
+            <tree string="Service delivery">
+                <field name="site_name"/>
+                <field  name="application" />
+                
+
+            </tree>
+        </field>
+    </record>
+    
+     <record model="ir.actions.act_window" id="action_bibind_service_delivery_continous">
+        <field name="name">Services Delivery continous</field>
+        <field name="res_model">bibind.service.delivery</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form, diagram</field>
+    </record>
+         	
+		<menuitem action="action_bibind_service_delivery_continous" name="Services" id="menu_bibind_label_delivery_continous"
+			parent="menu_bibind_continous_delivery" sequence="1" />
+		<menuitem action="action_bibind_service_delivery_continous" name="Mes Services" id="menu_bibind_list_delivery_continous"
+			parent="menu_bibind_label_delivery_continous" sequence="1" />
+    
+    
+    
+    
+ <!-- Cloud Manager service environnement -->
+	 <record model="ir.ui.view" id="bibind_service_delivery_environnement_form">
+        <field name="name">bibind.continous.environnement.form</field>
+        <field name="model">bibind.continous.environnement</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form  string="Environement | Intégration continue">
+            <header>
+               </header>
+            <sheet>
+         <group>
+         <group>
+         <field name="type" />
+          <field name="branche" />
+          <field name="depot" />
+          <field name="depot_url" />
+         </group>
+         
+         <group>
+         <field name="url_app" />
+          <field name="url_app_admin" />
+          <field name="domain" />
+          <field name="domain_zone" />
+          <field name="login_sftp" />
+         
+         </group>
+         
+         <group>
+	         <field name="password_sftp" />
+	          <field name="login_db" />
+	          <field name="password_db" />
+	          <field name="databas_name" />
+	          <field name="login_admin_app" />
+         </group>
+	         <group>
+		         <field name="service_continous_id" />
+		          <field name="service_id" />
+		          <field name="service_fournisseur_id" />
+		         <field name="hosts" />
+		         <field name="rancher_env_id" />
+		         <field name="rancher_stack_id" />
+	         </group>
+           </group>
+          <notebook>
+	          <page >
+		          <group>
+		            <field name="containerids" />
+		          </group>
+	          </page>
+          </notebook>
+				</sheet>
+            </form>
+        </field>
+    </record>
+     <record model="ir.ui.view" id="bibind_services_environnement_tree">
+        <field name="name">bibind.continous.environnement.tree</field>
+        <field name="model">bibind.continous.environnement</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+       
+            <tree string="cloud.service">
+                <field name="type"/>
+                <field  name="service_continous_id" />
+                
+
+            </tree>
+        </field>
+    </record>
+     <record model="ir.actions.act_window" id="action_bibind_service_delivery_environnement">
+        <field name="name">Services Delivery continous</field>
+        <field name="res_model">bibind.continous.environnement</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+         	
+		<menuitem action="action_bibind_service_delivery_environnement" name="Environnements" id="menu_bibind_label_delivery_environnement"
+			parent="menu_bibind_continous_delivery" sequence="1" />
+		<menuitem action="action_bibind_service_delivery_environnement" name="Mes environnements" id="menu_bibind_list_delivery_environnement"
+			parent="menu_bibind_label_delivery_environnement" sequence="1" />
+    
+    
+    
+    </data>
+    </openerp>

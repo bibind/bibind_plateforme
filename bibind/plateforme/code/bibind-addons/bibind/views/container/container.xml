@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	
+
+	
+	
+	     <!-- api container-->
+  
+  <record model="ir.ui.view" id="view_bibind_container_form">
+        <field name="name">bibind.container.form</field>
+        <field name="model">bibind.container</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="cloud.service.node">
+            <header>
+            <button 
+             attrs="{'invisible': [('state','in',[ 'TERMINATED'])]}"
+            class="oe_highlight" 
+            		type="object" 
+                    name="confirme_destroy_node"
+                    string="Destroy node" />
+            <button  attrclass="oe_inline" 
+            		type="object" 
+                    name="get_log_node"
+                    string="log node" />
+             <field name="state" statusbar_visible="PENDING, STARTING,RUNNING,STOPPING,SUSPENDED,STOPPED,TERMINATED" widget="statusbar" readonly="1" />
+          
+            
+                    
+             
+            </header>
+            <group name="infos" string="Information general">
+				<field name="name"  attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"/>
+				
+				
+				<field name="container_id" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}" />
+				
+                
+              
+                
+                <field name="ip_addresses" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"/>
+				<field name="driver" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"/>
+				<field name="api_driver" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}" />
+				  <field name="image" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"/>
+                 <field name="extra" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"></field>
+                 
+           
+      
+             </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_bibind_container_form_tree">
+        <field name="name">bibind.container.tree</field>
+        <field name="model">bibind.container</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Container">
+				<field name="name"/>
+                <field name="driver"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_bibind_container">
+        <field name="name">container</field>
+        <field name="res_model">bibind.container</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="container" 
+    id="menu_bibind_container" 
+    parent="menu_cloudservice_config"
+    groups="bibind.group_administrateur" 
+    action="action_bibind_container"/>
+  
+  
+   <!--fin container-->
+   
+   
+    <!-- api container image-->
+  
+  <record model="ir.ui.view" id="view_bibind_container_image_form">
+        <field name="name">bibind.container.image.form</field>
+        <field name="model">bibind.container.image</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="image container">
+            <header>
+            <button 
+            
+            class="oe_highlight" 
+            		type="object" 
+                    name="confirme_destroy_node"
+                    string="Destroy node" />
+            <button  attrclass="oe_inline" 
+            		type="object" 
+                    name="get_log_node"
+                    string="log node" />
+             
+          
+            
+                    
+             
+            </header>
+            <group name="infos" string="Information general">
+				<field name="name"  />
+				<field name="container_image_id" />
+				<field name="path" />
+                <field name="version" />
+				<field name="driver" />
+				<field name="api_driver"  />
+                <field name="extra" ></field>
+             </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_bibind_container_form_tree">
+        <field name="name">bibind.container.image.tree</field>
+        <field name="model">bibind.container.image</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="cloud.service.node">
+				<field name="name"/>
+                <field name="driver"/>
+               
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_bibind_container_image">
+        <field name="name">container</field>
+        <field name="res_model">bibind.container.image</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="container image" 
+    id="menu_bibind_container_image" 
+    parent="menu_cloudservice_config"
+    groups="bibind.group_administrateur" 
+    action="action_bibind_container_image"/>
+  
+  
+   <!--fin container image-->
+   
+   
+   
+    <!-- api container drivere-->
+  
+  <record model="ir.ui.view" id="view_bibind_container_driver_form">
+        <field name="name">bibind.container.driver.form</field>
+        <field name="model">bibind.container.driver</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="image container">
+            <header>
+
+            </header>
+            <group name="infos" string="Information general">
+				<field name="name"  />
+				<field name="provider"/>
+             </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_bibind_container_driver_tree">
+        <field name="name">bibind.container.driver.tree</field>
+        <field name="model">bibind.container.driver</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="cloud.service.node">
+				<field name="name"/>
+                <field name="provider"/>
+               
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_bibind_container_driver">
+        <field name="name">container driver</field>
+        <field name="res_model">bibind.container.driver</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="container driver" 
+    id="menu_bibind_container_driver" 
+    parent="menu_cloudservice_config"
+    groups="bibind.group_administrateur" 
+    action="action_bibind_container_driver"/>
+  
+  
+   <!--fin container driver-->
+   
+   
+   <!-- api rancher projet env-->
+  
+  <record model="ir.ui.view" id="view_bibind_rancher_project_form">
+        <field name="name">bibind.rancher.project.form</field>
+        <field name="model">bibind.rancher.project</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Rancher projet">
+            <header>
+
+            </header>
+            <group name="infos" string="Information general">
+				<field name="name"  />
+				<field name="project_name"  />
+				<field name="project_id"/>
+             </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_bibind_rancher_project_tree">
+        <field name="name">bibind.rancher.project.tree</field>
+        <field name="model">bibind.rancher.project</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Rancher projet">
+				<field name="name"/>
+                <field name="project_id"/>
+               
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_bibind_rancher_project">
+        <field name="name">Rancher Projet</field>
+        <field name="res_model">bibind.rancher.project</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="Rancher Projet" 
+    id="menu_bibind_rancher_projet" 
+    parent="menu_cloudservice_config"
+    groups="bibind.group_administrateur" 
+    action="action_bibind_rancher_project"/>
+  
+  
+   <!--fin rancher projet env-->
+   
+   
+    </data>
+</openerp>

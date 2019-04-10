@@ -1,0 +1,420 @@
+
+<t t-call="website.layout">
+	<div class="oe_structure oe_empty" id="wrap">
+		<section class="odoo_primary o-h" style="height: 650px;">
+			<div class="container">
+				<div class="row">
+					<div class="mt64 text-center col-md-12">
+						<h1>
+							<strong>Grow Your Business With Odoo Apps</strong>
+						</h1>
+						<h3 class="mt0">One need, one app. Integration has never been so
+							smooth.
+						</h3>
+						<div class="mt48 col-md-12">
+							<a class="btn btn-primary btn-lg" href="#apps">
+								<i class="fa fa-arrow-down" style=""></i>
+								Discover The Magic
+							</a>
+						</div>
+					</div>
+					<div class="mt128 col-md-12">
+						<div class="odoo_mix_picture">
+							<div class="imac-frame"
+								style="-webkit-transform: rotate(15deg)  translateX(-0.4%)  translateY(-4.3%);-moz-transform: rotate(15deg)  translateX(-0.4%)  translateY(-4.3%);-ms-transform: rotate(15deg)  translateX(-0.4%)  translateY(-4.3%);-o-transform: rotate(15deg)  translateX(-0.4%)  translateY(-4.3%);transform: rotate(15deg)  translateX(-0.4%)  translateY(-4.3%)">
+								<img alt="" class="img-responsive" editablecontent="false"
+									src="/openerp_website/static/src/img/theme/imac.png" />
+								<div class="screen screen-mutli-img">
+									<img alt="" class="img-responsive oe_img active"
+										editablecontent="true"
+										src="/website/image?max_height=768&amp;field=datas&amp;model=ir.attachment&amp;id=536416&amp;max_width=1024"
+										style="opacity: 0.8; display: block;" />
+									<img alt="" class="img-responsive oe_img" editablecontent="true"
+										src="/website/image?max_height=768&amp;field=datas&amp;model=ir.attachment&amp;id=536441&amp;max_width=1024"
+										style="opacity: 0.8; display: none;" />
+									<img alt="" class="img-responsive oe_img" editablecontent="true"
+										src="/website/image?max_height=768&amp;field=datas&amp;model=ir.attachment&amp;id=535897&amp;max_width=1024"
+										style="opacity: 0.8; display: none;" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="mt0" id="apps">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 mb32 mt16">
+						<h2 class="text-center">Apps to Build Stunning Websites</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-home fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Website Builder</h3>
+						<div class="text-muted">Get an awesome enterprise website.</div>
+						<div class="text-muted">Fully customizable and SEO friendly.</div>
+						<a class="btn mt8 btn-primary" href="/page/website-builder">Build Your Website</a>
+					</div>
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-credit-card fa-5x" style=""></span>
+						<h3 class="mt8 mb0">e-Commerce</h3>
+						<div class="text-muted">Boost your online sales with sleek</div>
+						<div class="text-muted">product pages.</div>
+						<a class="btn mt8 btn-primary" href="/page/e-commerce">Sell Online</a>
+					</div>
+					<div class="text-center col-md-4 mb48">
+						<span class="fa fa-rss fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Blogs</h3>
+						<div class="text-muted">Attract more leads with a winning</div>
+						<div class="text-muted">content marketing strategy.</div>
+						<a class="btn mt8 btn-primary" href="/page/blog-engine">Start Blogging</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="oe_dark" data-snippet-id="features">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 mt32 mb32">
+						<h2 class="text-center">Apps to Boost Your Sales</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-user fa-5x" style=""></span>
+						<h3 class="mt8 mb0">CRM</h3>
+						<div class="text-muted">Boost sales productivity, improve win rates, grow
+							revenues.
+						</div>
+						<a class="btn btn-primary mt8" href="/page/crm">Grow Your Sales</a>
+					</div>
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-file-text-o fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Quote Builder</h3>
+						<div class="text-muted">Create polished, professional proposals in minutes
+							and let customers sign online.
+						</div>
+						<a class="btn btn-primary mt8" href="/page/quote-builder">Build Quote Templates</a>
+					</div>
+					<div class="text-center col-md-4 mb48">
+						<span class="fa fa-suitcase fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Point of Sale</h3>
+						<div class="text-muted">Touchscreen point of sale based</div>
+						<div class="text-muted">on iPad or Android tablets.</div>
+						<a class="btn btn-primary mt8" href="/page/point-of-sale">Manage Your Shop</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="mt0" data-snippet-id="title">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 mt32 mb32">
+						<h2 class="text-center">Apps to Run Your Business</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-calendar fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Project Management</h3>
+						<div class="text-muted">Enable your project right way</div>
+						<div class="text-muted">Step by step get work done.</div>
+						<a class="btn btn-primary mt8" href="/page/project-management">Run Projects</a>
+					</div>
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-eur fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Billing</h3>
+						<div class="text-muted">Manage contracts, create recurring invoices,</div>
+						<div class="text-muted">bill timesheets, get paid faster.</div>
+						<a class="btn btn-primary mt8" href="/page/billing">Start Billing</a>
+					</div>
+					<div class="text-center col-md-4 mb48">
+						<span class="fa fa-book fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Accounting</h3>
+						<div class="text-muted">Integrate book keeping with all your</div>
+						<div class="text-muted">operations to keep accurate informations.</div>
+						<a class="btn btn-primary mt8" href="/page/accounting">Learn More</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-archive fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Warehouse Management</h3>
+						<div class="text-muted">A revolutionary double-entry inventory</div>
+						<div class="text-muted">management system.</div>
+						<a class="btn btn-primary mt8" href="/page/warehouse">Manage Your Inventory</a>
+					</div>
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-wrench fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Manufacturing</h3>
+						<div class="text-muted">Manage, plan, track and schedule all</div>
+						<div class="text-muted">your manufacturing operations.</div>
+						<a class="btn btn-primary mt8" href="/page/manufacturing">Manufacturing</a>
+					</div>
+					<div class="text-center col-md-4 mb48">
+						<span class="fa fa-shopping-cart fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Purchase</h3>
+						<div class="text-muted">Get the best from your supply chain.</div>
+						<div class="text-muted">Improve your inventory performance.</div>
+						<a class="btn btn-primary mt8" href="/page/purchase">Purchase Efficiently</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="mt0 mb0 oe_dark" data-snippet-id="title"
+			style="">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 mt32 mb32">
+						<h2 class="text-center">Apps to Boost Your Marketing</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-envelope fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Mailing</h3>
+						<div class="text-muted">Design efficient emails campaigns</div>
+						<div class="text-muted">Send, convert and track your success.</div>
+						<a class="btn mt8 btn-primary" href="/page/mailing">Send Emails</a>
+					</div>
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-comments-o fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Live Chat</h3>
+						<div class="text-muted">Engage directly with your website visitors</div>
+						<div class="text-muted">to attract leads and boost online sales.</div>
+						<a class="btn mt8 btn-primary" href="/page/live-chat">Chat Online</a>
+					</div>
+					<div class="text-center col-md-4 mb48">
+						<span class="fa fa-check-square-o fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Survey</h3>
+						<div class="text-muted">Raise high quality insights through surveys,</div>
+						<div class="text-muted">a great way to engage with prospects.</div>
+						<a class="btn mt8 btn-primary" href="/page/survey">Build Surveys</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-cogs fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Lead Automation</h3>
+						<div class="text-muted">Design campaigns, refine segmentation,</div>
+						<div class="text-muted">automate actions and track performance.</div>
+						<a class="btn mt8 btn-primary" href="/page/lead-automation">Launch Your Campaign</a>
+					</div>
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-calendar-o fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Events</h3>
+						<div class="text-muted">Create sleek and attractive event pages</div>
+						<div class="text-muted">Sell online and organize on site.</div>
+						<a class="btn mt8 btn-primary" href="/page/events">Organize Events</a>
+					</div>
+					<div class="text-center col-md-4 mb48">
+						<span class="fa fa-users fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Community Builder</h3>
+						<div class="text-muted">Build and engage with communities</div>
+						<div class="text-muted">with forums, Q&amp;A, mailing lists.</div>
+						<a class="btn mt8 btn-primary" href="/page/community-builder">Build Communities</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section data-snippet-id="title">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 mt32 mb32">
+						<h2 class="text-center">Apps to Delight Your Employees</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-smile-o fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Employees</h3>
+						<div class="text-muted">Oversee your employees directory</div>
+						<div class="text-muted">Retain significant informations about your team.
+						</div>
+						<a class="btn mt8 btn-primary" href="/page/employees">Learn More</a>
+					</div>
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-users fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Enterprise Social Network</h3>
+						<div class="text-muted">Start the dialogue and share knowledge</div>
+						<div class="text-muted">Informations collection made easy</div>
+						<a class="btn mt8 btn-primary" href="/page/enterprise-social-network">Launch Your Social Network
+						</a>
+					</div>
+					<div class="text-center col-md-4 mb48">
+						<span class="fa fa-search fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Recruitment</h3>
+						<div class="text-muted">Streamline Your Recruitment Process</div>
+						<div class="text-muted">Index resumes, track applicants, search profiles
+						</div>
+						<a class="btn mt8 btn-primary" href="/page/recruitment">Launch Job Offers</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-money fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Expenses</h3>
+						<div class="text-muted">Have an overview of your employees expenses</div>
+						<div class="text-muted">Access an accurate tracking tool</div>
+						<a class="btn mt8 btn-primary" href="/page/expenses">Manage Expenses</a>
+					</div>
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-trophy fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Appraisal</h3>
+						<div class="text-muted">Employees development follow-up</div>
+						<div class="text-muted">Set-up appraisals and watch your employees
+							evolution
+						</div>
+						<a class="btn mt8 btn-primary" href="/page/appraisal">Launch Appraisals</a>
+					</div>
+					<div class="text-center col-md-4 mb48">
+						<span class="fa fa-truck fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Fleet</h3>
+						<div class="text-muted">Fleet management at its top</div>
+						<div class="text-muted">Take care of all actions regarding your fleet
+						</div>
+						<a class="btn mt8 btn-primary" href="/page/fleet">Manage Your Fleet</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="oe_dark mb0" data-snippet-id="title" style="">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 mb32 mt32">
+						<h2 class="text-center">Tools to Boost Your Productivity</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-signal fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Business Intelligence</h3>
+						<div class="text-muted">
+							Design your dashboards, setup KPIS,
+							<br />
+							slice and dice on your cubes.
+						</div>
+						<a class="btn mt8 btn-primary" href="/page/business-intelligence">Learn More</a>
+					</div>
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-cog fa-5x" style=""></span>
+						<h3 class="mt8 mb0">API</h3>
+						<div class="text-muted">Connect Odoo to external applications</div>
+						<div class="text-muted">through JSON-RPC or XML-RPC.</div>
+						<a class="btn mt8 btn-primary" href="/page/api">Learn More</a>
+					</div>
+					<div class="text-center col-md-4 mb48">
+						<span class="fa fa-pencil-square-o fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Instant Messaging</h3>
+						<div class="text-muted">Chat in real time with your colleagues,</div>
+						<div class="text-muted">share screens and talk online.</div>
+						<a class="btn mt8 btn-primary" href="/page/instant-messaging">Learn More</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-gamepad fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Gamification</h3>
+						<div class="text-muted">Boost engagement, promote smart objectives,</div>
+						<div class="text-muted">reward and challenge your teams.</div>
+						<a class="btn mt8 btn-primary" href="/page/gamification">Learn More</a>
+					</div>
+					<div class="text-center col-md-4 mb32">
+						<span class="fa fa-comments-o fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Discuss</h3>
+						<div class="text-muted">Organize groups of discussions and</div>
+						<div class="text-muted">communicate efficiently on all resources.</div>
+						<a class="btn mt8 btn-primary" href="/page/discuss">Learn More</a>
+					</div>
+					<div class="text-center col-md-4 mb48">
+						<span class="fa fa-file-o fa-5x" style=""></span>
+						<h3 class="mt8 mb0">Notes</h3>
+						<div class="text-muted">Personal to-do lists that works.</div>
+						<div class="text-muted">Share and collaborate on meeting minutes.</div>
+						<a class="btn mt8 btn-primary" href="/page/notes">Learn More</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="jumbotron mb0 odoo_secondary_A">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-9 text-muted">
+						<p class="mb0">
+							<strong>Odoo has more than 3,000 open source business apps.
+							</strong>
+						</p>
+						<p class="mb0">Launch Odoo and make your company a better place.</p>
+					</div>
+					<div class="col-md-3">
+						<a class="btn btn-primary btn-lg pull-right mt8" href="/apps">
+							<i class="fa fa-arrow-right" style=""></i>
+							Browse All Apps
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="mt16 mb16">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 text-center mt0 mb8">
+						<h2>2 million users run their business with Odoo and you?</h2>
+					</div>
+					<div class="col-md-12">
+						<img class="img img-responsive"
+							src="/website/image?max_height=768&amp;field=datas&amp;model=ir.attachment&amp;id=527243&amp;max_width=1024"
+							style="margin: 0 auto" />
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="odoo_primary">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 mb32 mt8 text-center">
+						<h2>Subscribe and test our ERP now!</h2>
+
+						<div class="oe_snippet_body odoo_call_action mt16">
+							<div class="odoo_call_action_bg">
+								<form class="form-inline" role="form">
+									<div class="pull-right">
+										<button class="btn btn-info" type="submit" id="create_instance">
+											<strong>Try Now!</strong>
+											<span class="hidden-xs">It's Free</span>
+											.
+										</button>
+									</div>
+
+									<div class="input-group">
+										<input type="text" data-trigger="manual" data-placement="bottom"
+											class="form-control odoo_db_name" placeholder="your-company-name"
+											name="odoo_db_name" data-original-title="" title="" />
+										<span class="input-group-addon">.odoo.com</span>
+									</div>
+								</form>
+							</div>
+							<p id="cta_footer" class="mt4 text-muted">No credit card required. Instant
+								Access. Open Source.
+							</p>
+							<p id="price" class="mt4 text-muted invisible">Free for 2 users,
+
+
+
+								€
+
+								per user per month.
+							</p>
+							<p></p>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</t>
+

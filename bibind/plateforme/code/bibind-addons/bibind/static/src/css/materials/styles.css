@@ -1,0 +1,343 @@
+/**
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+ html {
+ font-size:14px!important;
+ }
+#searchbox {
+	   
+    width: 100%;
+    top: 0;
+}
+#top_search_input {
+	    width: 100%;
+    
+    top: 0;
+    text-align: 0;
+    
+}
+}
+
+ #top_search_input .oe_searchview {
+ 
+ position: relative;
+     display: flex;
+    flex-direction: row;
+    width: 100%;
+ }
+ 
+#top_search_input .oe_searchview_facets {
+ 
+     width: 80%;
+ 
+ }
+button.oe_searchview_search.mdc-button.mdc-button--raised.mdc-ripple-upgraded {
+      position: absolute;
+    top: 0;
+    background-color: white;
+    line-height: 0.5;
+    min-width: 70px;
+    right: 10px;
+}
+
+ #top_search_input .oe_searchview_unfold_drawer {
+        position: absolute;
+    top: 0;
+    left: 70%;
+    height: 24px;
+    padding: 0 7px 0 4px;
+    color: #ccc;
+    cursor: pointer;
+    margin-left: 50px;
+}
+#container_drawer_mdc{
+    width: 80%;
+    margin-top: 40px;
+    position: absolute;
+    border: 1px #000;
+    color: black;
+    top: 0;
+    display: flex;
+}
+.right-bar .oe_topbar_avatar {
+	width:18px
+}
+.right-bar .navbar-nav li a {
+	padding:0
+}
+#container_drawer_mdc .oe_searchview_drawer {
+    background-color: white;
+    width: 100%;
+    border: 1px solid rgb(210, 201, 201);
+    padding: 5px;
+    display: block;
+    display: flex;
+    flex-direction: column;
+    box-shadow: grey 0px 3px 5px;
+}
+
+ #top_search_input .oe_searchview_unfold_drawer:before {
+    position: absolute;
+    top: 10px;
+    right: 7px;
+    width: 0;
+    height: 0;
+    display: inline-block;
+    content: "";
+    vertical-align: top;
+    border-top: 5px solid #4C4C4C;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+}
+ 
+ #top_search_input .oe_searchview_clear {
+    position: absolute;
+    top: 0;
+    left: 70%;
+    cursor: pointer;
+   
+    right: 18px;
+    width: 15px;
+    height: 24px;
+    background: url(/web/static/src/css/../img/search_reset.gif) center center no-repeat;
+}
+.mdc-toolbar--fixed header {
+     display: flex;
+    flex-direction: row;
+ 
+ }
+.content-wraper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+ }
+.mdc-layout-grid {
+	align-items: center!important;
+    padding: 0!important;
+}
+.button-main-menu {
+	    margin-top: 16px;
+	
+}
+.logo-icon-text {
+	display: flex;
+    margin-left: 20px;
+}
+.bibind-cell {
+	display:flex;
+	flex:1 ;
+}
+ 
+ body  .logo-icon .logo {
+  display: block;
+  width: 42px;
+  min-width: 32px;
+  height: 42px;
+  line-height: 38px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #009688;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -moz-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  -ms-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  -o-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  -webkit-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+body  .logo-text {
+ display: flex;
+    flex-direction: column;
+  color: #FFFFFFS;
+  margin-left: 16px;
+  font-size: 16px;
+  text-transform: uppercase;
+  -moz-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  -ms-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  -o-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  -webkit-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+body .logo-name {
+	vertical-align: middle;
+    /* padding: 5px 5px; */
+    font-weight: bolder;
+    font-size: 20px;
+}
+body .logo-slogan {
+	font-size:12px;
+}
+
+ .demo-body {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    /* A simple menu button. */
+    .demo-menu {
+      background: none;
+      border: none;
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      margin: 0;
+      color: #FFF;
+      box-sizing: border-box;
+    }
+
+    .bibind-main {
+      padding-left:0px;
+      overflow: auto;
+      display:flex;
+      flex:1 1 auto
+    }
+    
+.bibind-main .mdc-toolbar {
+    background-color:lightgrey;
+    }
+ .nav-left-fixe {
+     left: 0px;
+    right: initial;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    width: 240px;
+    height: 100%;
+    box-sizing: border-box;
+    border-left: 0px;
+    border-right: 1px solid rgb(228, 228, 228);
+    overflow: hidden;
+    order:-1
+ }
+ 
+ 
+ body  #searchbox {
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+ 
+  padding: 0 16px;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex: 1 1 auto;
+  -moz-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+body  #searchbox > span.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 24px;
+  transform: translateY(-50%);
+}
+body  #searchbox .oe_searchview_input {
+  padding: 8px 8px 8px 42px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  height: 36px;
+      width: 100%;
+  border: medium none;
+  font-size: 16px;
+  font-weight: 400;
+  outline: medium none;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -moz-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  -ms-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  -o-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  -webkit-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: -webkit-inline-flex;
+  display: -moz-inline-flex;
+  display: -ms-inline-flexbox;
+  display: -ms-inline-flex;
+  display: inline-flex;
+  -webkit-flex: 1 1 auto;
+  -moz-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+body  #searchbox input#search-input:focus {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.middle-bar {
+	    position: relative;
+}
+
+.oe_header_row.oe_header_row_top {
+    height: 20px;
+    /* width: 100%; */
+    min-width: 150px;
+}
+
+.row-title {
+    width: 20%;
+}
+
+.row-buttons {
+    width: 80%;
+    display: flex;
+}
+
+.main-buttons {
+    min-width: 80%;
+    margin-top: 0px;
+}
+.main-buttons .oe_list_buttons {
+	display:flex
+}
+
+.openerp .oe_application > div > .oe_view_manager > .oe_view_manager_wrapper > div > .oe_view_manager_body {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+}
+
+.oe_header_row h2.oe_view_title {
+    margin: 0;
+    font-size: 12px;
+}
+
+.mdc-dialog__surface {
+	bottom:inherit!important
+}
+.mdc-dialog__body {
+	height:350px
+}

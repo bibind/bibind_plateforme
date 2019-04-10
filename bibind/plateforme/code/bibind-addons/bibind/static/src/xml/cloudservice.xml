@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim:fdl=1:
+-->
+
+<templates id="template" xml:space="preserve">
+<t t-name="FieldProgressBarWrite">
+    <span class="oe_form_field oe_form_field_progressbar" t-att-style="widget.node.attrs.style">
+        <span></span>
+    </span>
+    <div id="id_write_field_progressbar">
+    <div class="progress-label">Loading...</div>
+    </div>
+</t>
+<t t-name="PercentageWidget">
+    <span class="oe_form_field oe_form_field_url" t-att-style="widget.node.attrs.style">
+        <span class="oe_form_percentage"  t-if="widget.get('effective_readonly')" >
+            <span class="percentage_filed"></span>
+        </span>
+
+        <t t-if="!widget.get('effective_readonly')">
+            <div>
+                <input type="text"
+                    t-att-id="widget.id_for_label"
+                    t-att-tabindex="widget.node.attrs.tabindex"
+                    t-att-autofocus="widget.node.attrs.autofocus"
+                    t-att-placeholder="widget.node.attrs.placeholder"
+                    t-att-maxlength="widget.field.size"
+                />
+            </div>
+        </t>
+    </span>
+</t>
+
+ <t t-name="ProductsWidget">
+        <div>
+          <form class="form">
+
+<div class="card-block">
+
+    <div class="text-center">
+        <h3><i class="fa fa-envelope"></i> Write to us:</h3>
+        <hr class="mt-2 mb-2"/>
+    </div>
+
+
+    <p>We'll write rarely, but only the best content.</p>
+    <br/>
+
+
+    <div class="md-form">
+        <i class="fa fa-user prefix"></i>
+        <input type="text" id="form3" class="form-control"/>
+        <label for="form3">Your name is HOUSSOU</label>
+    </div>
+
+    <div class="md-form">
+        <i class="fa fa-envelope prefix"></i>
+        <input type="text" id="form2" class="form-control"/>
+        <label for="form2">Your email</label>
+    </div>
+
+    <div class="md-form">
+        <i class="fa fa-tag prefix"></i>
+        <input type="text" id="form32" class="form-control"/>
+        <label for="form34">Subject</label>
+    </div>
+
+    <div class="md-form">
+        <i class="fa fa-pencil prefix"></i>
+        <textarea type="text" id="form8" class="md-textarea"></textarea>
+        <label for="form8">Icon Prefix</label>
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-default">Submit</button>
+
+        <div class="call">
+           
+            <p>Or would you prefer to call?
+               
+                <span><i class="fa fa-phone"> </i></span>
+                 + 01 234 565 280</p>
+        </div>
+    </div>
+
+</div>
+</form>
+            <t t-foreach="widget.products" t-as="product">
+                <span class="oe_products_item"
+                      t-attf-style="background-color: {{ widget.color }};">
+                    <t t-esc="product"/>
+                </span>
+                <br/>
+            </t>
+
+        </div>
+    </t>
+
+
+
+
+<div t-name="mdcFormView.buttons"  class="oe_form_buttons">
+    <t t-if="widget.options.action_buttons !== false">
+        <span class="oe_form_buttons_view">
+            <!-- required for the bounce effect on button -->
+            <div t-if="widget.is_action_enabled('edit')" style="display: inline-block;">
+                <button type="button" class="oe_button btn btn-elegant oe_form_button_edit" accesskey="E">Edit</button>
+            </div>
+            <button t-if="widget.is_action_enabled('create')"
+                type="button" class="oe_button btn btn-elegant oe_form_button_create" accesskey="C">Create</button>
+        </span>
+        <span class="oe_form_buttons_edit">
+            <button type="button" class="oe_button btn btn-elegant oe_form_button_save oe_highlight" accesskey="S">Save</button>
+            <span class="oe_fade">or</span>
+            <a href="#" class="oe_bold oe_form_button_cancel" accesskey="D">Discard</a>
+        </span>
+    </t>
+</div>
+
+
+
+<t t-extend="ListView.buttons">
+        <t t-jquery="button.oe_list_add" t-operation="after">
+           <div t-if="widget.dataset.model == 'cloud.service'" class="oe_dropdown_toggle " groups="base.group_user">
+                                    <button type="button" class="mdc-button mdc-button--raised mdc-button--primary dropdown-toggle">Créer un service</button>
+                                    <ul class="oe_dropdown_menu cloudservice ">
+                                        <li><span class="oe_e">k</span><span>Web app</span>
+                                        <ul>
+                                        <li><button type="button"  class="oe_new_service_button" >Créer un projet</button></li>
+                                        </ul>
+                                        </li>
+                                        <li><span class="oe_e">k</span><span>E-commerce</span>
+                                        <ul>
+                                        <li><a type="edit">Créer un projet</a></li>
+                                        </ul>
+                                        
+                                        </li>
+                                        
+                                    </ul>
+                                   
+ 
+                                </div>
+                                </t>
+   							</t>
+
+<t t-name="FieldMany2ManyCheckBoxesImage">
+    <t t-foreach="widget.get('records')" t-as="record">
+        <div>
+            <label style="font-weight: normal">
+                <input type="checkbox" t-att-data-record-id="JSON.stringify(record[0])"
+                       t-att-checked="selected[record[0]] or null"/>
+                <t t-esc="record[1]"/>
+            </label>
+        </div>
+    </t>
+</t>
+<t t-name="mdc-FieldChar">
+    <span t-att-class="'oe_form_field  '+widget.widget_class" t-att-style="widget.node.attrs.style">
+        <t t-if="!widget.get('effective_readonly')">
+            <input t-att-type="widget.password ? 'password' : 'text'"
+                t-att-id="widget.id_for_label"
+                t-att-tabindex="widget.node.attrs.tabindex"
+                t-att-autofocus="widget.node.attrs.autofocus"
+                t-att-placeholder="widget.node.attrs.placeholder"
+                t-att-maxlength="widget.field.size"
+               class="form-control"
+            /><img class="oe_field_translate oe_input_icon" t-if="widget.field.translate" t-att-src='_s + "/web/static/src/img/icons/terp-translate.png"' width="16" height="16" border="0"/>
+        </t>
+        <t t-if="widget.get('effective_readonly')">
+            <span class="oe_form_char_content"></span>
+        </t>
+    </span>
+</t>
+<t t-extend="UserMenu">
+<t t-jquery="li.dropdown" t-operation="replace">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img class="oe_topbar_avatar" t-att-data-default-src="_s + '/web/static/src/img/user_menu_avatar.png'"/>
+                <span class="oe_topbar_name"/> <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#" data-menu="settings">Me</a></li>
+                <li><a href="#" data-menu="account">My Driver auth</a></li>
+                <li><a href="#" data-menu="about">About Bibind</a></li>
+                <li><a href="#" data-menu="help">Help</a></li>
+                <li><a href="#" data-menu="logout">Log out</a></li>
+            </ul>
+        </li>
+        </t>
+</t>
+
+<t t-name="ToolbarNotification">
+           <ul class="dropdown-menu">
+                            <li class="header">NOTIFICATIONS</li>
+                            <li class="body">
+                                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;"><ul class="menu" style="overflow: hidden; width: auto; height: 254px;">
+                                    <li>
+                                        <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                            <div class="icon-circle bg-light-green">
+                                                <i class="material-icons">person_add</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4>12 new members joined</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 14 mins ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                            <div class="icon-circle bg-cyan">
+                                                <i class="material-icons">add_shopping_cart</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4>4 sales made</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 22 mins ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                            <div class="icon-circle bg-red">
+                                                <i class="material-icons">delete_forever</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><b>Nancy Doe</b> deleted account</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 3 hours ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                            <div class="icon-circle bg-orange">
+                                                <i class="material-icons">mode_edit</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><b>Nancy</b> changed name</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 2 hours ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                            <div class="icon-circle bg-blue-grey">
+                                                <i class="material-icons">comment</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><b>John</b> commented your post</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 4 hours ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                            <div class="icon-circle bg-light-green">
+                                                <i class="material-icons">cached</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><b>John</b> updated status</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 3 hours ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                            <div class="icon-circle bg-purple">
+                                                <i class="material-icons">settings</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4>Settings updated</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> Yesterday
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul><div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.498039); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div><div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
+                            </li>
+                            <li class="footer">
+                                <a href="javascript:void(0);" class=" waves-effect waves-block">View All Notifications</a>
+                            </li>
+                        </ul>
+</t>
+
+<t t-name="ToolbarFlag">
+ <ul class="dropdown-menu">
+                            <li class="header">TASKS</li>
+                            <li class="body">
+                                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;"><ul class="menu tasks" style="overflow: hidden; width: auto; height: 254px;">
+                                    <li>
+                                        <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                            <h4>
+                                                Footer display issue
+                                                <small>32%</small>
+                                            </h4>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-pink" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 32%">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                            <h4>
+                                                Make new buttons
+                                                <small>45%</small>
+                                            </h4>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-cyan" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                            <h4>
+                                                Create new dashboard
+                                                <small>54%</small>
+                                            </h4>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-teal" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 54%">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                            <h4>
+                                                Solve transition issue
+                                                <small>65%</small>
+                                            </h4>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 65%">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                            <h4>
+                                                Answer GitHub questions
+                                                <small>92%</small>
+                                            </h4>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 92%">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul><div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.498039); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div><div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
+                            </li>
+                            <li class="footer">
+                                <a href="javascript:void(0);" class=" waves-effect waves-block">View All Tasks</a>
+                            </li>
+                        </ul>
+
+
+</t>
+
+
+
+<t t-name="mdc-Dialog" >
+    
+    <aside id="mdc-dialog-default" class="mdc-dialog" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true" aria-labelledby="mdc-dialog-default-label" aria-describedby="mdc-dialog-default-description">
+    	  <div class="mdc-dialog__surface " >
+    	     <div class="mdc-modal-content">
+    	    <header class="mdc-dialog__header">
+    	     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 class="modal-title"><t t-raw="title"/></h3>
+    	      
+    	    </header>
+    	    <section id="mdc-dialog-default-description" class="mdc-dialog__body ">
+    	      <div class="mdc-modal-body">
+    	      </div>
+    	     
+    	    </section>
+    	    <footer class="mdc-dialog__footer">
+    	     
+    	      <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel mdc-ripple-upgraded" style="--mdc-ripple-surface-width:59.3594px; --mdc-ripple-surface-height:21px; --mdc-ripple-fg-size:35.6156px; --mdc-ripple-fg-unbounded-transform-duration:266.935ms; --mdc-ripple-fg-scale:2.04867;">Decline</button>
+    	      <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept mdc-ripple-upgraded" style="--mdc-ripple-surface-width:55.75px; --mdc-ripple-surface-height:21px; --mdc-ripple-fg-size:33.45px; --mdc-ripple-fg-unbounded-transform-duration:260.659ms; --mdc-ripple-fg-scale:2.07994;">Accept</button>
+    	   
+    	    </footer>
+    	    </div>
+    	  </div>
+    	  <div class="mdc-dialog__backdrop"></div>
+    	</aside>
+</t>
+
+
+<t t-name="mdc-WidgetButton">
+    <button type="button" t-att-class="widget.is_stat_button ? 'oe_stat_button btn btn-elegant' : 'oe_button oe_form_button btn btn-elegant ' + (widget.node.attrs.class ? widget.node.attrs.class : '')"
+        t-att-style="widget.node.attrs.style"
+        t-att-tabindex="widget.node.attrs.tabindex"
+        t-att-autofocus="widget.node.attrs.autofocus"
+        t-att-accesskey="widget.node.attrs.accesskey">
+        <img t-if="!widget.is_stat_button and widget.node.attrs.icon " t-att-src="_s + widget.node.attrs.icon" width="16" height="16"/>
+        <div t-if="widget.is_stat_button and widget.icon_class" t-att-class="widget.icon_class"></div>
+        <span t-if="widget.string and !widget.is_stat_button"><t t-esc="widget.string"/></span>
+        <div t-if="widget.string and widget.is_stat_button"><t t-esc="widget.string"/></div>
+    </button>
+</t>
+
+<t t-name="mdc-ViewManager">
+    <div class="oe_view_manager mdcggg">
+     
+     <div class="mdc-toolbar ">
+   
+      <section class="oe_view_manager_header  mdc-toolbar__section mdc-toolbar__section--align-start">
+       <div class="oe_header_row oe_header_row_top row-title">
+	       <div class="title-breadcrumb">
+	       		<h2 class="oe_view_title" t-if="widget.flags.display_title !== false">
+	                 <span class="oe_view_title_text oe_breadcrumb_title"/>
+	            </h2>
+	        </div>
+	        <div class="search">
+	       		<div class="oe_view_manager_view_search"/>
+	        </div>
+	   </div>
+	    <div class="oe_header_row row-buttons">
+	       <div class="main-buttons">
+	       		<div class="oe_view_manager_buttons"/>
+	        </div>
+	        <div class="main-sidebar">
+	        	 <div class="oe_view_manager_sidebar"/>
+	        </div>
+	        <div class="switch-views">
+	       		<ul class="oe_view_manager_switch oe_button_group oe_right">
+                        <t t-if="widget.views_src.length > 1" t-foreach="widget.views_src" t-as="view">
+                          <li class="oe_e">
+                            <a t-attf-class="oe_vm_switch_#{view.view_type}" t-att-data-view-type="view.view_type"
+                               t-att-title="view.button_label"/>
+                          </li>
+                        </t>
+                    </ul>
+                    <div class="oe_view_manager_pager oe_right"/>
+	        </div>
+	   </div>
+      </section>
+     
+      </div>
+    
+
+    <div class="oe_view_manager_wrapper">
+        <div>
+            <div class="oe_view_manager_body">
+                <div class="oe_searchview_drawer_container"/>
+                    <t t-foreach="widget.views_src" t-as="view">
+                        <div t-attf-class="oe_view_manager_view_#{view.view_type}"/>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </div>
+</t>
+<t t-name="mdc-ViewManagerAction" t-extend="mdc-ViewManager">
+    <t t-jquery="h2.oe_view_title" t-operation="before">
+        <select t-if="widget.session.debug" class="oe_debug_view"/>
+    </t>
+</t>
+<div t-name="mdc-SearchView" class="oe_searchview">
+    <div class="oe_searchview_facets"/>
+    <div class="oe_searchview_clear"/>
+    <div class="oe_searchview_unfold_drawer" title="Advanced Search..."/>
+    
+            
+    <button class="oe_searchview_search mdc-button mdc-button--raised mdc-ripple-upgraded"
+     style="--mdc-ripple-surface-width:88px; --mdc-ripple-surface-height:36px; --mdc-ripple-fg-size:52.8px; --mdc-ripple-fg-unbounded-transform-duration:320.338ms; --mdc-ripple-fg-scale:1.99013; --mdc-ripple-fg-translate-start:19.2406px, -2.86875px; --mdc-ripple-fg-translate-end:17.6px, -8.4px;">
+          <i class="material-icons">search</i>
+          </button>
+            
+</div>
+<button t-name="mdc-SearchView.filter" type="button"
+        t-att-id="element_id"
+        t-att-title="attrs.help"
+        t-att-class="classes.join(' ')"
+        t-att-style="style"
+        t-att-autofocus="attrs.default_focus === '1' ? 'autofocus' : undefined">
+    <img t-att-src="_s + '/web/static/src/img/icons/' + (attrs.icon || 'gtk-home') + '.png'" width="16" height="16"/>
+    <br t-if="attrs.string"/>
+    <t t-esc="attrs.string"/>
+</button>
+
+
+</templates>

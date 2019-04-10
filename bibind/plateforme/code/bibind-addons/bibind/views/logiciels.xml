@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	
+  <record model="ir.ui.view" id="cloud_service_application_form">
+        <field name="name">bibind.application.form</field>
+        <field name="model">bibind.application</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        
+            <form string="Applications">
+            <header>
+            </header>
+            <sheet>
+            <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Application Name"/>
+                        <h1>
+                            <field name="name" string="Application Name"/>
+                        </h1>
+                       
+                       
+                    </div>
+              
+          
+          
+                    <group colspan="4">   
+	                <group>
+	                <field name="description"  select="0"/>
+                
+	                </group>
+	                <group>
+	                <field name="depot_git" select="0"/>
+                	<field name="category" select="0"/>
+	                </group>
+	                </group>
+                
+			</sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="cloud_service_application_tree">
+        <field name="name">bibind.application.tree</field>
+        <field name="model">bibind.application</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Applications">
+                <field name="name"/>
+                  <field name="category"/>
+             	
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_application">
+        <field name="name">Applications</field>
+        <field name="res_model">bibind.application</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+<menuitem 	string="Applications" 
+			name="Applications" 
+			 action="action_cloud_service_application" 
+			parent="menu_cloudservice_config"
+			id="menu_cloudservice_application" 
+			sequence="2" />
+ 
+		
+  <record model="ir.ui.view" id="cloud_service_category_application_form">
+        <field name="name">bibind.application.form</field>
+        <field name="model">bibind.application.category</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        
+            <form string="Category Applications">
+            <header>
+            </header>
+            <sheet>
+             <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Category Name"/>
+                        <h1>
+                            <field name="name" string="Category Name"/>
+                        </h1>
+                       
+                       
+                    </div>
+              
+             
+                     <group>
+	                <field name="description" select="0"/>
+	                <field name="parent_id"></field>
+	                <field name="child_id"></field>
+	                <field name="sequence"></field>
+	                <field name="type"></field>
+	                <field name="parent_left"></field>
+	                  <field name="parent_right"></field>
+	                
+	                </group>
+                
+                
+			</sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="cloud_service_category_application_tree">
+        <field name="name">bibind.application.category.tree</field>
+        <field name="model">bibind.application.category</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Category Applications">
+                <field name="name"/>
+                 <field name="sequence"/>
+                 
+             	
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_category_application">
+        <field name="name">Category Applications</field>
+        <field name="res_model">bibind.application.category</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+       
+    <menuitem 	string="Category applications" 
+			name="Category Applications" 
+			 action="action_cloud_service_category_application" 
+			parent="menu_cloudservice_config"
+			id="menu_cloudservice_category_application" 
+			sequence="2" />
+         
+	</data>
+</openerp>

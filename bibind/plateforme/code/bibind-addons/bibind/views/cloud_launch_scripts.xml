@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+     <record model="ir.ui.view" id="cloud_service_launch_script_form">
+        <field name="name">launch.script.form</field>
+        <field name="model">launch.script</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+             <form string="deploiement">
+             <header>
+              <button name="get_param_host" string="get log file" type="object" class="oe_highlight" />
+             </header>
+             <sheet>
+             <group>
+	              <field name="name" string="name"/>
+	              <field name="sequence" string="sequence"/>
+	              <field name="file_script" string="file script"/>
+	              <field name="script_code" string="Code"/>
+	              <field name="script_code_yml" string="Yml script"/>
+	              <field name="param_json_data" string="log"/>
+ 			 </group>
+             </sheet>
+             
+             </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="cloud_service_launch_script_tree">
+        <field name="name">launch.script.tree</field>
+        <field name="model">launch.script</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="cloud.service">
+                <field name="name"/>
+               <field name="sequence" />
+            </tree>
+        </field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="action_cloud_service_launch_script">
+        <field name="name">Deploiement</field>
+        <field name="res_model">launch.script</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+         	
+		<menuitem action="action_cloud_service_launch_script"
+		 name="Scripts de deploiement" 
+		 groups="bibind.group_administrateur" 
+		 id="menu_cloud_service_script"
+		 parent="menu_cloudservice_config"
+		 sequence="2" />
+
+         
+	</data>
+</openerp>
+

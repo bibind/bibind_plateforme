@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="layout_dedaluvia" inherit_id="website.layout">
+			<xpath expr="//footer" position="attributes">
+				<attribute name="style">background-color: #34495e;</attribute>
+			</xpath>
+		</template>
+		
+		<template id="theme_dedaluvia" inherit_id="website.themes">
+			<xpath expr="//div[@id='themes-list']" position="inside">
+				<div class="col-md-4">
+					<div class="well text-center">
+						<div class="image">
+							<p>Bibind</p>
+						</div>
+						<div class="options">
+							<h3>Bibind</h3>
+							<a class="btn btn-info"
+								href="/website/theme_change?theme_id=bibind_website_theme.bibind">Apply</a>
+						</div>
+					</div>
+				</div>
+			</xpath>
+		</template>
+
+		<template id="bibind" name="bibind" inherit_id="website.theme"
+			active="False" customize_show="True">
+			<xpath expr="//link[@id='bootstrap_css']" position="replace">
+				<link rel='stylesheet'
+					href='/bibind_website_theme/static/src/css/bootswatch/amelia.min.css'
+					t-ignore="true" />
+			</xpath>
+		</template>
+
+	</data>
+</openerp>

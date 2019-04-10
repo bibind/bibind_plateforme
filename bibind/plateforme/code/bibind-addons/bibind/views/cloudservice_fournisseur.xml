@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	    
+    <record model="ir.ui.view" id="view_cloud_service_fournisseur_form">
+        <field name="name">cloud.service.fournisseur.form</field>
+        <field name="model">cloud.service.fournisseur</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Cloud.Service.fournisseur">
+            <header>
+             <button name="run_service" string="Run service" type="object" states="draft" class="oe_highlight" />
+              <button name="deploy_node" string="deploy node" type="object" states="draft" class="oe_highlight" />
+               <button name="deploy_script" string="deploy script" type="object" states="draft" class="oe_highlight" />
+            <field name="state" widget="statusbar" readonly="1" />
+            </header>
+            <sheet>
+             <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Fournisseur service"/>
+                        <h1>
+                            <field name="name" string="Fournisseur service" readonly="1"/>
+                        </h1>
+                       
+                       
+                    </div>
+            <group clospan="4" string="Manage foournisseur">
+            <group>
+            <field name="fournisseur" select="2" domain="[('is_cloud_fournisseur','=',True)]" />
+            <field name="fournisseur_api" select="2" domain="[('res_partner_id','=',fournisseur)]" />
+            
+            <field name="product_id" select="0"/>
+            <field name="type_service" select="0"/> 
+            
+           
+            
+            </group>
+           
+          
+            </group>
+
+               <notebook>
+               <page string="Node or host">
+               <group>
+               <field name="host_ids"/>
+               
+               </group>
+               </page>
+               <page string="Script Host">
+               <group string="Stripts after creation">
+               <field name="launch_script_ids" />
+               </group>
+               </page>
+               <page string="Services Client">
+               <group clospan="4" string="Service disponible" >
+		            <group>
+		             <field name="nbr_service"  attrs="{'readonly': [('state','=', 'active')]}" ></field>
+		            <field name="availaible_service"  attrs="{'readonly': [('state','=', 'active')]}" ></field>
+		           
+		            </group>
+            
+            </group>
+             <group clospan="4" string="Creer Service" >
+		            <group>
+		            <field name="cloud_service_ids" attrs="{'readonly': [('state','=', 'draft')]}" />
+		            </group>
+            
+            </group>
+               </page>
+               
+               
+               </notebook>
+                
+                <!-- <field name="expired" select="0"/>
+                <field name="product_id" select="0"/>
+                <field name="purchase_order_id" select="0"/>
+                <field name="category" select="0"/>
+                <field name="cloud_service_ids" select="0"/>
+                <field name="state" select="0"/>
+                <field name="cloud.service.fournisseur.tmpl" select="0"/>
+                <field name="api_fournisseur" select="0"/>
+                <field name="api_fournisseur" select="0"/>
+                <field name="requete_api_pr_creation" select="0"/>
+                <field name="param_api_requete" select="0"/> -->
+		</sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_Cloud_Service_fournisseur_tree">
+        <field name="name">cloud.service.fournisseur.tree</field>
+        <field name="model">cloud.service.fournisseur</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Cloud.Service.fournisseur">
+                <field name="name"/>
+                <!-- <field name="fournisseur"/>
+                <field name="created"/>
+                <field name="expired"/>
+                <field name="product_id"/>
+                <field name="purchase_order_id"/>
+                <field name="category"/>
+                <field name="cloud_service_ids"/>
+                <field name="state"/>
+                <field name="cloud.service.fournisseur.tmpl"/>
+                <field name="api_fournisseur"/>
+                <field name="api_fournisseur"/>
+                <field name="requete_api_pr_creation"/>
+                <field name="param_api_requete"/> -->
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_fournisseur">
+        <field name="name">Services fournisseur</field>
+        <field name="res_model">cloud.service.fournisseur</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Services fournisseur" 
+    id="menu_cloud_service_fournisseur" 
+     groups="bibind.group_administrateur" 
+    parent="menu_cloudservice_fournisseur"
+    action="action_cloud_service_fournisseur"/>
+      
+     
+     
+        <record model="ir.ui.view" id="view_bibind_host_group_form">
+        <field name="name">bibind.host.group.form</field>
+        <field name="model">bibind.host.group</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="bibind.host.group">
+            <header>
+           
+             </header>
+            <sheet>
+            
+                    
+             <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Group"/>
+                        <h1>
+                            <field name="name" string="Group" />
+                        </h1>
+                       
+                       
+                    </div>
+            <group clospan="4" string="Group">
+            <group>
+            <group>
+             
+            <field name="parent_id" />        
+            <field name="child_id" />        
+            </group>
+        
+            </group>
+           
+            </group>
+
+		</sheet>
+            </form>
+        </field>
+    </record>
+    
+     <record model="ir.ui.view" id="view_bibind_host_group_tree">
+        <field name="name">bibind.host.group.tree</field>
+        <field name="model">bibind.host.group</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+       
+            <tree string="Group">
+                <field name="name"/>
+                <field name="parent_id"/>
+              <field name="child_id"/>
+
+            </tree>
+        </field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="action_bibind_host_group">
+        <field name="name">Group</field>
+        <field name="res_model">bibind.host.group</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+   
+     <menuitem name="Group" 
+    id="menu_bibind_host_group" 
+    parent="menu_cloudservice_fournisseur"
+     groups="bibind.group_administrateur" 
+    action="action_bibind_host_group"/>
+
+              <record id="cloud_service_host_search_view" model="ir.ui.view">
+            <field name="name">bibind.host.search</field>
+            <field name="model">bibind.host</field>
+            <field name="arch" type="xml">
+                <search string="host">
+                    <field name="name" string="Host" filter_domain="[('name','ilike',self)]"/>
+                    <separator/>
+                    <field name="group" filter_domain="[('group', 'child_of', self)]"/>
+                    <group  expand='0' string='Group by...'>
+                       <filter string='Group' domain="[]" context="{'group_by' : 'group'}"/>
+                     </group>
+                </search>
+            </field>
+        </record>
+      
+      
+      <record model="ir.ui.view" id="view_cloud_service_host_form">
+        <field name="name">bibind.host.form</field>
+        <field name="model">bibind.host</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="bibind.host">
+            <header>
+            <button class="oe_inline" 
+            		type="object" 
+                    name="destroy_node" string="Destroy node" />
+            <button class="oe_inline" 
+            		type="object" 
+                    name="deployer_script_install_docker" string="install docker" />
+            
+             <field name="state" />
+             </header>
+            <sheet>
+            
+                    
+             <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Host"/>
+                        <h1>
+                            <field name="name" string="host" />
+                        </h1>
+                       
+                       
+                    </div>
+            <group clospan="4" string="Host">
+            <group>
+            <group>
+             <field name="hostname" />
+            <field name="nodeid" />
+           
+            <field name="host_ipv4" />
+           
+            <field name="image" />
+            <field name="size" />
+            <field name="location" />
+            <field name="group" />
+            </group>
+            <group>
+            <field name="state" />
+            <field name="deployed" /> 
+            <field name="rancher_deployed" /> 
+            <field name="docker_rancher_deployed" /> 
+            </group>
+           
+             <group>
+             <button class="oe_inline" 
+            		type="object" 
+                    name="script_deployed" string="list script deployed" />
+                   <button class="oe_inline" 
+            		type="object" 
+                    name="script_is_deployed" string="list not deployed" />  
+            
+             </group>
+             <group>
+             <field name="scriptdeployed" /> 
+           <field name="log" /> 
+    
+                </group>
+        
+            </group>
+           
+            </group>
+            <group>
+            <field name="deploy_scripts_ids"   >
+            <tree>
+           
+             <field name="name" />
+               
+            
+            </tree>
+            </field>
+            
+            </group>
+		</sheet>
+            </form>
+        </field>
+    </record>
+     <record model="ir.ui.view" id="view_cloud_service_host_tree">
+        <field name="name">bibind.host.tree</field>
+        <field name="model">bibind.host</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+       
+            <tree string="Group">
+                <field name="name"/>
+                <field name="hostname"/>
+                <field name="group" />
+              <field name="state"/>
+
+            </tree>
+        </field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="action_cloud_service_host">
+        <field name="name">host</field>
+        <field name="res_model">bibind.host</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+         
+    </record>
+    
+     <menuitem name="Host" 
+    id="menu_cloud_service_host" 
+    parent="menu_cloudservice_fournisseur"
+     groups="bibind.group_administrateur" 
+    action="action_cloud_service_host"/>
+	</data>
+</openerp>

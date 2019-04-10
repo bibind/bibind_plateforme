@@ -1,0 +1,129 @@
+
+# PHP Web Server dev 
+web_drupal_dev:
+  # Build the Drupal 8 image
+  # https://hub.docker.com/r/_/drupal/
+  image: drupal:8
+  # Environment variables
+  environment:
+    # Drupal settings
+    DRUPAL_PROFILE: standard
+    DRUPAL_SITE_NAME: Drupal
+    DRUPAL_USER: admin
+    DRUPAL_PASS: admin
+    DRUPAL_DBURL: mysql://drupal:drupal@database:3306/dev_drupal
+  ports:
+    # Host machine's port 8000 will map to Drupal's port 80
+    - "8380:80"
+  volumes:
+    # Drupal should live in the "drupal" directory
+    - ./drupal_dev:/var/www/html
+  links:
+    - database_drupal_dev:database_drupal_dev
+  restart: always
+  labels:
+    com.bibind.app: "drupal"
+    com.bibind.category: "decouverte, docker, dev"
+    com.bibind.client: "${customer}"
+    com.bibind.version: "1"
+    com.bibind.env: "dev"
+
+# MySQL Server
+database_drupal_dev:
+  image: mariadb:10
+  environment:
+    MYSQL_USER: drupal
+    MYSQL_PASSWORD: drupal
+    MYSQL_DATABASE: dev_drupal
+    MYSQL_ROOT_PASSWORD: ''
+    MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+  ports:
+    - "3305:3306"
+  restart: always
+  
+  
+  # PHP Web Server test
+web_drupal_test:
+  # Build the Drupal 8 image
+  # https://hub.docker.com/r/_/drupal/
+  image: drupal:8
+  # Environment variables
+  environment:
+    # Drupal settings
+    DRUPAL_PROFILE: standard
+    DRUPAL_SITE_NAME: Drupal
+    DRUPAL_USER: admin
+    DRUPAL_PASS: admin
+    DRUPAL_DBURL: mysql://drupal:drupal@database:3306/drupal
+  ports:
+    # Host machine's port 8000 will map to Drupal's port 80
+    - "8280:80"
+  volumes:
+    # Drupal should live in the "drupal" directory
+    - ./drupal_test:/var/www/html
+  links:
+    - database_drupal_test:database_drupal_test
+  restart: always
+  labels:
+    com.bibind.app: "drupal"
+    com.bibind.category: "decouverte, docker, test"
+    com.bibind.client: "${customer}"
+    com.bibind.version: "1"
+    com.bibind.env: "test"
+
+# MySQL Server
+database_drupal_test:
+  image: mariadb:10
+  environment:
+    MYSQL_USER: drupal
+    MYSQL_PASSWORD: drupal
+    MYSQL_DATABASE: test_drupal
+    MYSQL_ROOT_PASSWORD: ''
+    MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+  ports:
+    - "3308:3306"
+  restart: always
+
+  
+  
+  # PHP Web Server live
+web_drupal_live:
+  # Build the Drupal 8 image
+  # https://hub.docker.com/r/_/drupal/
+  image: drupal:8
+  # Environment variables
+  environment:
+    # Drupal settings
+    DRUPAL_PROFILE: standard
+    DRUPAL_SITE_NAME: Drupal
+    DRUPAL_USER: admin
+    DRUPAL_PASS: admin
+    DRUPAL_DBURL: mysql://drupal:drupal@database:3306/drupal
+  ports:
+    # Host machine's port 8000 will map to Drupal's port 80
+    - "8180:80"
+  volumes:
+    # Drupal should live in the "drupal" directory
+    - ./drupal:/var/www/html
+  links:
+    - database_drupal_live:database_drupal_live
+  restart: always
+  labels:
+    com.bibind.app: "drupal"
+    com.bibind.category: "decouverte, docker, live"
+    com.bibind.client: "${customer}"
+    com.bibind.version: "1"
+    com.bibind.env: "live"
+
+# MySQL Server
+database_drupal_live:
+  image: mariadb:10
+  environment:
+    MYSQL_USER: drupal
+    MYSQL_PASSWORD: drupal
+    MYSQL_DATABASE: live_drupal
+    MYSQL_ROOT_PASSWORD: ''
+    MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+  ports:
+    - "3307:3306"
+  restart: always

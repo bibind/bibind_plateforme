@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="0">
+
+		<template id="website.layout_logo_show" inherit_id="website.layout"
+			customize_show="True" name="Show Logo">
+			<xpath expr="//header//a[@class='navbar-brand']" position="replace">
+					<a class="navbar-brand logo" href="/">
+						<img style="" src="/logo.png"/>
+							<span
+								style="font-size: 180%; color: rgb(143,143,143); position: relative; top: 9px;"></span>
+					</a>
+					
+			</xpath>
+		</template>
+		
+		<template id="website.layout_product_domain" inherit_id="website_sale.product">
+			<xpath expr="//div[@class='col-sm-7 col-md-7 col-lg-7']" position="after">
+					<input name="domain_name" type="text" id="domain_name_id"/>
+					
+			</xpath>
+		</template>
+<template id="bibind_website_theme.blog_post_short_dedal"  name="Blog Posts">
+ 
+    <t t-call="website_blog.index">
+        <div class="oe_structure">
+            <section class="mb0">
+                <div class="container-fluid1">
+                    <div class="filter col-12">
+                        <header>
+                            <h1>Projets \\  </h1>
+                            <h2>TOUS LES PROJETS</h2>
+                        </header>
+                        <div class="isotope-options">
+                            <div class="filter-dropdown">
+                                <div class="selected">
+                                    <span class="name">Filtre:</span>
+                                    <span class="val">Tous les projets</span>
+                                </div>
+                                <ul name="list-filter-data">
+                                    <li data-filter="*">Tous les projets</li>
+                                    <t t-foreach="tags" t-as="nav_tag">
+                                        <li t-attf-data-filter=".#{nav_tag.name}" >
+                                            <t t-esc="nav_tag.name"/>
+                                        </li>
+                                    </t>
+                                </ul>
+                                <div class="arrow"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="container-fluid">
+            <div class="isotope-4 isotope" id="isotope-container">
+                <article t-foreach="blog_posts" t-as="blog_post" class="isotope-element  portfolio col-4">
+                    <a class="image" t-attf-href="/blog/#{ slug(blog_post.blog_id) }/post/#{ slug(blog_post) }" t-attf-style="background-image: url(#{blog_post.background_image})"></a>
+                    <div class="inner">
+                        <header>
+                            <h3 t-field="blog_post.name" class="mb4"/>
+                        </header>
+                    </div>
+                     <div class="bg_over">
+                    <div name="blog_post_data" class="mb0 hidden infos-class">
+                   
+                        <span t-field="blog_post.description" t-field-options="{&quot;format&quot;: &quot;MMMM yyyy&quot;}"/>
+                        <span t-if="len(blog_post.message_ids) &gt; 0">
+                            <t t-esc="len(blog_post.message_ids)"/>
+                            <t t-if="len(blog_post.message_ids) &lt;= 1">comment</t>
+                            <t t-if="len(blog_post.message_ids) &gt; 1">comments</t>
+                        </span>
+                        <span t-if="not blog_post.website_published" class="label label-danger">not published</span>
+                   </div>
+                   </div>
+                    <div name="data-before" class="data-before"></div>
+                </article>
+            </div>
+        </div>
+        <div class="oe_structure"/>
+    
+   </t>
+</template>
+<template id="dedal_opt_blog_post_short_tags" name="DedalTags"
+        customize_show="True" inherit_id="bibind_website_theme.blog_post_short_dedal">
+  <xpath expr="//*[@name='blog_post_data']" position="inside">
+        <p class="post-meta text-muted text-center" t-if="len(blog_post.tag_ids)">
+            <span class="fa fa-tags"/>
+            <t t-foreach="blog_post.tag_ids" t-as="tag">
+                <a t-attf-href="#{blog_url(tag=tag)}" t-esc="tag.name"/> &amp;nbsp;
+            </t>
+        </p>
+    </xpath>
+    <xpath expr="//*[@name='data-before']" position="inside">
+       
+            <t t-foreach="blog_post.tag_ids" t-as="tag">
+                <t t-esc="tag.name"/>
+            </t>
+        
+    </xpath>
+</template>
+
+
+
+		<template id="website.homepage">
+			<t t-call="website.layout">
+				 <div class="oe_structure oe_empty" id="wrap">
+      <section class="section-dedal header" id="home">
+        <div class="section-title-nav">
+          <h3>Actualités</h3>
+          <nav id="actualites"/>
+        </div>
+        <div class="container" id="home-list-info">
+          <div class="container-all">
+            <div class="container-box actualites">
+              <h3>Actualités</h3>
+              <div class="contenerajax "/>
+            </div>
+            <div class="container-box lesproduits">
+              <h3>Les produits Saas</h3>
+              <div class="contenerajax "/>
+            </div>
+            <div class="container-box tutoriels">
+              <h3>Cours et tutoriels</h3>
+              <div class="contenerajax "/>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section-dedal" id="nosservices">
+        <div class="section-title-nav">
+          <h3>Les services</h3>
+          <nav>
+            <ul class="submenu">
+              <li class="submenu-item">
+                <a href="/page/website.strategies-expertises-conseils">Stratégies, Expertises, Conseils</a>
+              </li>
+              <li>
+                <a href="/page/website.technologies-developpements">Technologies, Développement</a>
+              </li>
+              <li>Formations</li>
+            </ul>
+          </nav>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4">
+              <span alt="Odoo - Sample 1 for three columns" class="img-rounded fa fa-cog fa-5x" src="/website/image/ir.attachment/1900_c1614b5/datas" style=""/>
+              <h4 class="mt16">Stratégie, Expertises, Conseil</h4>
+            </div>
+            <div class="col-md-4">
+              <span alt="Odoo - Sample 2 for three columns" class="img-rounded fa fa-dropbox fa-5x" src="/website/static/src/img/deers_thumb.jpg" style="animation-play-state: paused; transition: none"/>
+              <h4 class="mt16">Technologies, Développement</h4>
+            </div>
+            <div class="col-md-4">
+              <span alt="Odoo - Sample 3 for three columns" class="img-rounded fa fa-pencil-square-o fa-5x" src="/website/static/src/img/china_thumb.jpg" style="animation-play-state: paused; transition: none"/>
+              <h4 class="mt16">Formation</h4>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section-dedal" id="lesproduits">
+        <div class="section-title-nav">
+          <h3>Les Produits Saas (Cloud)</h3>
+          <div class="menu-title-produit">
+          <nav>
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="active" role="presentation">
+                <a aria-controls="home" data-toggle="tab" href="#sitweb" role="tab">Site web</a>
+              </li>
+              <li role="presentation">
+                <a aria-controls="ecommerce" data-toggle="tab" href="#profile" role="tab">E-commerce</a>
+              </li>
+              <li role="presentation">
+                <a aria-controls="portail" data-toggle="tab" href="#messages" role="tab">Portail/extranet/intrane</a>
+              </li>
+              <li role="presentation">
+                <a aria-controls="mobile" data-toggle="tab" href="#settings" role="tab">Mobile application</a>
+              </li>
+              <li role="presentation">
+                <a aria-controls="progiciel" data-toggle="tab" href="#settings" role="tab">Solution Global-Odoo-Bibind Erp</a>
+              </li>
+            </ul>
+            </nav>
+            <div class="tab-content">
+              <div class="tab-pane active" id="siteweb" role="tabpanel">Site web</div>
+              <div class="tab-pane" id="ecommerce" role="tabpanel">E-commerce</div>
+              <div class="tab-pane" id="portail" role="tabpanel">Portail</div>
+              <div class="tab-pane" id="mobile" role="tabpanel">Mobile</div>
+              <div class="tab-pane" id="progiciel" role="tabpanel">Progiciel</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section-dedal" id="references">
+        <div class="section-title-nav">
+          <h3>Références</h3>
+          <nav>
+            
+          </nav>
+        </div>
+        <div class="sectioncontent">
+            
+            
+        </div>
+        
+      </section>
+      <section class="section-dedal" id="jobs">
+        <div class="section-title-nav">
+          <h3>Jobs</h3>
+          <nav>
+            <ul class="submenu">
+              <li class="submenu-item">
+                <a href="/page/website.strategies-expertises-conseils">Stratégies, Expertises, Conseils</a>
+              </li>
+              <li>
+                <a href="/page/website.technologies-developpements">Technologies, Développement</a>
+              </li>
+              <li>Formations</li>
+            </ul>
+          </nav>
+        </div>
+      </section>
+      <section class="section-dedal" id="tutoriels">
+        <div class="section-title-nav">
+          <h3>Tutoriels et cours</h3>
+          <nav>
+            <ul class="submenu">
+              <li class="submenu-item">
+                <a href="/page/website.strategies-expertises-conseils">Stratégies, Expertises, Conseils</a>
+              </li>
+              <li>
+                <a href="/page/website.technologies-developpements">Technologies, Développement</a>
+              </li>
+              <li>Formations</li>
+            </ul>
+          </nav>
+        </div>
+      </section>
+      <section class="section-dedal" id="contact">
+        <div class="section-title-nav">
+          <h3>Contact</h3>
+          <nav>
+           
+          </nav>
+          <div class="sectioncontent"></div>
+        </div>
+      </section>
+    </div>
+  </t>
+
+		</template>
+		
+		<template id="website.cvbibind" name="Cvbibind" page="True">
+			<t t-call="website.layout">
+				<div class="oe_structure oe_empty" id="wrap">
+				<div class="preloader">
+  					<div class="status"></div>
+				</div>
+					<section class="section-dedal header" id="home">
+					<h3>cv.Bibind.com</h3>
+					</section>
+					<section class="section-dedal" id="references">
+					</section>
+					<section class="section-dedal" id="nosservices">
+					</section>
+					<section class="section-dedal" id="tutoriels">
+					</section>
+				</div>
+			</t>
+		</template>
+		
+		<template id="website.cvaccueil">
+			<t t-call="website.layout">
+				<div class="oe_structure oe_empty" id="wrap">
+				<div class="preloader">
+  					<div class="status"></div>
+				</div>
+					<section class="section-dedal header" id="home">
+					</section>
+					<section class="section-dedal" id="references">
+					</section>
+					<section class="section-dedal" id="nosservices">
+					</section>
+					<section class="section-dedal" id="tutoriels">
+					</section>
+				</div>
+			</t>
+
+
+		</template>
+		
+		<template id="website.accueil">
+			<t t-call="website.layout">
+				<div class="oe_structure oe_empty" id="wrap">
+				<div class="preloader">
+  					<div class="status"></div>
+				</div>
+					<section class="section-dedal header" id="home">
+					</section>
+					<section class="section-dedal" id="references">
+					</section>
+					<section class="section-dedal" id="nosservices">
+					</section>
+					<section class="section-dedal" id="tutoriels">
+					</section>
+				</div>
+			</t>
+
+
+		</template>
+		
+		<template id="website.services">
+			<t t-call="website.layout">
+				<div class="oe_structure oe_empty" id="wrap">
+				<div class="preloader">
+  					<div class="status"></div>
+				</div>
+					<section class="section-dedal header" id="home">
+					</section>
+					<section class="section-dedal" id="references">
+					</section>
+					<section class="section-dedal" id="nosservices">
+					</section>
+					<section class="section-dedal" id="tutoriels">
+					</section>
+				</div>
+			</t>
+		</template>
+		
+		
+		
+		<template id="assets_frontend" inherit_id="website.assets_frontend" name="cadreinsitu">
+  <xpath expr="." position="inside">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:700,900,400italic,400' rel='stylesheet' type="text/css"/>
+      <link href='/bibind_website_theme/static/src/css/bootswatch/style.css' rel='stylesheet' type="text/css">
+  </link>
+  <script type="text/javascript" src="/bibind_website_theme/static/src/js/jquery.isotope.min.js"></script>
+     <script type="text/javascript" src="/web/static/lib/jquery.validate/jquery.validate.js"></script>
+         
+   <script type="text/javascript" src="/bibind_website_theme/static/src/js/jquery.knob.js"></script>
+   <script type="text/javascript" src="/bibind_website_theme/static/src/js/jquery.sticky.js"></script>
+    
+   <script type="text/javascript" src="/bibind_website_theme/static/src/js/jquery.scrollTo.min.js"></script>
+    <script type="text/javascript" src="/bibind_website_theme/static/src/js/jquery.nav.js"></script>
+     <script type="text/javascript" src="/bibind_website_theme/static/src/js/jquery.vegas.min.js"></script>
+      <script type="text/javascript" src="/bibind_website_theme/static/src/js/snippet.js"></script>
+     </xpath>
+</template>
+<template>
+<data name="Tags" customize_show="True" inherit_id="website_blog.blog_post_short">
+    <xpath expr="//*[@name='blog_post_data']" position="inside">
+        <p class="post-meta text-muted text-center" t-if="len(blog_post.tag_ids)">
+            <span class="fa fa-tags"/>
+            <t t-foreach="blog_post.tag_ids" t-as="tag">
+                <a t-attf-href="#{blog_url(tag=tag)}" t-esc="tag.name"/> &amp;nbsp;
+            </t>
+        </p>
+    </xpath>
+    <xpath expr="//*[@name='data-before']" position="inside">
+       
+            <t t-foreach="blog_post.tag_ids" t-as="tag">
+                <t t-esc="tag.name"/>
+            </t>
+        
+    </xpath>
+</data>
+
+</template>
+	</data>
+</openerp>

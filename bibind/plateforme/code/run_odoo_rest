@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from flask import g, jsonify
+from odoo_rest.common.odoo_auth import OdooAuth, OdooUser, auth
+from odoo_rest.common.odoo_rest import app
+from odoo_rest.common.config import config
+from os.path import dirname, join, basename
+from glob import glob
+import re
+
+if config.has_option('log_file'):
+    import logging
+    logging.basicConfig(
+        filename=config.get('log_file'),
+        level=getattr(logging, config.get('log_level')))
+odooauth = OdooAuth()
+
+
+@auth.verify_password
+def verify_password(username_or_token, password):
+    user = odooauth.verify_auth_token(username_or_token)
+    if not user and username_or_token and password:
+        # try to authenticate with username/password
+        user = OdooUser(username_or_token, password)
+        if user.verify_password():
+            odooauth.add_user(user)
+        else:
+            return False
+    else:
+        return False
+    g.user = user
+    return True
+
+
+@app.route('/api/token')
+@auth.login_required
+def get_auth_token():
+    token = g.user.generate_auth_token(600)
+    return jsonify({'token': token.decode('ascii'), 'duration': 600})
+
+
+# El siguiente código es equivalente ha hacer las siguientes dos líneas
+# de código sobre todos los ficheros del directorio resources.
+# from resources.res_users import ResUsers
+# api.add_resource(ResUsers, '/res_users')
+# Lo que hace es importar dinámicamente todos los ficheros y cargar
+# las clases en el servidor REST
+
+def to_camelcase(s):
+    return re.sub(r'(?!^)_([a-zA-Z])',
+                  lambda m: m.group(1).upper(), s.capitalize())
+
+pwd = dirname(__file__)
+for x in glob(join(pwd, 'odoo_rest/resources/*.py')):
+    if not x.endswith('__.py'):
+        filename = basename(x)[:-3]
+        filename_import = 'odoo_rest.resources.%s' % (filename,)
+        odoo_resource = to_camelcase(filename)
+        # print "Importing %s %s ..." % (filename_import, odoo_resource,)
+        mod = __import__(filename_import,
+                         globals(),
+                         locals(),
+                         fromlist=[odoo_resource])
+# print "Imports done"
+if __name__ == '__main__':
+    app.run(port=int(config.get('port')), debug=True)

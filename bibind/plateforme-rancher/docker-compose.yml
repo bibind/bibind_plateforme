@@ -1,0 +1,26 @@
+nginx-proxy:
+  image: jwilder/nginx-proxy:latest
+  ports:
+   - "80:80"
+   - "443:443"
+  volumes:
+    - '/home/docker/nginx-proxy/ssl:/etc/nginx/certs:ro'
+    - '/etc/nginx/vhost.d'
+    - '/usr/share/nginx/html'
+    - '/var/run/docker.sock:/tmp/docker.sock:ro'
+letsencrypt-nginx-proxy-companion:
+  image: jrcs/letsencrypt-nginx-proxy-companion:latest
+  volumes_from:
+    - nginx-proxy
+  volumes:
+    - '/home/docker/nginx-proxy/ssl:/etc/nginx/certs:rw'
+    - '/var/run/docker.sock:/var/run/docker.sock:ro'
+rancher-server:
+  image: rancher/server:latest
+  environment:
+    VIRTUAL_PORT: 8080
+    VIRTUAL_HOST: rancher.bibind.com
+    LETSENCRYPT_HOST: rancher.bibind.com
+    LETSENCRYPT_EMAIL: arhoussou@bibind.com
+  volumes:
+    - '/home/docker/rancher-server/mysql:/var/lib/mysql:rw'

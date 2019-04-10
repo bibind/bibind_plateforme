@@ -1,0 +1,64 @@
+version: '2'
+services:
+  lb-{{projetname}}:
+    image: rancher/lb-service-haproxy:v0.5.9
+    ports:
+    - 80:80/tcp
+    labels:
+      io.rancher.container.agent.role: environmentAdmin
+      io.rancher.container.create_agent: 'true'
+      io.rancher.service.external_dns: never
+  {{projetname}}-live:
+    image: wordpress
+    stdin_open: true
+    tty: true
+    links:
+    - {{projetname}}-db-live:mysql
+    ports:
+    - 8086:80/tcp
+    labels:
+      io.rancher.container.pull_image: always
+  {{projetname}}-db-dev:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  {{projetname}}-test:
+    image: wordpress
+    stdin_open: true
+    tty: true
+    links:
+    - {{projetname}}-db-test:mysql
+    ports:
+    - 8085:80/tcp
+    labels:
+      io.rancher.container.pull_image: always
+  {{projetname}}-db-test:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpresstest
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  {{projetname}}-db-live:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpresslive
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  {{projetname}}-dev:
+    image: wordpress
+    stdin_open: true
+    tty: true
+    links:
+    - {{projetname}}-db-dev:mysql
+    ports:
+    - 8084:80/tcp
+    labels:
+      io.rancher.container.pull_image: always

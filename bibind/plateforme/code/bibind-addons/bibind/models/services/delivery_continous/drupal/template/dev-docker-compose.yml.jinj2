@@ -1,0 +1,20 @@
+version: '2'
+services:
+  {{projetname}}-dev:
+    image: drupal
+    stdin_open: true
+    tty: true
+    links:
+    - {{projetname}}-db-dev:mysql
+    ports:
+    - 8084:80/tcp
+    labels:
+      io.rancher.container.pull_image: always
+  {{projetname}}-db-dev:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: {{DEV_MYSQL_ROOT_PASSWORD}}
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always

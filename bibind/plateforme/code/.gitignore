@@ -1,0 +1,3 @@
+*.pyc
+odoo_rest/resources
+odoo_rest.conf

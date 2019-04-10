@@ -1,0 +1,999 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	
+    <template id="assets_backend" name="cloudservice_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/bibind/static/src/css/cloudservice.css"/>
+                <script type="text/javascript" src="/bibind/static/src/js/cloudservice.js"/>
+            
+			  
+            </xpath>
+        </template>
+        
+	
+		
+<record id="action_home_page" model="ir.actions.client">
+ <field name="name">Bibind test Home</field>
+    <field name="tag">bibind.homepage</field>
+</record>
+    <menuitem id="home_page_bibind_menu" parent="menu_quick_wordpress"
+          name="Home Page" action="action_home_page"/>
+
+
+<!-- wizard cloud service -->
+       
+        <act_window id="launch_wizard_wordpress_continous"
+                    name="Creez votre site web"
+                  
+                    res_model="wizard.wordpress.continous"
+                    view_mode="form"
+                  	target="current"
+                  	context="{'cms_name': 'wordpress'}"
+                    key2="client_action_multi"/>
+                    
+                    
+                    <menuitem 
+                    action="launch_wizard_wordpress_continous"
+                    name="Wordpress Delivery"
+                    id="menu_wordpress_delivery"
+					parent="menu_delivery_wordpress"
+					groups="bibind.group_user"  
+					sequence="10" />
+                   <!-- wizard cloud service -->
+       
+       
+
+        <act_window id="launch_session_wizard"
+                    name="Creez votre site web"
+                  
+                    res_model="services.builder"
+                    view_mode="form"
+                  	target="current"
+                  	context="{'cms_name': 'wordpress'}"
+                    key2="client_action_multi"/>
+                    
+                    
+                    <menuitem action="launch_session_wizard" name="My site web" id="menu_cloud_service_action"
+			parent="menu_delivery_wordpress" groups="bibind.group_user"  sequence="10" />
+                   <!-- wizard cloud service -->
+
+
+
+<!-- action view environnement -->
+  
+
+
+<!--  -->
+
+
+
+		<!-- Cloud Manager service -->
+		
+		 <record model="ir.ui.view" id="cloud_service_form_kanban">
+        <field name="name">cloud.service.form</field>
+        <field name="model">cloud.service</field>
+        <field name="type">kanban</field>
+
+        <field name="arch" type="xml">
+                <kanban class="oe_background_grey">
+                    
+                    <field name="name"/>
+                   
+                    <field name="expire_date"/>
+                    
+                    <templates>
+                        <t t-name="kanban-box">
+                           
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+		
+		
+	 <record model="ir.ui.view" id="cloud_service_form">
+        <field name="name">cloud.service.form</field>
+        <field name="model">cloud.service</field>
+        <field name="type">form</field>
+         
+        
+        <field name="arch" type="xml">
+            <form string="cloud service">
+            <header>
+            <field attrs="{'invisible':[('is_active','=', False)]}" name="state" statusbar_visible="en_attente_service_fournisseur, en_creation,expired, desactive" widget="statusbar" readonly="1" />
+          
+              <field attrs="{'invisible':[('is_active','=', True)]}" name="state" statusbar_visible="Provider, environnement, application " widget="statusbar" readonly="1" />
+            
+                </header>
+            <sheet>
+            <field invisible="1" name="is_env" ></field>
+             <div class="oe_right oe_button_box" name="buttons" >
+                         <button class="oe_inline oe_stat_button" type="object" attrs="{'invisible':[('is_env','=', False)]}"
+                            name="get_environnement" string="Env" icon="fa-tasks">
+                        </button>
+                       
+                    </div>
+            
+            
+            <field name="projetname" string="service" />    
+            <field name="partner_id" readonly="1" string="client" attrs="{'invisible':[('is_active','=', True)]}" />    
+            <field name="cloud_service_fournisseur_id" />
+             <field  invisible="1" name="is_active" class="oe_inline" readonly="1"/>
+             <field attrs="{'invisible':[('is_active','=', False)]}" name="name" class="oe_inline" readonly="1" string="client"/>
+            
+            <group attrs="{'invisible': [('state','in',[ 'environnement', 'application', 'dns_domain', 'Piloter', 'en_attente_service_fournisseur', 'en_creation', 'active', 'expired', 'desactive'])]}" >
+                <group >
+                  
+                  <field name="providerdriverid"  string="Provider" widget="many2many_kanban" >
+                    <kanban quick_create="true" create="true" delete="true">
+                                    <field name="name"/>
+                                   
+                                    <templates>
+                                    
+                                        <t t-name="kanban-box">
+                                       
+                                            <div style="position: relative">
+                                                <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
+                                                <div class="oe_module_vignette">
+                                                    <img t-att-src="kanban_image('res.partner', 'image_small',  record.id.raw_value)" class="oe_avatar oe_kanban_avatar_smallbox"/>
+                                                    <div>
+                                                   
+                                                    <p><t t-esc="record.raw_value"/></p>
+                                                    </div>
+                                                    <div class="oe_module_desc">
+                                                  
+                                                        <field name="name"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                  
+                  
+                  </field>    
+          
+                
+                
+                </group>
+                
+                
+                <group>
+                
+                 <field invisible="1" colspan="4" name="archi_id" >
+                      <kanban quick_create="false" create="true" delete="true">
+                                    <field name="name"/>
+                                    <field name="provider_id"/>
+                                    <templates>
+                                    
+                                        <t t-name="kanban-box">
+                                       
+                                            <div style="position: relative">
+                                                <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
+                                                <div class="oe_module_vignette">
+                                                    <img t-att-src="kanban_image('res.partner', 'image_small',  record.provider_id.raw_value)" class="oe_avatar oe_kanban_avatar_smallbox"/>
+                                                    <div>
+                                                   
+                                                    <p><t t-esc="record.raw_value"/></p>
+                                                    </div>
+                                                    <div class="oe_module_desc">
+                                                  
+                                                        <field name="name"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>           
+                                
+                              
+                            </field>
+              
+             	
+            	</group>
+            </group>
+            	
+            
+             
+             <group  string="Environements">
+                <group>
+              
+              <field name="cloud_service_environnement_id" string="Environnements"/>
+            	</group>
+             
+             </group >
+             
+             
+                
+				</sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="cloud_service_tree">
+        <field name="name">cloud.service.tree</field>
+        <field name="model">cloud.service</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+       
+            <tree string="cloud.service">
+                <field name="name"/>
+                <!--  <field name="Cloud_Service_tmpl_id"/>
+                <field name="expire"/>
+                <field name="created"/>
+                <field name="Client"/>
+                 <field name="Type_renew"/> 
+                <field name="cloud_service_fournisseur_id"/>
+                 <field name="instance_service"/> 
+                <field name="state"/>
+                <field name="product_id"/>
+                <field name="param_host"/>
+                <field name="api_service"/> -->
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service">
+        <field name="name">Services client</field>
+        <field name="res_model">cloud.service</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+         	
+		<menuitem action="action_cloud_service" name="Services client" id="menu_cloud_service_client"
+			parent="menu_cloudservice_client" sequence="1" />
+
+	 <!-- fin  object service  -->
+
+	 <!-- Cloud Manager service environnement -->
+	 <record model="ir.ui.view" id="cloud_service_environnement_form">
+        <field name="name">cloud.service.environnement.form</field>
+        <field name="model">cloud.service.environnement</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form  string="Environement | Intégration continue">
+            <header>
+               </header>
+            <sheet>
+            <group>
+	            <group>
+	            <field name="name" string="name" />    
+              <field name="cloudserviceid" string="id" context="{'cloudserviceid': active_id}" />  
+               
+	            </group>
+            </group>
+             <label for="notebook" string="Environement | Intégration continue"/>
+           <notebook >
+          <page string="Branche" name="Branch">
+          <group>
+           <field name="branch_env"  string="Environnement branche"  >
+				<form>
+				<field name="tag_id"/>
+                   <field name="git_ref_id"/>
+                   <notebook>
+                   <page string="un">
+                   hello
+                   </page>
+                    <page string="deux">
+                   hello
+                   </page>
+                   </notebook>
+				</form>                  
+                 </field>    
+          
+          
+          </group>
+          </page>
+            <page string="Développement" name="dev">
+            <group string="Environnement de dev" >
+             <field name="dev_env"  string="" widget="many2many_kanban" >
+               <kanban quick_create="true" create="true" delete="false">
+                                    <field name="tag_id"/>
+                                    <field name="git_ref_id"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div style="position: relative">
+                                                <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
+                                                  <div class="oe_kanban_content">
+                                                <ul class="nav nav-tabs" style="pointer-events: auto;">
+														  <li class="active"><a  data-toggle="tab" href="#home">Home</a></li>
+														  <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+														  <li><a style="pointer-events:auto;"  data-toggle="tab" href="#menu2">Menu 2</a></li>
+														</ul>
+														
+														<div class="tab-content">
+														  <div id="home" class="tab-pane fade in active">
+														    <h3>HOME</h3>
+														    <p>Some content.</p>
+														  </div>
+														  <div id="menu1" class="tab-pane fade">
+														    <h3>Menu 1</h3>
+														    <p>Some content in menu 1.</p>
+														    
+														    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+														    
+														    
+														  </div>
+														  <div id="menu2" class="tab-pane fade">
+														    <h3>Menu 2</h3>
+														    <p>Some content in menu 2.</p>
+														  </div>
+														</div>
+                                                <div class="oe_left oe_button_box" name="buttons" >
+								                         <button class="oe_inline oe_stat_button" type="object"  name="backup_dev" string="Backup" icon="fa-tasks">
+								                        </button>
+								                    </div>
+								                  <div class="oe_kanban_project_list">
+                                        <a  name="backup_dev" type="object" style="margin-right: 10px"> <field name="git_ref_id"/> backup</a>
+                                    </div>
+                                                <div class="oe_module_vignette">
+                                                      <div>
+                                                    
+                                                    <field name="git_ref_id"/>
+                                                    </div>
+                                                    <div class="oe_module_desc">
+                                                   <field name="git_ref_id"/>
+                                                        <field name="tag_id"/>
+                                                    </div>
+                                                </div>
+                                               </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                  
+                  
+              
+                 </field>    
+            
+                </group>
+            
+            </page>
+            <page string="Test" name="Test">
+               <group string="Environnement de test">
+                
+                <field name="test_env" string="Test" />  
+              
+             	
+            	</group>
+            </page>
+            <page string="Live" name="live">
+            <group string="Environnement de live">
+        		<field name="live_env" string="Live" /> 
+        		</group>
+            </page>
+           
+           </notebook>
+
+				</sheet>
+            </form>
+        </field>
+    </record>
+    
+    
+    
+    <!-- type kanban environnement model -->
+    
+    <record model="ir.ui.view" id="cloud_service_environnement_kanban">
+        <field name="name">cloud.service.environnement.kaban</field>
+        <field name="model">cloud.service.environnement</field>
+          <field name="type">kanban</field>
+        <field name="arch" type="xml">
+         <kanban class="oe_background_grey">
+                   
+                    <field name="name"/>
+                     <field name="cloudserviceid"/>
+                      <field name="dev_env"/>
+                       <field name="test_env"/>
+                       <field name="live_env"/>
+                       <field name="branch_env"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_color_ oe_kanban_card oe_kanban_project oe_kanban_global_click">
+                                <div class="oe_dropdown_toggle oe_dropdown_kanban" groups="base.group_user">
+                                    <span class="oe_e">í</span>
+                                    <ul class="oe_dropdown_menu">
+                                        <t t-if="widget.view.is_action_enabled('edit')"><li><a type="edit">Project Settings</a></li></t>
+                                        <t t-if="widget.view.is_action_enabled('delete')"><li><a type="delete">Delete</a></li></t>
+                                        <li></li>
+                                    </ul>
+                                </div>
+                                <div class="oe_kanban_content">
+                                    <h4 class="text-center"><strong><field name="name"/></strong></h4>
+                                     <div class="oe_kanban_project_avatars">
+                                             <div>hello</div>
+                                      
+                                    </div>
+                                    <div class="oe_kanban_project_list">
+                                       
+                                    </div>
+                                    <div class="oe_kanban_project_list">
+                                    </div>
+                                    <div class="oe_kanban_footer_left">
+                                        
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+           
+        </field>
+    </record>
+    
+    
+    
+    <!--  finb type kanban environnement model -->
+    
+    
+    
+    
+    
+    
+    
+    <record model="ir.ui.view" id="cloud_service_environnement_tree">
+        <field name="name">cloud.service.envirronement.tree</field>
+        <field name="model">cloud.service.environnement</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+       
+            <tree string="Environnement">
+                <field name="name"/>
+              
+
+            </tree>
+        </field>
+    </record>
+     <record model="ir.actions.act_window" id="action_cloud_service_env">
+        <field name="name">Env</field>
+        <field name="res_model">cloud.service.environnement</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem action="action_cloud_service_env" name="Services env" id="menu_cloud_service_env"
+			parent="menu_cloudservice_client" sequence="1" />
+
+	 <!-- fin  object service environnement -->
+	 
+	 
+	 
+	 <!-- environnment dev -->
+	 
+	 
+	 <record model="ir.ui.view" id="env_dev_form">
+        <field name="name">cloud.service.environnement.dev.form</field>
+        <field name="model">cloud.service.environnement.dev</field>
+        <field name="type">form</field>
+         
+        <field name="arch" type="xml">
+            <form string="Environement de développement">
+            <header>
+               </header>
+            <sheet>
+            <group>
+	            <group>
+	            <field name="tag_id" />
+	            <field name="git_ref_id" />
+	            
+	            </group>
+	         </group>
+	         <notebook>
+	         
+	         </notebook>
+	         </sheet>
+	         
+	         </form>
+	         
+	         </field>
+	         
+	         </record>
+	 
+	 
+	 <!-- environnement dev fin -->
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	
+	 <!-- object template service client -->
+	   
+    <record model="ir.ui.view" id="cloud_service_tmpl_form">
+        <field name="name">cloud.service.tmpl.form</field>
+        <field name="model">cloud.service.tmpl</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        
+            <form string="Template de service client">
+            <header>
+            </header>
+            <sheet>
+             <h1>
+	                       <label for="name"/>
+	                      
+	                    </h1>
+                 <field name="name" string="Nom du template" class="oe_inline"/>
+               <group>
+	               <group>
+	                <field name="product_id" />
+	               </group>
+               </group>
+              <group strin="Scripts de déploiement">
+               <field name="list_script_before" select="0"/>
+              </group>
+               
+			</sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="cloud_service_tmpl_tree">
+        <field name="name">cloud.service.tmpl.tree</field>
+        <field name="model">cloud.service.tmpl</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="cloud.service.tmpl">
+                <field name="name"/>
+                <!--  <field name="client"/>
+                <field name="Fournisseur"/>
+                <field name="tmpl_fournisseur_id"/>
+                <field name="service_client_param_ids"/>
+                <field name="instance_de_gestion"/> -->
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_tmpl">
+        <field name="name">Templates de service client</field>
+        <field name="res_model">cloud.service.tmpl</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Templates de service client" 
+    action="action_cloud_service_tmpl" groups="bibind.group_administrateur"  id="menu_cloud_service"
+			parent="menu_cloudservice_config" sequence="1" />
+        
+        
+        
+        
+         <!-- fin template service client-->
+        
+        
+        
+         <!-- object template service fournisseur -->
+          
+    <record model="ir.ui.view" id="cloud_service_tmpl_fournisseur_form">
+        <field name="name">cloud.service.tmpl.fournisseur.form</field>
+        <field name="model">cloud.service.tmpl.fournisseur</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="cloud.service.tmpl.fournisseur">
+            <header>
+            
+            <field name="state" widget="statusbar" readonly="1" />
+            
+            </header>
+            <sheet>
+						<div class="oe_right oe_button_box" style="width: 300px;"
+							name="buttons">
+							<button class="oe_stat_button" name="active_domain" icon="fa-building-o"
+								type="object">
+								<div>test</div>
+							</button>
+						</div>
+						<div class="oe_title">
+							<h1>
+								
+								
+							</h1>
+						</div>
+			<group>
+            <group string="Information Générale">
+            <field name="name" select="2"/>
+            <field name="type_service" select="2"/>
+            
+            </group>
+            <group string="Fournisseur et api du fournisseur">
+              <field name="fournisseur_id" on_change="onchange_partner_id(fournisseur_id, context)"
+									context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}"
+									domain="[('supplier','=',True)]" />
+                <field name="api_fournisseur"
+                context="{'api':api_fournisseur}"
+                domain="" 
+                /> 
+             <field name="requete_api_service"   context="{'api':api_fournisseur}" 	 />
+            
+            <field name="nbr_service_client" select="0"/>
+            <field name="categorie_fournisseur_ids" select="0"/> 
+            </group>
+			</group>
+			 <group string="Parametrage du template">
+             <button class="oe_stat_button" name="config_url_param" icon="fa-building-o"
+								type="object">
+				<div class="config_tmpl_fou">Configurer les paramètres</div>
+							</button>
+                <field name="param_api_requete" select="0">
+                
+                
+                </field>
+              
+             </group>
+             <group sring="Scripts à lancer après la creation du service">
+		    <field name="param_ids">
+			<tree string="Scripts post création" editable="bottom">
+                <field name="sequence" widget="handle"/>
+			    <field name="name"/>
+			</tree>
+		    </field>
+		</group>
+			</sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="cloud_service_tmpl_fournisseur_tree">
+        <field name="name">cloud.service.tmpl.fournisseur.tree</field>
+        <field name="model">cloud.service.tmpl.fournisseur</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="cloud.service.tmpl.fournisseur">
+               
+                <field name="name"/>
+                 <!-- <field name="service_fournisseur_id"/>
+                <field name="api_fournisseur"/>
+                <field name="requete_api_service"/>
+                <field name="param_api_requete"/>
+                <field name="tmpl_service_fournisseur_depend"/>
+                <field name="Price"/>
+                <field name="nbr_service_client"/>
+                <field name="categorie_fournisseur_ids"/> -->
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_tmpl_fournisseur">
+        <field name="name">Templates de service fournisseur</field>
+        <field name="res_model">cloud.service.tmpl.fournisseur</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Templates de service fournisseur" 
+    id="menu_cloud_service_tmpl_fournisseur" 
+    parent="menu_cloudservice_config"
+    groups="bibind.group_administrateur" 
+    action="action_cloud_service_tmpl_fournisseur"/>
+   <!-- fin cloud service template fournisseur -->
+  
+  
+  
+
+
+ 
+  <!-- api object requete-->
+    <record model="ir.ui.view" id="cloud_service_api_url_requete_form">
+        <field name="name">cloud.service.api.url.requete.form</field>
+        <field name="model">cloud.service.api.url.requete</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="cloud.service.api.url.requete">
+				<header>
+				</header>
+				<sheet>
+			<group>
+				<h1>  <field name="name"/></h1>	
+			</group>
+			
+				
+				<group string="API">
+				<field name="fournisseur" />
+	            <field name="apibibindid"
+	             attrs="{'invisible': [('fournisseur','!=','Your Company')]}"/>
+	            </group>
+	            	
+				<group string="Requete Url et paramètres">
+                <field name="url"/>
+                <field name="description" string="Description"/>
+                <field name="data_json" string="parametres en Json de la requetes" />
+                 
+                 </group>
+             
+             <group>
+               
+             </group>
+                 
+                </sheet>
+                
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="cloud_service_api_url_requete_tree">
+        <field name="name">cloud.service.api.url.requete.tree</field>
+        <field name="model">cloud.service.api.url.requete</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+         
+            <tree string="cloud.service.api.url.requete">
+				<field name="url"/>
+				<field name="fournisseur"/>
+				 <field name="description"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_api_url_requete">
+        <field name="name">Requete URL et Parametres des api</field>
+        <field name="res_model">cloud.service.api.url.requete</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="Api requete url" 
+    id="menu_cloud_service_api_url_requete" 
+    parent="menu_cloudservice_api_config"
+    groups="bibind.group_administrateur" 
+    action="action_cloud_service_api_url_requete"/>
+  
+  
+  <!-- fin api object requete api  -->
+  
+   <!-- api object param url -->
+    <record model="ir.ui.view" id="cloud_service_requete_param_form">
+        <field name="name">cloud.service.requete.param.form</field>
+        <field name="model">cloud.service.requete.param</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="cloud.service.requete.param">
+				<header>
+				</header>
+				<sheet>
+			<group>
+				<h1>  <field name="name"/></h1>	
+			</group>
+				
+				<group string="param">
+				<field name="datatype"  />
+	            <field name="is_client_param"/>
+	            <field name="valeur" />
+	            <field name="paramtype"/>
+	            <field name="enum_valeur"    domain="[('modeltype','=',datatype)]" />
+	            <field name="is_requiered"/>
+	            <field name="tmpl_fournisseur_id" />
+	           <field name="url_id"></field>
+	            </group>
+	            	
+ 
+                </sheet>
+                
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="cloud_service_requete_param_tree">
+        <field name="name">cloud.service.requete.param.tree</field>
+        <field name="model">cloud.service.requete.param</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+         
+            <tree string="cloud.service.requete.param">
+				<field name="name"/>
+				<field name="datatype"/>
+				<field name="enum_valeur"/>
+				<field name="valeur"/>
+				
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_requete_param">
+        <field name="name">Parametres url template</field>
+        <field name="res_model">cloud.service.requete.param</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="Param Url" 
+    id="menu_cloud_service_requete_param" 
+    groups="bibind.group_administrateur" 
+    parent="menu_cloudservice_api_config"
+    action="action_cloud_service_requete_param"/>
+  
+  
+  <!-- fin object param url  -->
+  
+  
+  
+  
+  
+    <!-- api object model param -->
+    <record model="ir.ui.view" id="cloud_service_param_model_form">
+        <field name="name">cloud.service.param.model.form</field>
+        <field name="model">cloud.service.param.model</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="cloud.service.param.model">
+				<header>
+				</header>
+				<sheet>
+			<group>
+				<h1>  <field name="name"/></h1>	
+			</group>
+			
+				
+				<group string="param">
+				<field name="modeltype" />
+	            <field name="description"/>
+	            </group>
+	            	
+ 
+                </sheet>
+                
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="cloud_service_param_model_tree">
+        <field name="name">cloud.service.param.model.tree</field>
+        <field name="model">cloud.service.param.model</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+         
+            <tree string="cloud.service.param.model">
+				<field name="name"/>
+				<field name="modeltype"/>
+				
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_param_model">
+        <field name="name">Model pour Param template</field>
+        <field name="res_model">cloud.service.param.model</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="Model ovh" 
+    id="menu_cloud_service_param_model" 
+    groups="bibind.group_administrateur" 
+    parent="menu_cloudservice_api_config"
+    action="action_cloud_service_param_model"/>
+  
+  
+  <!-- fin object model param  -->
+  
+  
+ <record id="bibindproduct_category_form_view" model="ir.ui.view">
+            <field name="name">product.category.form</field>
+            <field name="model">product.category</field>
+             <field name="inherit_id" ref="product.product_category_form_view" />
+            <field name="arch" type="xml">
+            <data>
+                    <xpath expr="//group[@name='parent']" position="inside">
+                        <group name="CategoryProvider" string="Category Provider" colspan="2">
+                            <field name="provider_id" class="oe_inline" domain="[('is_cloud_fournisseur','=',True)]" string="Provider of this category"/> 
+   						  </group>
+                    </xpath>
+                </data>
+                 
+                
+            </field>
+        </record>
+  
+  
+  
+  
+  
+  
+  
+  
+           <record model="ir.ui.view" id="partner_view_cloud_service">
+            <field name="name">partner.view.cloud.service</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_edit_only']" position="inside">(
+                     <field name="is_cloud_fournisseur" on_change="onchange_api(is_cloud_fournisseur)" class="oe_inline"/> <label for="is_cloud_fournisseur" string="Ce fournisseur a une api?"/>)
+   
+                </xpath>
+                
+            </field>
+        </record>     
+         <record id="view_partner_cloud_service_form" model="ir.ui.view">
+            <field name="name">res.partner.cloud.service.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="priority">2</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <page name="sales_purchases" position="after">
+                <page string="cloud API" col="4" name="cloudapi" attrs="{'invisible': [('is_cloud_fournisseur','=',False)]}" groups="account.group_account_invoice">
+                    <group>
+                       <field name="libcloudcst" />
+                        <field name="libcloudselection" />
+                    </group>
+                    <field name="api_ids" >
+                        <tree string="API Details">
+                            <field name="name"/>
+                           
+                           
+                          
+                        </tree>
+                    </field>
+                </page>
+                <page string="cloudapi" name="cloudapi_disabled" attrs="{'invisible': ['|',('is_company','=',True),('parent_id','=',False)]}" groups="account.group_account_invoice">
+                    <div>
+                        <p>Pour l'api de la societe veuillez vous rendre sur la societe mère</p>
+                    </div>
+                </page>
+                </page>
+            </field>
+        </record>
+        
+        
+        
+           <record model="ir.ui.view" id="product_view_cloud_service_product">
+            <field name="name">product.template.view.cloud.service</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view" />
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='options']" position="inside">
+                	<div>
+                     <field name="is_cloud_service_product" on_change="onchange_api(is_cloud_service_product)" class="oe_inline"/> <label for="is_cloud_service_product" string="is a cloud Product"/>
+   					</div>
+                </xpath>
+                
+                
+            </field>
+        </record>     
+        
+         <record id="cloud_service_product_view" model="ir.ui.view">
+            <field name="name">product.template.cloud.service.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="priority">2</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <page string="Procurements" position="after">
+                <page string="cloud product" col="4" name="cloudproduct" attrs="{'invisible': [('is_cloud_service_product','=',False)]}" >
+                    <group>
+                    <field name="is_domain_product" />
+                    <field name="cloud_service_tmpl_id" />
+                    <field name="product_depend_id" />
+                    <field name="model_services"/>
+                    </group>
+                    
+                </page>
+                
+                </page>
+            </field>
+        </record>
+        
+         
+        
+        
+	</data>
+</openerp>

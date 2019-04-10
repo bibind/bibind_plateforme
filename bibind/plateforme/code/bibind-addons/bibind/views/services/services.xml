@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+ <record model="ir.ui.view" id="bibind_services_form">
+        <field name="name">bibind.services.form</field>
+        <field name="model">bibind.services</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="bibind service">
+            <header>
+          
+          
+              <field name="state"  widget="statusbar" readonly="1" />
+            
+                </header>
+            <sheet>
+            <group>
+            <group>
+            <field  name="name" />
+            <field  name="created_date" />
+            <field name="expire_date"></field>
+            <field  name="termineted_date" />
+            <field  name="last_update" />
+            
+            <field  name="last_renew_date" />
+            
+            </group>
+            <group>
+            <field name="bibind_fournisseur" />
+             <field  name="product_id" />
+             <field  name="type_paiement" />
+            <field  name="period_paiement" />
+            <field  name="is_pay" />
+            </group>
+            </group>
+            
+           <group>
+           
+           
+           <group>
+           
+           <field  name="bibind_user_id" />
+              <field  name="odoo_partner_id" />
+               <field  name="bibind_owner_user" />
+                <field  name="bibind_organisation" />
+             <field  name="bibind_admin_ids" />
+             
+              <field  name="bibind_techniques_ids" />
+              
+               <field  name="bibind_facturation_ids" />
+           </group>
+            
+           </group>
+           
+           <group>
+            <field  name="bibind_team_ids" />
+           </group>
+           <group>
+            <field  name="service_instance_id" />
+           </group>
+           
+            
+               
+                
+
+				</sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="bibind_services_tree">
+        <field name="name">bibind.service.tree</field>
+        <field name="model">bibind.services</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+       
+            <tree string="cloud.service">
+                <field name="name"/>
+                <field  name="created_date" />
+                
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_bibind_services">
+        <field name="name">Services client</field>
+        <field name="res_model">bibind.services</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+         	
+		<menuitem action="action_bibind_services" name="Mes Services" id="menu_bibind_services_client"
+			parent="menu_bibind_dashboard_activites" sequence="1" />
+
+	 <!-- fin  object service  -->
+	 
+	 </data>
+	 </openerp>
+	 

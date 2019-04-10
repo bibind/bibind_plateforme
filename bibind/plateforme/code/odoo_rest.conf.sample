@@ -1,0 +1,7 @@
+[options]
+;lof_file = ../log
+;log_level = DEBUG
+port = 5000
+secret_key = 'secret key to store password'
+odoo_server = http://localhost:8069
+odoo_db = vertical_midban_limpia

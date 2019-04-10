@@ -1,0 +1,114 @@
+version: '2'
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy:latest
+    ports:
+     - "80:80"
+     - "443:443"
+    volumes:
+      - '/home/docker/nginx-proxy/ssl:/etc/nginx/certs:ro'
+      - '/etc/nginx/vhost.d'
+      - '/usr/share/nginx/html'
+      - '/var/run/docker.sock:/tmp/docker.sock:ro'
+  letsencrypt-nginx-proxy-companion:
+    image: jrcs/letsencrypt-nginx-proxy-companion:latest
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - '/home/docker/nginx-proxy/ssl:/etc/nginx/certs:rw'
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+  db_odoo:
+      container_name: db_odoo
+      environment:
+        - POSTGRES_USER=odoo
+        - POSTGRES_PASSWORD=odoo
+      expose:
+        - "5432"
+      image: "postgres:9.4"
+      volumes:
+        - "../code/data/postgresql:/var/lib/postgresql/data"
+  odoo:
+    container_name: bibind
+    depends_on:
+      - db_odoo
+    environment:
+      PGHOST: db_odoo
+      PGUSER: odoo
+      PGPASSWORD: odoo
+      VIRTUAL_PORT: 8069
+      VIRTUAL_HOST: www.bibind.com
+      LETSENCRYPT_HOST: www.bibind.com
+      LETSENCRYPT_EMAIL: arhoussou@bibind.com
+    image: "bibind/plateforme-base:v1"
+    links:
+      - db_odoo
+    expose:
+     - "8069"
+    ports:
+      - "8069:8069"
+    tty: true
+    volumes:
+      - "../code/config:/etc/odoo"
+      - "../code/bibind-addons:/mnt/extra-addons"
+      - "../code/filestore:/var/lib/odoo/filestore"
+  proxy_bibind:
+      build: .
+      container_name: proxybibind
+      environment:
+        PGHOST: db_odoo
+        PGUSER: odoo
+        PGPASSWORD: odoo
+        VIRTUAL_PORT: 5000
+        VIRTUAL_HOST: proxy.bibind.com
+        LETSENCRYPT_HOST: proxy.bibind.com
+        LETSENCRYPT_EMAIL: arhoussou@bibind.com
+      links:
+        - mongodb
+      ports:
+        - "5000:5000"
+      tty: true
+      volumes:
+        - "../code/bibind-rest:/code"
+  mongodb:
+      image: mongo:3.0.2
+
+  web_drupal:
+    # Build the Drupal 8 image
+    # https://hub.docker.com/r/_/drupal/
+    image: drupal:8
+    # Environment variables
+    environment:
+      # Drupal settings
+      DRUPAL_PROFILE: standard
+      DRUPAL_SITE_NAME: Drupal
+      DRUPAL_USER: admin
+      DRUPAL_PASS: admin
+      DRUPAL_DBURL: mysql://drupal:drupal@database:3306/drupal
+      VIRTUAL_PORT: 8887
+      VIRTUAL_HOST: les-lettres-envolées.com
+    ports:
+      # Host machine's port 8000 will map to Drupal's port 80
+      - "8887:80"
+    expose:
+      - "8887"
+    volumes:
+      # Drupal should live in the "drupal" directory
+      - ./drupal:/app
+    links:
+      - database_drupal:database_drupal
+    command: php -S 0.0.0.0:80 -t /app
+    working_dir: /app
+    restart: always
+
+  # MySQL Server
+  database_drupal:
+    image: mariadb:10
+    environment:
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+      MYSQL_DATABASE: drupal
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - "3306:3306"
+    restart: always

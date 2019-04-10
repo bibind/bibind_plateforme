@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	
+
+ <!-- Cloud Manager service delivery -->
+	 <record model="ir.ui.view" id="bibind_bibind_depot_form">
+        <field name="name">bibind.depot.form</field>
+        <field name="model">bibind.depot</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form  string="Depot | Gitlab">
+            <header>
+               <button class="" type="object"  name="create_depot" string="create depot" />
+                <button class=" " type="object"  name="get_branch_env" string="get branche" />
+                  </header>
+            <sheet>
+            <h1>
+            <field name="name" />
+            </h1>
+            
+         <group>
+         <group>
+          <field name="gitlab_projet_id" />
+                <field name="bibind_user_id" />
+                <field name="partner_id" />
+                <field name="url" />
+                <field name="ssh_url" />
+                <field name="http_url" />
+         </group>
+          <group>
+          		<field name="projet_name" />
+          		<field name="runner_token" />
+              	<field name="gitlab_web_url" />
+              	<field name="depot_state" />
+           </group>
+          
+         </group>
+         
+				</sheet>
+            </form>
+        </field>
+    </record>
+    
+   
+    	
+    
+    
+    
+        <record model="ir.ui.view" id="bibind_bibind_depot_tree">
+        <field name="name">bibind.depot.tree</field>
+        <field name="model">bibind.depot</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+       
+            <tree string="Depots">
+                <field name="name"/>
+                 <field name="ssh_url" />
+            </tree>
+        </field>
+    </record>
+    
+     <record model="ir.actions.act_window" id="action_bibind_bibind_depot">
+        <field name="name">Depot Gitlab</field>
+        <field name="res_model">bibind.depot</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+         	
+		<menuitem action="action_bibind_bibind_depot" name="Depots" id="menu_bibind_depot_label"
+			parent="menu_bibind_continous_delivery" sequence="3" />
+		<menuitem action="action_bibind_bibind_depot" name="Mes dépots" id="menu_bibind_list_bibind_depot"
+			parent="menu_bibind_depot_label" sequence="3" />
+    
+    
+    
+    
+    </data>
+    </openerp>

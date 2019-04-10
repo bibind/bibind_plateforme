@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	
+	<!-- Cloud Service Menu general-->
+		<menuitem name="My Bibind Cloud" sequence="2"
+			id="menu_cloudservice_base"  groups="bibind.group_administrateur" />
+	
+	<menuitem name="tableau de bord" sequence="0"
+			id="menu_bibind_dashboard"  
+			groups="bibind.group_user" />
+			
+	<menuitem name="Mes activités" 
+			sequence="2"
+			parent="menu_bibind_dashboard"
+			id="menu_bibind_dashboard_activites"
+			groups="bibind.group_user" />	
+			  <menuitem name="Quotations" id="dasshboard_portal_quotations"
+			   parent="menu_bibind_dashboard_activites"
+            action="portal_sale.action_quotations_portal" sequence="10"/>
+			
+	<menuitem name="Quick App" sequence="3"
+			id="menu_bibind_quick_app"  groups="bibind.group_user" />
+			<menuitem  name="just a Wordpress" id="menu_quick_wordpress"
+			parent="menu_bibind_quick_app" sequence="1" />
+		
+			
+	<menuitem name="Continous Delivery" sequence="4"
+			id="menu_bibind_continous_delivery"
+			  groups="bibind.group_user" />
+	<menuitem  name="Wordpress continue" 
+	id="menu_delivery_wordpress"
+			parent="menu_bibind_continous_delivery" 
+			sequence="2" />
+	
+	
+	
+	<menuitem name="Elastic App Engine" sequence="5"
+			id="menu_bibind_engine"  groups="bibind.group_user" />
+			
+	<menuitem name="Architect and Pattern Infrastructure" sequence="6"
+			id="menu_bibind_engine"  groups="bibind.group_user" />
+		
+		
+		
+		<menuitem string="Cloudservice" groups="bibind.group_administrateur" name="Services" id="menu_cloudservice"
+			parent="menu_cloudservice_base" sequence="1" />
+			
+			<menuitem string="Cloudservice" 
+			name="Bibind CMS" id="menu_cloudservice_client"
+			parent="menu_cloudservice" sequence="1" />
+			
+			<menuitem string="Cloudservice"
+			 groups="bibind.group_administrateur" 
+			 name="Services fournisseur" 
+			 id="menu_cloudservice_fournisseur"
+			parent="menu_cloudservice" sequence="1" />
+			
+		<menuitem string="Configuration Services" groups="bibind.group_administrateur"  name="Configuration" id="menu_cloudservice_config"
+			parent="menu_cloudservice_base" sequence="2" />
+		
+		
+		<menuitem string="Configuration api" groups="bibind.group_administrateur"  name="Configuration api" id="menu_cloudservice_api_config"
+			parent="menu_cloudservice_base" sequence="2" />
+
+	
+	
+	
+	     <!-- api node -->
+  
+  <record model="ir.ui.view" id="view_cloud_service_node_form">
+        <field name="name">cloud.service.node.form</field>
+        <field name="model">cloud.service.node</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="cloud.service.node">
+            <header>
+            <button  attrs="{'invisible': [('state','in',[ 'TERMINATED'])]}"
+            	class="oe_highlight" 
+            		type="object" 
+                    name="confirme_destroy_node"
+                    string="Destroy node" />
+            <button  attrclass="oe_inline" 
+            		type="object" 
+                    name="get_log_node"
+                    string="log node" />
+              <button  attrclass="oe_inline" 
+            		type="object" 
+                    name="ex_get_state_node"
+                    string="get state" />
+               <button  attrclass="oe_inline" 
+            		type="object" 
+                    name="valide_size"
+                    string="valide size" />
+                <button  attrclass="oe_inline" 
+            		type="object" 
+                    name="start_node"
+                    string="start node" />
+                    
+             <field name="state" statusbar_visible="PENDING, STARTING,RUNNING,STOPPING,SUSPENDED,STOPPED,TERMINATED" widget="statusbar" readonly="1" />
+             
+            </header>
+            <group name="infos" string="Information general">
+				<field name="name"  attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"/>
+				<field name="created_date" readonly="1"></field>
+				<field name="terminated_date"  readonly="1"></field>
+				<field name="idnode" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}" />
+				<field name="UuidMixin" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"/>
+                
+               
+                
+                
+                <field name="public_ips" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"/>
+				<field name="private_ips" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}" />
+				<field name="driver" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"/>
+				<field name="api_driver" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}" />
+				<field name="location" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"/>
+				  <field name="region" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"></field>
+                <field name="image" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"/>
+                <field name="size" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}" ></field>
+                <field name="extra" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"></field>
+                 
+           
+      
+             </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_cloud_service_node_form_tree">
+        <field name="name">cloud.service.node.tree</field>
+        <field name="model">cloud.service.node</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="cloud.service.node">
+				<field name="name"/>
+                <field name="driver"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_node">
+        <field name="name">node</field>
+        <field name="res_model">cloud.service.node</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="node" 
+    id="menu_cloud_service_node" 
+    parent="menu_cloudservice_config"
+    groups="bibind.group_administrateur" 
+    action="action_cloud_service_node"/>
+  
+  
+   <!--fin node-->
+   
+   <!--debut size node-->
+   
+   <record model="ir.ui.view" id="view_cloud_service_nodeize_form">
+        <field name="name">cloud.service.nodesize.form</field>
+        <field name="model">cloud.service.nodesize</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="cloud.service.nodesize">
+            <header>
+              <button class="oe_inline "
+               type="object" 
+             name="get_extra" string="log" /> 
+            </header>
+            <group name="infos" string="Information general">
+				
+				<field name="name"/>
+				<field name="id_size"  />
+				<field name="UuidMixin"/>
+                
+                <field name="region"></field>
+                
+                <field name="ram"/>
+				<field name="disk"  />
+				<field name="driver"/>
+				<field name="bibindapi_id"/>
+                <field name="bandwidth" />
+                <field name="price"></field>
+                <field name="extra"></field>
+                 <field name="log"></field>
+
+             </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_cloud_service_nodesize_form_tree">
+        <field name="name">cloud.service.nodesize.tree</field>
+        <field name="model">cloud.service.nodesize</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="cloud.service.nodesize">
+				<field name="name"/>
+				 <field name="region"></field>
+                <field name="driver"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_nodesize">
+        <field name="name">NodeSize</field>
+        <field name="res_model">cloud.service.nodesize</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="Size" 
+    id="menu_cloud_service_nodesize" 
+    parent="menu_cloudservice_config"
+    groups="bibind.group_administrateur" 
+    action="action_cloud_service_nodesize"/>
+  
+    <!--fin size node-->
+
+
+ <!--debut image node-->
+   
+   <record model="ir.ui.view" id="view_cloud_service_nodeimage_form">
+        <field name="name">cloud.service.nodeimage.form</field>
+        <field name="model">cloud.service.nodeimage</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="cloud.service.nodeimage">
+            <header>
+            
+            </header>
+            <group name="infos" string="Information general">
+				<field name="name"/>
+				<field name="id_image"  />
+				<field name="UuidMixin"/>
+				<field name="driver"/>
+                <field name="extra"></field>
+
+             </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_cloud_service_nodeimage_form_tree">
+        <field name="name">cloud.service.nodeimage.tree</field>
+        <field name="model">cloud.service.nodeimage</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="cloud.service.nodeimage">
+				<field name="name"/>
+				
+                <field name="driver"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_nodeimage">
+        <field name="name">Images</field>
+        <field name="res_model">cloud.service.nodeimage</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="Images" 
+    id="menu_cloud_service_nodeimage" 
+    parent="menu_cloudservice_config"
+    groups="bibind.group_administrateur" 
+    action="action_cloud_service_nodeimage"/>
+  
+    <!--fin image node-->
+  <!--debut location node-->
+   
+   <record model="ir.ui.view" id="view_cloud_service_nodelocation_form">
+        <field name="name">cloud.service.nodelocation.form</field>
+        <field name="model">cloud.service.nodelocation</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="cloud.service.nodelocation">
+            <header>
+            
+            </header>
+            <group name="infos" string="Information general">
+				
+				 
+			
+				<field name="name"/>
+				<field name="id_location"  />
+				<field name="country"/>
+				<field name="driver"/>
+
+               
+
+             </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_cloud_service_nodelocation_form_tree">
+        <field name="name">cloud.service.nodelocation.tree</field>
+        <field name="model">cloud.service.nodelocation</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="cloud.service.nodelocation">
+				<field name="name"/>
+				
+                <field name="driver"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_nodelocation">
+        <field name="name">Location</field>
+        <field name="res_model">cloud.service.nodelocation</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="Locations" 
+    id="menu_cloud_service_nodelocation" 
+    parent="menu_cloudservice_config"
+    groups="bibind.group_administrateur" 
+    action="action_cloud_service_nodelocation"/>
+  
+     <!-- api nodedriver -->
+  
+  <record model="ir.ui.view" id="view_cloud_service_nodedriver_form">
+        <field name="name">cloud.service.nodedriver.form</field>
+        <field name="model">cloud.service.nodedriver</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="cloud.service.nodedriver">
+            <header>
+            
+            </header>
+            <group name="infos" string="Information general">
+				<field name="name" />
+				<field name="provider" />
+				
+           
+      
+             </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_cloud_service_nodedriver_form_tree">
+        <field name="name">cloud.service.nodedriver.tree</field>
+        <field name="model">cloud.service.nodedriver</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="cloud.service.nodedriver">
+				<field name="name"/>
+				
+                <field name="provider"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_cloud_service_nodedriver">
+        <field name="name">NodeDriver</field>
+        <field name="res_model">cloud.service.nodedriver</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="NodeDriver" 
+    id="menu_cloud_service_nodedriver" 
+    parent="menu_cloudservice_config"
+    groups="bibind.group_administrateur" 
+    action="action_cloud_service_nodedriver"/>
+  
+  
+   <!--fin nodedriver-->
+  
+   
+    </data>
+</openerp>

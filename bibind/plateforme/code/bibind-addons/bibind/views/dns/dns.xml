@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	
+
+	
+	
+	     <!-- api container-->
+  
+  <record model="ir.ui.view" id="view_bibind_zone_form">
+        <field name="name">bibind.zone.form</field>
+        <field name="model">bibind.zone</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="cloud.service.node">
+            <header>
+            <button 
+             attrs="{'invisible': [('state','in',[ 'TERMINATED'])]}"
+            class="oe_highlight" 
+            		type="object" 
+                    name="confirme_destroy_node"
+                    string="Destroy node" />
+            <button  attrclass="oe_inline" 
+            		type="object" 
+                    name="get_log_node"
+                    string="log node" />
+             <field name="state" statusbar_visible="PENDING, STARTING,RUNNING,STOPPING,SUSPENDED,STOPPED,TERMINATED" widget="statusbar" readonly="1" />
+          
+            
+                    
+             
+            </header>
+            <group name="infos" string="Information general">
+				<field name="name"  attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"/>
+				
+				
+				<field name="container_id" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}" />
+				
+                
+              
+                
+                <field name="ip_addresses" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"/>
+				<field name="driver" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"/>
+				<field name="api_driver" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}" />
+				<field name="image" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"/>
+                 <field name="extra" attrs="{'readonly': [('state','in',[ 'TERMINATED'])]}"></field>
+                 
+           
+      
+             </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_bibind_zone_form_tree">
+        <field name="name">bibind.zone.tree</field>
+        <field name="model">bibind.zone</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Container">
+				<field name="name"/>
+                <field name="driver"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_bibind_zone">
+        <field name="name">Zone</field>
+        <field name="res_model">bibind.zone</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="zone" 
+    id="menu_bibind_zone" 
+    parent="menu_cloudservice_config"
+    groups="bibind.group_administrateur" 
+    action="action_bibind_zone"/>
+  
+  
+   <!--fin container-->
+   
+   
+   
+   
+   
+    </data>
+</openerp>

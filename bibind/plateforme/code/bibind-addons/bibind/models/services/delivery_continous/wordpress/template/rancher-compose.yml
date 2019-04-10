@@ -1,0 +1,50 @@
+version: '2'
+services:
+  lb-{projetname}:
+    scale: 1
+    start_on_create: true
+    lb_config:
+      certs: []
+      port_rules:
+      - hostname: {projetname}-dev.bibind.com
+        priority: 1
+        protocol: http
+        service: {projetname}-dev
+        source_port: 80
+        target_port: 80
+      - hostname: {projetname}-test.bibind.com
+        priority: 2
+        protocol: http
+        service: {projetname}-test
+        source_port: 80
+        target_port: 80
+      - hostname: {projetname}-live.bibind.com
+        priority: 3
+        protocol: http
+        service: {projetname}-live
+        source_port: 80
+        target_port: 80
+    health_check:
+      healthy_threshold: 2
+      response_timeout: 2000
+      port: 42
+      unhealthy_threshold: 3
+      interval: 2000
+  {projetname}-live:
+    scale: 1
+    start_on_create: false
+  {projetname}-db-dev:
+    scale: 1
+    start_on_create: true
+  {projetname}-test:
+    scale: 1
+    start_on_create: false
+  {projetname}-db-test:
+    scale: 1
+    start_on_create: false
+  {projetname}-db-live:
+    scale: 1
+    start_on_create: false
+  {projetname}-dev:
+    scale: 1
+    start_on_create: true

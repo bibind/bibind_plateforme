@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	
+	<!-- Cloud Service Menu general-->
+		<menuitem name="Services Hosts fournisseur" sequence="2"
+			id="menu_cloudservice_fournisseur" />
+		<menuitem string="Cloudservice" name="template service fournisseur" id="menu_cloudservice_template_fournisseur"
+			parent="menu_cloudservice_fournisseur" sequence="1" />
+		<menuitem string="Service Fournisseur" id="menu_cloudservice_service_fournisseur"
+			parent="menu_cloudservice_fournisseur" sequence="2" />
+
+		<!-- Cloud Manager service template fournisseur -->
+		<record id="view_cloud_service_fournisseur" model="ir.ui.view">
+			<field name="name">view.cloud.service.fournisseur.form</field>
+			<field name="model">cloud.service.fournisseur</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Cloud Manager service fournisseur" version="7.0">
+					<header>
+						<button name="ConfigurerService" string="payer le service"
+							type="object" />
+						<button name="VerifDispo" string="charge log" type="Vérifier la disponibilité" />
+
+						<button name="transfertService" string="Transferer le service"
+							type="object" />
+						
+						<field name="state" widget="statusbar" readonly="1" />
+
+					</header>
+					<sheet>
+						<div class="oe_right oe_button_box" style="width: 300px;"
+							name="buttons">
+							<button class="oe_stat_button" name="active_domain" icon="fa-building-o"
+								type="object">
+								<div>test</div>
+							</button>
+						</div>
+						<div class="oe_title">
+							<h1>
+								<label for="domain" />
+								<field name="domain" placeholder="exemple.com" />
+							</h1>
+						</div>
+						<group>
+							
+							<group>
+								<field name="create_date" />
+								<field name="expire_date" />
+							</group>
+						</group>
+						<group>
+							<field name="description" />
+						</group>
+
+						<notebook>
+							<page string="OVH">
+								<header>
+								
+								</header>
+								<div class="oe_right oe_button_box" style="width: 300px;"
+							name="buttons">
+								<button class="oe_stat_button"  icon="fa-building-o" name="button_load_records_Zonedns" 
+										type="object" >
+										<div>Mise a jour des Zones DNS</div>
+										</button>
+									<button class="oe_stat_button"  icon="fa-building-o" name="button_load_records_serveurdns" 
+										type="object" >
+										<div>Mise a jour des serveurs DNS</div>
+										</button>
+									<button class="oe_stat_button"  icon="fa-building-o" name="SupprimerforUpdateLineDnsZone"
+										type="object" >
+										<div>Suppression des lines Zones Dns </div>
+										</button>
+							
+						</div>
+								<group>
+									<group>
+										
+										<field name="ovh_nameServerType" />
+										<field name="ovh_dnssec" string="Gestion du DNSSEC" />
+
+										<field name="ovh_last_update" />
+									<field name="ovh_offer" string="Offre domain ovh" />
+
+										<field name="ovh_transferLockStatus" />
+										<field name="ovh_owoSupported" />
+				
+									
+									</group>
+									<group>
+																<field name="ovh_status" />
+										<field name="ovh_engagedUpTo" />
+										<field name="ovh_possibleRenewPeriod" />
+										<field name="ovh_contactBilling" />
+										<field name="ovh_renew" />
+										<field name="ovh_domain" />
+										<field name="ovh_expiration" />
+										<field name="ovh_contactTech" />
+										<field name="ovh_contactAdmin" />
+										<field name="ovh_creation" />
+
+									</group>
+
+								</group>
+
+								<notebook>
+        
+          
+           
+									<page string="Zone DNS">
+
+										<field name="service_domain_zone_ids"  string="Zone dns " />
+
+									</page>
+
+									<page string="Gestion DNS">
+										<field name="service_domain_nameserver_ids" string="Serveur dns " />
+
+									</page>
+									<page string="Redirection" >
+										<field name="service_domain_zone_redirection_ids" string="Serveur dns " />
+									
+									</page>
+
+									<page string="DynHost" >
+									
+									</page>
+									<page string="Email" >
+									
+									</page>
+									<page string="MailingList" >
+									
+									</page>
+
+								</notebook>
+							</page>
+
+
+
+							<page string="Gandi">
+								<notebook>
+									<page string="Zone DNS" />
+
+
+
+								</notebook>
+
+							</page>
+
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="view_cloud_service_tree" model="ir.ui.view">
+			<field name="name">view.cloud.service.fournisseur.tree</field>
+			<field name="model">cloud.service.fournisseur</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Cloud manager service fournisseur">
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_cloud_service_fournisseur_filter" model="ir.ui.view">
+			<field name="name">view.cloud.service.filter</field>
+			<field name="model">cloud.service</field>
+			<field name="arch" type="xml">
+				<search string="Cloud service">
+					<field name="name" filter_domain="[('name','ilike',self)]" />
+					<group expand="0" string="Group By..." />
+
+				</search>
+			</field>
+		</record>
+
+		<record id="action_cloud_service_fournisseur" model="ir.actions.act_window">
+			<field name="name">Tous les services fournisseur</field>
+			<field name="res_model">cloud.service.fournisseur</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem action="action_cloud_service_fournisseur" id="menu_cloud_service_fournisseur"
+			parent="menu_cloudservice_fournisseur" sequence="1" />
+
+		<!-- Cloud Service template service fournisseur -->
+		<!-- Cloud Service form template service fournisseur -->
+		<record id="view_cloud_service_fournisseur_template_form" model="ir.ui.view">
+			<field name="name">view.cloud.service.template.fournisseur.form</field>
+			<field name="model">cloud.service.template.fournisseur</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Cloud service template fournisseur" version="7.0">
+					<header>
+						<button name="configurertemplate" string="Configurer le template"
+							type="object" />
+						<button name="LogTemplate" string="charge log" type="object" />
+
+						<button name="button_load_domain_name" string="Update name"
+							type="object" />
+						<button name="button_load_expiredate" string="Update Date d'expiration"
+							type="object" />
+						<button name="loadProprieteDomain" string="Propriete du domain"
+							type="object" />
+
+						<field name="state" widget="statusbar" readonly="1" />
+
+					</header>
+					<sheet>
+						<div class="oe_right oe_button_box" style="width: 300px;"
+							name="buttons">
+							<button class="oe_stat_button" name="active_domain" icon="fa-building-o"
+								type="object">
+								<div>test</div>
+							</button>
+						</div>
+						<div class="oe_title">
+							<h1>
+								<label for="domain" />
+								<field name="domain" placeholder="exemple.com" />
+							</h1>
+						</div>
+						<group>
+							<group>
+								<field string="Client" name="partner_id"
+									on_change="onchange_partner_id(partner_id, context)" domain="[('customer','=',True)]"
+									context="{'search_default_customer':1, 'show_address': 1}"
+									options='{"always_reload": True}' />
+
+								<field name="fournisseur_id" on_change="onchange_partner_id(partner_id, context)"
+									context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}"
+									domain="[('supplier','=',True)]" />
+								
+
+							</group>
+							<group>
+								<field name="create_date" />
+								<field name="expire_date" />
+							</group>
+						</group>
+						<group>
+							<field name="description" />
+						</group>
+
+						<notebook>
+							<page string="OVH">
+								<header>
+								
+								</header>
+								<div class="oe_right oe_button_box" style="width: 300px;"
+							name="buttons">
+								<button class="oe_stat_button"  icon="fa-building-o" name="button_load_records_Zonedns" 
+										type="object" >
+										<div>Mise a jour des Zones DNS</div>
+										</button>
+									<button class="oe_stat_button"  icon="fa-building-o" name="button_load_records_serveurdns" 
+										type="object" >
+										<div>Mise a jour des serveurs DNS</div>
+										</button>
+									<button class="oe_stat_button"  icon="fa-building-o" name="SupprimerforUpdateLineDnsZone"
+										type="object" >
+										<div>Suppression des lines Zones Dns </div>
+										</button>
+							
+						</div>
+								<group>
+									<group>
+										
+										<field name="ovh_nameServerType" />
+										<field name="ovh_dnssec" string="Gestion du DNSSEC" />
+
+										<field name="ovh_last_update" />
+									<field name="ovh_offer" string="Offre domain ovh" />
+
+										<field name="ovh_transferLockStatus" />
+										<field name="ovh_owoSupported" />
+				
+									
+									</group>
+									<group>
+																<field name="ovh_status" />
+										<field name="ovh_engagedUpTo" />
+										<field name="ovh_possibleRenewPeriod" />
+										<field name="ovh_contactBilling" />
+										<field name="ovh_renew" />
+										<field name="ovh_domain" />
+										<field name="ovh_expiration" />
+										<field name="ovh_contactTech" />
+										<field name="ovh_contactAdmin" />
+										<field name="ovh_creation" />
+
+									</group>
+
+								</group>
+
+								<notebook>
+        
+          
+           
+									<page string="Zone DNS">
+
+										<field name="service_domain_zone_ids"  string="Zone dns " />
+
+									</page>
+
+									<page string="Gestion DNS">
+										<field name="service_domain_nameserver_ids" string="Serveur dns " />
+
+									</page>
+									<page string="Redirection" >
+										<field name="service_domain_zone_redirection_ids" string="Serveur dns " />
+									
+									</page>
+
+									<page string="DynHost" >
+									
+									</page>
+									<page string="Email" >
+									
+									</page>
+									<page string="MailingList" >
+									
+									</page>
+
+								</notebook>
+							</page>
+
+
+
+							<page string="Gandi">
+								<notebook>
+									<page string="Zone DNS" />
+
+
+
+								</notebook>
+
+							</page>
+
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+			<!-- Cloud Service tree Domain -->
+		<record id="view_cloud_service_domain_tree" model="ir.ui.view">
+			<field name="name">view.cloud.service.domain.tree</field>
+			<field name="model">cloud.service.domain</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Cloud service domain">
+
+					<field name="domain" />
+				</tree>
+			</field>
+		</record>
+	<!-- Cloud Service filter Domain -->
+		<record id="view_cloud_service_domain_filter" model="ir.ui.view">
+			<field name="name">view.cloud.service.domain.filter</field>
+			<field name="model">cloud.service.domain</field>
+			<field name="arch" type="xml">
+				<search string="Cloud instance">
+					<field name="domain" filter_domain="[('domain','ilike',self)]" />
+					<group expand="0" string="Group By..." />
+
+				</search>
+			</field>
+		</record>
+
+	<!-- Cloud Service action menu Domain -->
+		<record id="action_cloud_service_domain" model="ir.actions.act_window">
+			<field name="name">OVH domains</field>
+			<field name="res_model">cloud.service.domain</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+<menuitem action="action_cloud_service_domain" id="menu_cloud_service_domain"
+			parent="menu_cloudservice" sequence="1" />
+
+
+	<!-- Cloud Service zone -->
+ 
+      	<!-- Cloud Service zone form -->
+      	<record id="view_cloud_service_domain_zone_form" model="ir.ui.view">
+			<field name="name">view.cloud.service.domain.zone.form</field>
+			<field name="model">cloud.service.domain.zone</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Zone Dns " version="7.0">
+					<header />
+
+					<group>
+						<field name="zone_name" nolabel="0" string="Name" />
+
+						<field name="ovh_lastUpdate" nolabel="0" string="last update" />
+
+
+						<field name="ovh_hasDnsAnycast" string="Has dnsanycast" />
+
+
+						<field name="ovh_nameServers" string="name server" />
+						<field name="ovh_dnssecSupported" />
+
+
+					</group>
+					<group>
+					<field name="service_domain_zone_ids" />
+					
+					</group>
+				</form>
+			</field>
+		</record>
+      	
+      	<!-- Cloud Service zone tree -->
+      	
+      	<record id="view_cloud_service_domain_zone_tree" model="ir.ui.view">
+			<field name="name">view.cloud.service.domain.zone.tree</field>
+			<field name="model">cloud.service.domain.zone</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="zone">
+
+					<field name="zone_name" nolabel="0" string="TTL" />
+
+				
+				</tree>
+			</field>
+		</record>
+      	
+      	<!-- Cloud Service zone filter -->
+      		
+      		
+      	<!-- Cloud Service zone action menu -->
+      	
+      	
+      	
+      	<!-- Cloud Service zone record -->
+      	
+      	<!-- Cloud Service zone record -->
+		<record id="view_cloud_service_domain_zone_record_form" model="ir.ui.view">
+			<field name="name">view.cloud.service.domain.zone.record.form</field>
+			<field name="model">cloud.service.domain.zone.record</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Zone Dns " version="7.0">
+					<header />
+
+					<group>
+						<field name="ovh_ttl" nolabel="0" string="TTL" />
+
+						<field name="ovh_type" nolabel="0" string="Type" />
+
+
+						<field name="ovh_subdomain" string="SubDomain" />
+
+
+						<field name="ovh_cible" string="Target" />
+						<field name="ovh_id" invisible="1" />
+						<field name="service_zone_id" />
+
+					</group>
+				</form>
+			</field>
+		</record>
+
+<!-- Cloud Service zone record tree -->
+
+<record id="view_cloud_service_domain_zone_record_tree" model="ir.ui.view">
+			<field name="name">view.cloud.service.domain.zone.record.tree</field>
+			<field name="model">cloud.service.domain.zone.record</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Zone DNS">
+
+					<field name="ovh_subdomain" string="Domain" />
+					<field name="ovh_ttl" string="TTL" />
+					<field name="ovh_type" string="Type" />
+					<field name="ovh_cible" string="Target" />
+					<field name="ovh_zone" string="Zone" />
+					<field name="ovh_id" string="id ovh record" />
+					<field name="service_zone_id" />
+				
+				</tree>
+			</field>
+		</record>
+		<!-- Cloud Service zone record filter -->
+		
+		
+		<!-- Cloud Service zone record action menu -->
+		
+		
+		<!-- Cloud Service nameserver -->
+		
+		<!-- Cloud Service nameserver form -->
+		<record id="view_cloud_service_domain_nameserver_form" model="ir.ui.view">
+			<field name="name">view.cloud.service.domain.nameserver.form</field>
+			<field name="model">cloud.service.domain.nameserver</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Serveur" version="7.0">
+					<header />
+				<group>
+				 <field name="ovh_toDelete" string="a supprimer"></field>
+					<field name="ovh_host" string="Serveur DNS" />
+					<field name="ovh_ip" string="IP associé" />
+					<field name="ovh_isUsed" string="Status"></field>
+					<field name="ovh_id" invisible='1' />
+					<field name="service_domain_id" invisible='1' />
+			
+				
+				</group>
+					
+				</form>
+			</field>
+		</record>
+		
+		<!-- Cloud Service nameserver tree -->
+		<record id="view_cloud_service_domain_nameserver_tree" model="ir.ui.view">
+			<field name="name">view.cloud.service.domain.nameserver.tree</field>
+			<field name="model">cloud.service.domain.nameserver</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Serveur DNS">
+				
+         			<field name="ovh_host" string="Serveur DNS" />
+					<field name="ovh_ip" string="IP associé" />
+					<field name="ovh_isUsed" string="Status"></field>
+			</tree>
+			</field>
+		</record>
+
+<!-- Cloud Service nameserver filter -->
+
+<!-- Cloud Service nameserver action -->
+
+
+
+
+
+
+
+<!-- Cloud Service soa domain-->
+
+<!-- Cloud Service soa form-->
+<record id="view_cloud_service_domain_soa_form" model="ir.ui.view">
+			<field name="name">view.cloud.service.domain.soa.form</field>
+			<field name="model">cloud.service.domain.soa</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Serveur" version="7.0">
+					<header />
+				<group>
+				 <field name="ovh_email" string="email"></field>
+					<field name="ovh_nxDomainTtl" string="Serveur DNS" />
+					<field name="ovh_refresh" string="IP associé" />
+					<field name="ovh_ttl" string="Status"></field>
+					<field name="ovh_serial"  />
+					
+					<field name="ovh_server" string="IP associé" />
+					<field name="ovh_expire" string="Status"></field>
+					<field name="id_ovh_record" invisible='1' />
+				
+					
+					<field name="service_domain_id" invisible='1' />
+			
+				
+				</group>
+					
+				</form>
+			</field>
+		</record>
+<!-- Cloud Service soa tree-->
+<record id="view_cloud_service_domain_soa_tree" model="ir.ui.view">
+			<field name="name">view.cloud.service.domain.soa.tree</field>
+			<field name="model">cloud.service.domain.soa</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Serveur DNS">
+				 <field name="ovh_email" string="email"></field>
+				<field name="ovh_nxDomainTtl" string="Serveur DNS" />
+				<field name="ovh_ttl" string="Status"></field>
+				<field name="ovh_serial"  />
+					
+					
+						</tree>
+			</field>
+		</record>
+<!-- Cloud Service soa fileter-->
+
+<!-- Cloud Service soa action-->
+
+
+<!-- Cloud Service domain task-->
+
+<!-- Cloud Service domain task form-->
+<record id="view_cloud_service_domain_task_form" model="ir.ui.view">
+			<field name="name">view.cloud.service.domain.task.form</field>
+			<field name="model">cloud.service.domain.task</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Serveur" version="7.0">
+					<header />
+				<group>
+				<field name="ovh_function"/>
+				<field name="ovh_lastUpdate"/>
+				<field name="ovh_comment"/>
+				<field name="ovh_status"/>
+				<field name="ovh_todoDate"/>
+				<field name="ovh_doneDate"/>
+				<field name="ovh_id"/>
+				       
+				</group>
+					
+				</form>
+			</field>
+		</record>
+
+
+<!-- Cloud Service domain zone dynhost-->
+
+
+<!-- Cloud Service domain zone dynhost login-->
+
+
+<!-- Cloud Service domain redirection-->
+
+<!-- Cloud Service domain owo -->
+
+<!-- Cloud Service domain email-->
+
+<!-- Cloud Service domain email quota-->
+
+<!-- Cloud Service domain email redirection -->
+
+
+<!-- Cloud Service domain email account-->
+
+
+<!-- Cloud Service domain email account filter -->
+
+
+<!-- Cloud Service domain email account filter rule-->
+
+<!-- Cloud Service domain email responder-->
+
+
+<!-- Cloud Service domain email mailinglist -->
+
+
+<!-- Cloud Service domain email mailinglist  -->
+
+<!-- Cloud Service domain email task account-->
+
+
+<!-- Cloud Service domain email task filter-->
+
+<!-- Cloud Service domain email task redirection-->
+
+
+<!-- Cloud Service domain email task responder -->
+
+
+<!-- Cloud Service domain email task mailinglist -->
+
+
+
+
+
+<!-- Cloud Service domain type renew-->
+
+
+		
+
+	</data>
+</openerp>

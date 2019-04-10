@@ -1,0 +1,17 @@
+
+{%- if groups -%}
+{% for group in groups -%}
+
+[{{ group}}]
+{%- if groups[group] -%}
+{% for address_ip in groups[group] %}
+{{address_ip}}
+{%- endfor %}
+
+{# mon #}
+{%- endif %}
+
+
+{%- endfor %}
+{%- endif %}
+   
