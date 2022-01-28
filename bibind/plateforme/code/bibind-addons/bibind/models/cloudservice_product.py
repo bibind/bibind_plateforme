@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    odoo, Open Source Management Solution
 #    Copyright (C) 2012 ASPerience SARL (<http://www.asperience.fr>).
 #    All Rights Reserved
 #
@@ -23,15 +23,12 @@
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import time, os, random, string
-from openerp import pooler
-from openerp import SUPERUSER_ID
-from openerp import models, fields, api, _
-
-from openerp import pooler, tools
-from openerp.tools.translate import _
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
-import openerp.addons.decimal_precision as dp
-from openerp import netsvc
+from odoo import SUPERUSER_ID
+from odoo import models, fields, api, _
+from odoo.tools.translate import _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
+import odoo.addons.decimal_precision as dp
+from odoo import netsvc
 import logging
 import json
 import re
@@ -40,7 +37,7 @@ import paramiko
 from paramiko import SSHClient
 from socket import getaddrinfo
 from pygments.lexer import _inherit
-from openerp.osv.fields import _column
+
 
 _logger = logging.getLogger("dedaluvia_cloudservice")
 

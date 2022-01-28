@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    odoo, Open Source Management Solution
 #    Copyright (C) 2012 ASPerience SARL (<http://www.asperience.fr>).
 #    All Rights Reserved
 #
@@ -23,16 +23,16 @@
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import time, os, random, string
-from openerp import pooler
-from openerp.osv import fields, osv
-from openerp import models, fields, api, _
-from openerp import pooler, tools
-from openerp.tools.translate import _
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
-import openerp.addons.decimal_precision as dp
+
+
+from odoo import models, fields, api, _
+
+from odoo.tools.translate import _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
+import odoo.addons.decimal_precision as dp
 import sys
 import array
-from openerp import netsvc
+from odoo import netsvc
 import logging
 from lxml import etree
 import paramiko
@@ -228,7 +228,7 @@ class BibindInventory(object):
        
         self.inventory = self.empty_inventory()
 
-        print json.dumps(self.inventory);
+        print(json.dumps(self.inventory))
 
     # Example inventory for testing.
     def get_inventory(self, hosts):
@@ -362,7 +362,7 @@ class cloud_service_launch_script(models.Model):
                 return res
             
         
-        @api.multi
+
         def get_param_host(self):
             _logger.info('binary file %s' % (self.file_compresser))
             doc = self.file_compresser
@@ -429,7 +429,7 @@ class cloud_service_launch_script(models.Model):
             ssh.close()
             
             return
-        @api.multi
+
         def get_script_id(self):
             
              host = self.env['bibind.host'].browse(self.env.context.get('host'))
@@ -442,7 +442,7 @@ class cloud_service_launch_script(models.Model):
                 deployed = json.dumps(deployed)
                 host.write({'scriptdeployed':deployed})
             
-        @api.multi
+
         def _get_is_deployed(self):
              _logger.info('context  in field is deploed script %s' % (self.env.context))
              host = self.env['bibind.host'].browse(self.env.context.get('host'))
@@ -488,7 +488,7 @@ class cloud_service_launch_script(models.Model):
             
             return dd
         
-        @api.multi
+
         def get_hosts(self, listhosts):
            
             _logger.info('hostlist %s' % (listhosts))
@@ -509,7 +509,7 @@ class cloud_service_launch_script(models.Model):
             return hosts
         
         
-        @api.multi
+
         def get_inventory(self, hosts):
             hosts = self.get_hosts(hosts)
             inventory_file = '/var/lib/odoo/filestore/my_inventory'
@@ -619,7 +619,7 @@ class cloud_service_launch_script(models.Model):
                     res ='fail auth'
                     return res
                 except:
-                    print "Could not SSH to %s, waiting for it to start" % host
+                    print("Could not SSH to %s, waiting for it to start" % host)
                     i += 1
                     time.sleep(2)
             

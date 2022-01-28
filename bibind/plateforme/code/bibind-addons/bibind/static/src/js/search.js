@@ -1,8 +1,8 @@
 
 (function() {
 
-var instance = openerp;
-openerp.web.search = {};
+var instance = odoo;
+odoo.web.search = {};
 
 var QWeb = instance.web.qweb,
       _t =  instance.web._t,
@@ -552,8 +552,8 @@ instance.web.SearchView = instance.web.Widget.extend(/** @lends instance.web.Sea
         this.renderFacets(undefined, model, options);
     },
     /**
-     * @param {openerp.web.search.SearchQuery | undefined} Undefined if event is change
-     * @param {openerp.web.search.Facet} 
+     * @param {odoo.web.search.SearchQuery | undefined} Undefined if event is change
+     * @param {odoo.web.search.Facet} 
      * @param {Object} [options]
      */
     renderFacets: function (collection, model, options) {
@@ -1170,7 +1170,7 @@ instance.web.search.FilterGroup = instance.web.search.Input.extend(/** @lends in
     /**
      * Fetches contexts for all enabled filters in the group
      *
-     * @param {openerp.web.search.Facet} facet
+     * @param {odoo.web.search.Facet} facet
      * @return {*} combined contexts of the enabled filters in this group
      */
     get_context: function (facet) {
@@ -1291,7 +1291,7 @@ instance.web.search.GroupbyGroup = instance.web.search.FilterGroup.extend({
 instance.web.search.Filter = instance.web.search.Input.extend(/** @lends instance.web.search.Filter# */{
     template: 'SearchView.filter',
     /**
-     * Implementation of the OpenERP filters (button with a context and/or
+     * Implementation of the odoo filters (button with a context and/or
      * a domain sent as-is to the search view)
      *
      * Filters are only attributes holder, the actual work (compositing
@@ -1411,7 +1411,7 @@ instance.web.search.Field = instance.web.search.Input.extend( /** @lends instanc
     }
 });
 /**
- * Implementation of the ``char`` OpenERP field type:
+ * Implementation of the ``char`` odoo field type:
  *
  * * Default operator is ``ilike`` rather than ``=``
  *
@@ -1603,7 +1603,7 @@ instance.web.search.DateField = instance.web.search.Field.extend(/** @lends inst
     }
 });
 /**
- * Implementation of the ``datetime`` openerp field type:
+ * Implementation of the ``datetime`` odoo field type:
  *
  * * Uses the same widget as the ``date`` field type (a simple date)
  *

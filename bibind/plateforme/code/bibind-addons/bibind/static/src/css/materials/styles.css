@@ -321,7 +321,7 @@ body  #searchbox input#search-input:focus {
 	display:flex
 }
 
-.openerp .oe_application > div > .oe_view_manager > .oe_view_manager_wrapper > div > .oe_view_manager_body {
+.odoo .oe_application > div > .oe_view_manager > .oe_view_manager_wrapper > div > .oe_view_manager_body {
     position: relative;
     top: 0;
     bottom: 0;

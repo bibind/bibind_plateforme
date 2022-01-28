@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-	<data>
+<odoo>
+
 	     <!-- api api fournisseur object -->
   
   <record model="ir.ui.view" id="view_cloud_service_api_fournisseur_form">
@@ -18,7 +18,7 @@
             </header>
             <group name="infos" string="Information general">
 				<field name="name"/>
-				<field name="res_partner_id" domain="[('supplier','=',True)]" />
+				<field name="res_partner_id" />
 				
                 <field name="ref_api"/>
                 <field name="description"></field>
@@ -41,7 +41,6 @@
     <record model="ir.actions.act_window" id="action_cloud_service_api_fournisseur">
         <field name="name">Api fournisseur</field>
         <field name="res_model">cloud.service.api.fournisseur</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
     
@@ -49,7 +48,7 @@
     id="menu_cloud_service_api_fournisseur" 
     parent="menu_cloudservice_config"
     groups="bibind.group_administrateur" 
-    action="action_cloud_service_api_fournisseur"/>
+    action="action_cloud_service_api_fournisseur" />
   
   
    <!--fin api object fournissseur -->
@@ -126,7 +125,6 @@
     <record model="ir.actions.act_window" id="action_cloud_service_api_bibind">
         <field name="name">Api bibind</field>
         <field name="res_model">cloud.service.api.bibind</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
     
@@ -134,7 +132,7 @@
     id="menu_cloud_service_api_bibind" 
     parent="menu_cloudservice_api_config"
     groups="bibind.group_administrateur" 
-    action="action_cloud_service_api_bibind"/>
+    action="action_cloud_service_api_bibind" />
   
   
   <!-- fin api object bibind rancher test -->
@@ -190,7 +188,6 @@
     <record model="ir.actions.act_window" id="action_cloud_service_api_bibind_rancher">
         <field name="name">Bibind container</field>
         <field name="res_model">bibind.api.container</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
     
@@ -198,10 +195,10 @@
     id="menu_cloud_service_api_bibind_rancher" 
     parent="menu_cloudservice_api_config"
     groups="bibind.group_administrateur" 
-    action="action_cloud_service_api_bibind_rancher"/>
+    action="action_cloud_service_api_bibind_rancher" />
   
   
   <!-- fin api object bibind container test -->
    
-    </data>
-</openerp>
+
+</odoo>

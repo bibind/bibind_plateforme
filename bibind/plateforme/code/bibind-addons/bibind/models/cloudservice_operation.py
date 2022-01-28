@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    odoo, Open Source Management Solution
 #    Copyright (C) 2012 ASPerience SARL (<http://www.asperience.fr>).
 #    All Rights Reserved
 #
@@ -23,15 +23,13 @@
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import time, os, random, string
-from openerp import pooler
-from openerp import SUPERUSER_ID
 
-from openerp import models, fields, api, _
-from openerp import pooler, tools
-from openerp.tools.translate import _
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
-import openerp.addons.decimal_precision as dp
-from openerp import netsvc
+from odoo import SUPERUSER_ID
+from odoo import models, fields, api, _
+from odoo.tools.translate import _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
+import odoo.addons.decimal_precision as dp
+from odoo import netsvc
 import logging
 import json
 import re
@@ -47,7 +45,7 @@ class cloud_service_operation(models.Model):
     """operation"""
     _name = 'cloud.service.operation'
     _description = 'Operation'
-    _inherit = ['mail.thread', 'ir.needaction_mixin']
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'date_begin'
     
     def selection_state(self):
@@ -92,7 +90,7 @@ class cloud_service_operation(models.Model):
      
      
      
-    @api.multi 
+
     def check_and_confirm_purchase_order(self):
         """On confirme  la purchases commande pour être sur
         que tous les livraisons fournisseurs sont à jour depuis la creation de
@@ -385,14 +383,14 @@ class cloud_service_operation_line(models.Model):
         
      
      
-     @api.multi
+
      def check_service_fournisseur(self):
          
          return self.cloud_service_fournisseur_id.check_state()
          
     
      
-     @api.multi 
+
      def create_service_fournisseur(self):
          
          if not self.cloud_service_fournisseur_id:
@@ -448,7 +446,7 @@ class cloud_service_operation_line(models.Model):
              return True
          
     
-     @api.multi
+
      def call_fournisseur_service_commande_paid_pour_creation(self):
         if self.state =='service_fournisseur_creer':
              
@@ -463,7 +461,7 @@ class cloud_service_operation_line(models.Model):
         
         
     
-     @api.multi
+
      def prepare_order_and_invoice(self):
             if self.service_fournisseur_is_paid:
                 data_order = self.cloud_service_fournisseur_id.call_get_order()
@@ -505,27 +503,27 @@ class cloud_service_operation_line(models.Model):
             
                     return 
     
-     @api.multi    
+
      def is_fournisseur_paid(self):
          
          return True
      
      
      
-     @api.multi
+
      def call_activation_fournisseur_service(self):
         
         return
     
     
     
-     @api.multi
+
      def fournisseur_service_post_traitement(self):
         
         return
     
     
-     @api.multi
+
      def fournisseur_is_done(self):
          
          return
@@ -533,7 +531,7 @@ class cloud_service_operation_line(models.Model):
      
      
      
-     @api.multi
+
      def fournisseur_service_create_service_client(self):
         
          if not self.cloudservice:
@@ -593,24 +591,24 @@ class cloud_service_operation_line(models.Model):
              return True
         
     
-     @api.multi
+
      def client_service_is_(self):
         
         return
     
-     @api.multi
+
      def client_service_active(self):
         
         return
     
     
-     @api.multi
+
      def client_service_is_active(self):
         
         return
     
     
-     @api.multi
+
      def client_service_post_traitment(self):
         if self.state=="service_fournisseur_acheter":
             ser_four = self.cloud_service_fournisseur_id.post_traitement()
@@ -620,7 +618,7 @@ class cloud_service_operation_line(models.Model):
         return
     
      
-     @api.multi
+
      def client_service_is_done(self):
         
         return

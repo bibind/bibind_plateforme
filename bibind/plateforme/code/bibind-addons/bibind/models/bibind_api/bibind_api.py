@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    odoo, Open Source Management Solution
 #    Copyright (C) 2012 ASPerience SARL (<http://www.asperience.fr>).
 #    All Rights Reserved
 #
@@ -24,15 +24,14 @@ from random import *
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import time, os, random, string
-from openerp import pooler
-from openerp import SUPERUSER_ID
-from openerp.osv import fields, osv
-from openerp import pooler, tools
-from openerp.tools.translate import _
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
-import openerp.addons.decimal_precision as dp
-from openerp import netsvc
-from openerp import models, fields, api, _
+
+from odoo import SUPERUSER_ID
+
+from odoo.tools.translate import _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
+import odoo.addons.decimal_precision as dp
+from odoo import netsvc
+from odoo import models, fields, api, _
 import logging
 import json
 import re
@@ -95,13 +94,13 @@ class cloud_service_api_fournisseur(models.Model):
         
         
     
-    @api.multi
+
     def get_model_api_ref(self):
         
         self.description = 'hello endpoint: %s et url id %s' %(self.api_ref.endpoint, self.api_ref.requeteapiids.url)
         
         
-    @api.multi
+
     def destroy_host(self, host):
         
         self.description = 'hello endpoint: %s et url id %s' %(self.api_ref.endpoint, self.api_ref.requeteapiids.url)
@@ -138,7 +137,7 @@ class Cloud_Service_api_bibind(models.Model, BibindNodeDriver ):
                pro.append((key,key))
            return pro 
        
-    @api.multi 
+
     def verif_image_import(self):
             
         if self.driver_cloud : 
@@ -158,7 +157,7 @@ class Cloud_Service_api_bibind(models.Model, BibindNodeDriver ):
     
     
     
-    @api.multi
+
     def verif_size_import(self):
              
         if self.driver_cloud :
@@ -170,7 +169,7 @@ class Cloud_Service_api_bibind(models.Model, BibindNodeDriver ):
                 self.importsize = 0
         else :
             self.importsize = 0
-    @api.multi
+
     def verif_location_import(self):
              
         if self.driver_cloud :
@@ -183,7 +182,7 @@ class Cloud_Service_api_bibind(models.Model, BibindNodeDriver ):
         else :
             self.importlocation = 0
             
-    @api.multi
+
     def verif_node_import(self):
              
         if self.driver_cloud :
@@ -284,7 +283,7 @@ class Cloud_Service_api_bibind(models.Model, BibindNodeDriver ):
             return driver
     
     
-    @api.multi  
+
     def import_list_size(self):
         
         if self.importsize==0:
@@ -342,7 +341,7 @@ class Cloud_Service_api_bibind(models.Model, BibindNodeDriver ):
             return True
         else:
             return False
-    @api.multi      
+
     def verify_list_image(self):
         
         list =self.env['cloud.service.nodeimage'].name_search(['driver.name','=', self.driver_cloud.name])
@@ -358,7 +357,7 @@ class Cloud_Service_api_bibind(models.Model, BibindNodeDriver ):
             return False
     
     
-    @api.multi  
+
     def import_list_images(self):
         
         if not self.importimages:
@@ -387,11 +386,11 @@ class Cloud_Service_api_bibind(models.Model, BibindNodeDriver ):
         else:
             raise Warning('La liste des serveurs ont déjà été importer')
     
-    @api.multi  
+
     def import_list_location(self):
         
         if self.importlocation==0:
-            driver = self.run_driver()
+            driver = self.run_bibind_driver()
             list_sizes = driver.list_locations()
             nodeslocation = self.env['cloud.service.nodelocation']
             for location in list_sizes:
@@ -431,10 +430,14 @@ class Cloud_Service_api_bibind(models.Model, BibindNodeDriver ):
                 size_id = node.extra['flavor']['id']
                 
             if 'imageId' in node.extra:
-               
                 image_id = node.extra['imageId']
             else:
                 image_id = node.extra['image']['id']
+            if 'created' in node.extra:
+                tt = "%Y-%m-%dT%H:%M:%SZ"
+                created = datetime.strptime(node.extra['created'], tt)
+            else:
+                created = datetime.date.today()
             
             
             val = {
@@ -448,14 +451,14 @@ class Cloud_Service_api_bibind(models.Model, BibindNodeDriver ):
                      'public_ips' : node.public_ips,
                      'private_ips' : node.private_ips,
                      'size' : self.get_size_by_attr(size_id),
-                     'created_date' : node.extra['created'],
+                     'created_date' : created,
                      'image' : self.get_image_by_attr(image_id),
                      'extra' : node.extra ,
                           
                           }
             return val
     
-    @api.multi  
+
     def import_list_node(self):
         
         

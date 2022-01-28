@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-	<data>
-        <menuitem parent="base.menu_administration" icon="STOCK_PROPERTIES" sequence="0" id="base.menu_custom_bibind" name="Bibind" />
-        <!-- Cloud Service Menu general-->
-        <menuitem name="Services Hosts" sequence="2"
-                  id="menu_cloudservice_base" />
-        <menuitem string="Cloudservice" name="Services Domain" id="menu_cloudservice"
-                  parent="menu_cloudservice_base" sequence="1" />
-        <menuitem string="Configuration" id="menu_cloudservice_config"
-                  parent="menu_cloudservice_base" sequence="2" />
-    </data>
-</openerp>
+<odoo>
+
+
+</odoo>

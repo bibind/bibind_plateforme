@@ -1,6 +1,6 @@
 (function() {
 
-var instance = openerp;
+var instance = odoo;
 var _t = instance.web._t,
    _lt = instance.web._lt;
 var QWeb = instance.web.qweb;
@@ -21,7 +21,7 @@ instance.web.form = {};
  *     this event is triggered all fields should reprocess their modifiers.
  *     - field_changed:<field_name> : when the value of a field change, an event is triggered
  *     named "field_changed:<field_name>" with <field_name> replaced by the name of the field.
- *     This event is not related to the on_change mechanism of OpenERP and is always called
+ *     This event is not related to the on_change mechanism of odoo and is always called
  *     when the value of a field is setted or changed. This event is only triggered when the
  *     value of the field is syntactically valid, but it can be triggered when the value
  *     is sematically invalid (ie, when a required field is false). It is possible that an event
@@ -47,9 +47,9 @@ instance.web.form.FieldManagerMixin = {
     */
     set_values: function(values) {},
     /**
-    Computes an OpenERP domain.
+    Computes an odoo domain.
 
-    @param {Array} expression An OpenERP domain.
+    @param {Array} expression An odoo domain.
     @return {boolean} The computed value of the domain.
     */
     compute_domain: function(expression) {},
@@ -58,7 +58,7 @@ instance.web.form.FieldManagerMixin = {
     the field are only supposed to use this context to evualuate their own, they should not
     extend it.
 
-    @return {CompoundContext} An OpenERP context.
+    @return {CompoundContext} An odoo context.
     */
     build_eval_context: function() {},
 };
@@ -82,9 +82,9 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
      * @constructs instance.web.FormView
      * @extends instance.web.View
      *
-     * @param {instance.web.Session} session the current openerp session
+     * @param {instance.web.Session} session the current odoo session
      * @param {instance.web.DataSet} dataset the dataset this view will work with
-     * @param {String} view_id the identifier of the OpenERP view object
+     * @param {String} view_id the identifier of the odoo view object
      * @param {Object} options
      *                  - resize_textareas : [true|false|max_height]
      *
@@ -213,7 +213,7 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
         this.$el.find(".oe_form_group_row,.oe_form_field,label,h1,.oe_title,.oe_notebook_page, .oe_list_content").on('click', function (e) {
             if(self.get("actual_mode") == "view") {
                 var $button = self.options.$buttons.find(".oe_form_button_edit");
-                $button.openerpBounce();
+                $button.odooBounce();
                 e.stopPropagation();
                 instance.web.bus.trigger('click', e);
             }
@@ -222,7 +222,7 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
         this.$el.find(".oe_form_field_status:not(.oe_form_status_clickable)").on('click', function (e) {
             if((self.get("actual_mode") == "view")) {
                 var $button = self.$el.find(".oe_highlight:not(.oe_form_invisible)").css({'float':'left','clear':'none'});
-                $button.openerpBounce();
+                $button.odooBounce();
                 e.stopPropagation();
             }
          });
@@ -950,7 +950,7 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
             if (this.sidebar) {
                 this.sidebar.do_attachement_update(this.dataset, this.datarecord.id);
             }
-            //openerp.log("The record has been created with id #" + this.datarecord.id);
+            //odoo.log("The record has been created with id #" + this.datarecord.id);
             return $.when(this.reload()).then(function () {
                 self.trigger('record_created', r);
                 return _.extend(r, {created: true});
@@ -2030,7 +2030,7 @@ instance.web.form.FieldInterface = {
      * before the widget is inserted into the DOM.
      *
      * set_value() must be able, at any moment, to handle the syntax returned by the "read" method of the
-     * osv class in the OpenERP server as well as the syntax used by the set_value() (see below). It must
+     * osv class in the odoo server as well as the syntax used by the set_value() (see below). It must
      * also be able to handle any other format commonly used in the _defaults key on the models in the addons
      * as well as any format commonly returned in a on_change. It must be able to autodetect those formats as
      * no information is ever given to know which format is used.
@@ -2040,7 +2040,7 @@ instance.web.form.FieldInterface = {
      * Get the current value of the widget.
      *
      * Must always return a syntactically correct value to be passed to the "write" method of the osv class in
-     * the OpenERP server, although it is not assumed to respect the constraints applied to the field.
+     * the odoo server, although it is not assumed to respect the constraints applied to the field.
      * For example if the field is marked as "required", a call to get_value() can return false.
      *
      * get_value() can also be called *before* a call to set_value() and, in that case, is supposed to
@@ -2184,7 +2184,7 @@ instance.web.form.AbstractField = instance.web.form.FormWidget.extend(instance.w
     },
     /**
      * Method useful to implement to ease validity testing. Must return true if the current
-     * value is similar to false in OpenERP.
+     * value is similar to false in odoo.
      */
     is_false: function() {
         return this.get('value') === false;
@@ -3134,7 +3134,7 @@ instance.web.form.FieldSelection = instance.web.form.AbstractField.extend(instan
         this.set("values", []);
         this.records_orderer = new instance.web.DropMisordered();
         this.field_manager.on("view_content_has_changed", this, function() {
-            var domain = new openerp.web.CompoundDomain(this.build_domain()).eval();
+            var domain = new odoo.web.CompoundDomain(this.build_domain()).eval();
             if (! _.isEqual(domain, this.get("domain"))) {
                 this.set("domain", domain);
             }
@@ -3143,14 +3143,14 @@ instance.web.form.FieldSelection = instance.web.form.AbstractField.extend(instan
     initialize_field: function() {
         instance.web.form.ReinitializeFieldMixin.initialize_field.call(this);
         this.on("change:domain", this, this.query_values);
-        this.set("domain", new openerp.web.CompoundDomain(this.build_domain()).eval());
+        this.set("domain", new odoo.web.CompoundDomain(this.build_domain()).eval());
         this.on("change:values", this, this.render_value);
     },
     query_values: function() {
         var self = this;
         var def;
         if (this.field.type === "many2one") {
-            var model = new openerp.Model(openerp.session, this.field.relation);
+            var model = new odoo.Model(odoo.session, this.field.relation);
             def = model.call("name_search", ['', this.get("domain")], {"context": this.build_context()});
         } else {
             var values = _.reject(this.field.selection, function (v) { return v[0] === false && v[1] === ''; });
@@ -3777,7 +3777,7 @@ instance.web.form.FieldMany2One = instance.web.form.AbstractField.extend(instanc
         });
         // set position for list of suggestions box
         this.$input.autocomplete( "option", "position", { my : "left top", at: "left bottom" } );
-        this.$input.autocomplete("widget").openerpClass();
+        this.$input.autocomplete("widget").odooClass();
         // used to correct a bug when selecting an element by pushing 'enter' in an editable list
         this.$input.keyup(function(e) {
             if (e.which === 13) { // ENTER
@@ -5659,7 +5659,7 @@ instance.web.form.FieldBinary = instance.web.form.AbstractField.extend(instance.
     on_file_uploaded: function(size, name, content_type, file_base64) {
         if (size === false) {
             this.do_warn(_t("File Upload"), _t("There was a problem while uploading your file"));
-            // TODO: use openerp web crashmanager
+            // TODO: use odoo web crashmanager
             console.warn("Error while uploading file : ", name);
         } else {
             this.filename = name;
@@ -5801,7 +5801,7 @@ instance.web.form.FieldBinaryImage = instance.web.form.FieldBinary.extend({
         $($img).click(function(e) {
             if(self.view.get("actual_mode") == "view") {
                 var $button = $(".oe_form_button_edit");
-                $button.openerpBounce();
+                $button.odooBounce();
                 e.stopPropagation();
             }
         });
@@ -6119,7 +6119,7 @@ instance.web.form.FieldStatus = instance.web.form.AbstractField.extend({
         });
     },
     /*
-     * :deprecated: this feature will probably be removed with OpenERP v8
+     * :deprecated: this feature will probably be removed with odoo v8
      */
     get_distant_fields: function() {
         var self = this;
@@ -6207,7 +6207,7 @@ instance.web.form.FieldMany2ManyCheckBoxes = instance.web.form.AbstractField.ext
         this.set("value", {});
         this.set("records", []);
         this.field_manager.on("view_content_has_changed", this, function() {
-            var domain = new openerp.web.CompoundDomain(this.build_domain()).eval();
+            var domain = new odoo.web.CompoundDomain(this.build_domain()).eval();
             if (! _.isEqual(domain, this.get("domain"))) {
                 this.set("domain", domain);
             }
@@ -6217,12 +6217,12 @@ instance.web.form.FieldMany2ManyCheckBoxes = instance.web.form.AbstractField.ext
     initialize_field: function() {
         instance.web.form.ReinitializeFieldMixin.initialize_field.call(this);
         this.on("change:domain", this, this.query_records);
-        this.set("domain", new openerp.web.CompoundDomain(this.build_domain()).eval());
+        this.set("domain", new odoo.web.CompoundDomain(this.build_domain()).eval());
         this.on("change:records", this, this.render_value);
     },
     query_records: function() {
         var self = this;
-        var model = new openerp.Model(openerp.session, this.field.relation);
+        var model = new odoo.Model(odoo.session, this.field.relation);
         this.records_orderer.add(model.call("search", [this.get("domain")], {"context": this.build_context()}).then(function(record_ids) {
             return model.call("name_get", [record_ids] , {"context": self.build_context()});
         })).then(function(res) {
@@ -6365,7 +6365,7 @@ instance.web.form.StatInfo = instance.web.form.AbstractField.extend({
  * Registry of form fields, called by :js:`instance.web.FormView`.
  *
  * All referenced classes must implement FieldInterface. Those represent the classes whose instances
- * will substitute to the <field> tags as defined in OpenERP's views.
+ * will substitute to the <field> tags as defined in odoo's views.
  */
 instance.web.form.widgets = new instance.web.Registry({
     'char' : 'instance.web.form.FieldChar',
@@ -6408,7 +6408,7 @@ instance.web.form.widgets = new instance.web.Registry({
 
 /**
  * Registry of widgets usable in the form view that can substitute to any possible
- * tags defined in OpenERP's form views.
+ * tags defined in odoo's form views.
  *
  * Every referenced class should extend FormWidget.
  */

@@ -1,10 +1,10 @@
 /*---------------------------------------------------------
- * OpenERP Web chrome
+ * odoo Web chrome
  *---------------------------------------------------------*/
 (function() {
 
-var instance = openerp;
-openerp.web.chrome = {};
+var instance = odoo;
+odoo.web.chrome = {};
 
 var QWeb = instance.web.qweb,
     _t = instance.web._t;
@@ -78,7 +78,7 @@ instance.web.Dialog.include({
             - buttons: Deprecated. The buttons key is not propagated to jQueryUI Dialog. It must be a dictionary (key = button
                 label, value = click handler) or a list of dictionaries (each element in the dictionary is send to the
                 corresponding method of a jQuery element targeting the <button> tag). It is deprecated because all dialogs
-                in OpenERP must be personalized in some way (button in red, link instead of button, ...) and this
+                in odoo must be personalized in some way (button in red, link instead of button, ...) and this
                 feature does not allow that kind of personalization.
             - destroy_on_close: Default true. If true and the dialog is closed, it is automatically destroyed.
         @param {jQuery object} content Some content to replace this.$el .
@@ -159,7 +159,7 @@ instance.web.Dialog.include({
         if (options.dialogClass){
             $dialog_content.find(".modal-body").addClass(options.dialogClass);
         }
-        $dialog_content.openerpClass();
+        $dialog_content.odooClass();
 
         this.$dialog_box.on('hidden.bs.modal', this, function() {
             self.close();
@@ -247,7 +247,7 @@ instance.web.CrashManager = instance.web.Class.extend({
             new (handler)(this, error).display();
             return;
         }
-        if (error.data.name === "openerp.http.SessionExpiredException" || error.data.name === "werkzeug.exceptions.Forbidden") {
+        if (error.data.name === "odoo.http.SessionExpiredException" || error.data.name === "werkzeug.exceptions.Forbidden") {
             this.show_warning({type: "Session Expired", data: { message: _t("Your Odoo session expired. Please refresh the current web page.") }});
             return;
         }
@@ -346,7 +346,7 @@ instance.web.RedirectWarningHandler = instance.web.Dialog.extend(instance.web.Ex
         }, QWeb.render('CrashManager.warning', {error: error})).open();
     }
 });
-instance.web.crash_manager_registry.add('openerp.exceptions.RedirectWarning', 'instance.web.RedirectWarningHandler');
+instance.web.crash_manager_registry.add('odoo.exceptions.RedirectWarning', 'instance.web.RedirectWarningHandler');
 
 instance.web.Loading = instance.web.Widget.extend({
     template: _t("Loading"),
@@ -652,7 +652,7 @@ instance.web.redirect = function(url, wait) {
 /**
  * Client action to reload the whole interface.
  * If params.menu_id, it opens the given menu entry.
- * If params.wait, reload will wait the openerp server to be reachable before reloading
+ * If params.wait, reload will wait the odoo server to be reachable before reloading
  */
 instance.web.Reload = function(parent, action) {
     var params = action.params || {};
@@ -1032,7 +1032,7 @@ instance.web.UserMenu =  instance.web.Widget.extend({
                 var avatar_src = self.session.url('/web/binary/image', {model:'res.users', field: 'image_small', id: self.session.uid});
                 $avatar.attr('src', avatar_src);
 
-                openerp.web.bus.trigger('resize');  // Re-trigger the reflow logic
+                odoo.web.bus.trigger('resize');  // Re-trigger the reflow logic
             });
         };
         this.update_promise = this.update_promise.then(fct, fct);
@@ -1164,9 +1164,9 @@ instance.web.Client = instance.web.Widget.extend({
         this.crashmanager =  new instance.web.CrashManager();
         instance.session.on('error', this.crashmanager, this.crashmanager.rpc_error);
         self.notification = new instance.web.Notification(this);
-        self.notification.appendTo(self.$el.find('.openerp'));
+        self.notification.appendTo(self.$el.find('.odoo'));
         self.loading = new instance.web.Loading(self);
-        self.loading.appendTo(self.$('.openerp_webclient_container'));
+        self.loading.appendTo(self.$('.odoo_webclient_container'));
         self.action_manager = new instance.web.ActionManager(self);
         self.action_manager.appendTo(self.$('.oe_application'));
     },
@@ -1187,7 +1187,7 @@ instance.web.WebClient = instance.web.Client.extend({
         this._current_state = null;
         this.menu_dm = new instance.web.DropMisordered();
         this.action_mutex = new $.Mutex();
-        this.set('title_part', {"zopenerp": "Odoo"});
+        this.set('title_part', {"zodoo": "Odoo"});
     },
     start: function() {
         var self = this;

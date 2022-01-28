@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    odoo, Open Source Management Solution
 #    Copyright (C) 2012 ASPerience SARL (<http://www.asperience.fr>).
 #    All Rights Reserved
 #
@@ -23,17 +23,17 @@
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import time, os, random, string
-from openerp import pooler
-from openerp import SUPERUSER_ID
 
-from openerp.exceptions import Warning
-from openerp import models, fields, api, _
-from openerp import pooler, tools
-from openerp.tools.translate import _
-from openerp.osv.expression import get_unaccent_wrapper
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
-import openerp.addons.decimal_precision as dp
-from openerp import netsvc
+from odoo import SUPERUSER_ID
+
+from odoo.exceptions import Warning
+from odoo import models, fields, api, _
+
+from odoo.tools.translate import _
+from odoo.osv.expression import get_unaccent_wrapper
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
+import odoo.addons.decimal_precision as dp
+from odoo import netsvc
 import logging
 import json
 import re
@@ -56,7 +56,7 @@ _logger = logging.getLogger("bibind_cloudservice")
      
 class bibind_service_delivery(models.Model):
      _name = 'bibind.service.delivery'
-     _inherit = ['mail.thread', 'ir.needaction_mixin']
+     _inherit = ['mail.thread', 'mail.activity.mixin']
      _description = 'Bibind delivery'
      
     
@@ -130,7 +130,7 @@ class bibind_service_delivery(models.Model):
         return dev_env
     
     
-     @api.multi  
+
      def create_depot(self, depot_name=None):
         
         if depot_name==None:
@@ -147,7 +147,7 @@ class bibind_service_delivery(models.Model):
                 return False
      
      
-     @api.multi  
+
      def get_api(self):
          
          return False
@@ -156,28 +156,27 @@ class bibind_service_delivery(models.Model):
      
      
     
-     @api.multi  
+
      def create_test_env(self):
          
          return env_id
      
-     @api.multi  
+
      def create_live_env(self):
          
          return env_id
      
      
-     @api.multi  
+
      def create_branche_env(self):
          
          return env_id
-     @api.multi  
+
      def get_branch_env(self):
          
          return branch 
-     
-     @api.one
-     @api.multi 
+
+
      def get_rancher_env_id(self):
          
          if not self.rancher_env_id:
@@ -189,19 +188,19 @@ class bibind_service_delivery(models.Model):
                 return rancher_env_id
          
      
-     @api.multi  
+
      def create_rancher_env_id(self):
          
          return rancher_env_id
      
-     @api.multi  
+
      def create_stack(self):
          
        
          return rancher_stack_id
      
      
-     @api.multi  
+
      def delete_stack(self):
          
         if self.rancher_env_id and self.rancher_stack_id:
@@ -211,13 +210,13 @@ class bibind_service_delivery(models.Model):
                 self.rancher_stack_id = ''
      
      
-     @api.multi  
+
      def get_stack(self):
          
          return rancher_stack_id
      
      
-     @api.multi  
+
      def deploy_dev_env(self):
          api = self.env.ref('bibind.bibind_api_container_rancher')
          stack = api.deploy_environnement(self, 'dev')
@@ -228,28 +227,28 @@ class bibind_service_delivery(models.Model):
          return False
      
      
-     @api.multi  
+
      def get_service_lb(self):
          
          return lb
      
      
-     @api.multi  
+
      def update_lb(self):
          
          return lb
      
      
-     @api.multi  
+
      def create_lb(self):
          
          return lb
-     @api.multi  
+
      def deploy_dev_to_test(self):
          
          return True
      
-     @api.multi  
+
      def deploy_test_to_live(self):
          
          

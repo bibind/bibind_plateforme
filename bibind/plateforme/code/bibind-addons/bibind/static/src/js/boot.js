@@ -1,54 +1,54 @@
 /*---------------------------------------------------------
- * OpenERP Web Boostrap Code
+ * odoo Web Boostrap Code
  *---------------------------------------------------------*/
 
 /**
- * @name openerp
- * @namespace openerp
+ * @name odoo
+ * @namespace odoo
  */
 (function() {
-    // copy everything in the openerp namespace to openerp.web
-    openerp.web = _.clone(openerp);
+    // copy everything in the odoo namespace to odoo.web
+    odoo.web = _.clone(odoo);
 
     var inited = false;
 
-    _.extend(openerp, {
+    _.extend(odoo, {
         // Per session namespace
-        // openerp.<module> will map to
-        // openerp.instances.sessionname.<module> using a closure
-        instances: {instance0: openerp},
-        // links to the global openerp
-        _openerp: openerp,
+        // odoo.<module> will map to
+        // odoo.instances.sessionname.<module> using a closure
+        instances: {instance0: odoo},
+        // links to the global odoo
+        _odoo: odoo,
         // this unique id will be replaced by hostname_databasename by
-        // openerp.web.Session on the first connection
+        // odoo.web.Session on the first connection
         _session_id: "instance0",
-        _modules: openerp._modules || ['web'],
+        _modules: odoo._modules || ['web'],
         web_mobile: {},
         /**
-         * OpenERP instance constructor
+         * odoo instance constructor
          *
          * @param {Array|String} modules list of modules to initialize
          */
         init: function(modules) {
             if (modules === undefined) {
-                modules = openerp._modules;
+                modules = odoo._modules;
             }
             modules = _.without(modules, "web");
             if (inited)
-                throw new Error("OpenERP was already inited");
+                throw new Error("odoo was already inited");
             inited = true;
             for(var i=0; i < modules.length; i++) {
-                var fct = openerp[modules[i]];
+                var fct = odoo[modules[i]];
                 if (typeof(fct) === "function") {
-                    openerp[modules[i]] = {};
+                    odoo[modules[i]] = {};
                     for (var k in fct) {
-                        openerp[modules[i]][k] = fct[k];
+                        odoo[modules[i]][k] = fct[k];
                     }
-                    fct(openerp, openerp[modules[i]]);
+                    fct(odoo, odoo[modules[i]]);
                 }
             }
-            openerp._modules = ['web'].concat(modules);
-            return openerp;
+            odoo._modules = ['web'].concat(modules);
+            return odoo;
         }
     });
 })();

@@ -83,12 +83,23 @@ from libcloud.compute.types import Provider
 from libcloud.compute.providers import get_driver
 from libcloud.compute.providers import set_driver
 
+from libcloud.common.ovh import API_ROOT, OvhConnection
+from libcloud.compute.base import (NodeDriver, NodeSize, Node, NodeLocation,
+                                   NodeImage, StorageVolume, VolumeSnapshot)
+from libcloud.compute.types import (Provider, StorageVolumeState,
+                                    VolumeSnapshotState)
+from libcloud.compute.drivers.openstack import OpenStackNodeDriver
+from libcloud.compute.drivers.openstack import OpenStackKeyPair
+from libcloud.compute.drivers.ovh import OvhNodeDriver
 
 import gitlab
 from jinja2 import Environment, PackageLoader
 
+set_driver('bibind',
+           'tests.bibind',
+           'BibindNodeDriver')
 
-# rancher 
+# rancher
 # cle acces
 # 5B8D466780146E519CA7 
 # Cle secrete (mot de passe)
@@ -100,137 +111,64 @@ from jinja2 import Environment, PackageLoader
 # id = driver.ex_get_node('585e104f-5524-452b-a94f-61292dfe9584')
 # print(id.uuid)
 
+BIBINDLOCATIONS = {
+    "BHS": {"id": "BHS", "name": "Beauharnois, Quebec ", "country": "CA"},
+    "BHS1": {"id": "BHS1", "name": "Beauharnois, Quebec 1", "country": "CA"},
+    "BHS2": {"id": "BHS2", "name": "Beauharnois, Quebec 2", "country": "CA"},
+    "BHS3": {"id": "BHS3", "name": "Beauharnois, Quebec 3", "country": "CA"},
+    "BHS4": {"id": "BHS4", "name": "Beauharnois, Quebec 4", "country": "CA"},
+    "BHS5": {"id": "BHS5", "name": "Beauharnois, Quebec 5", "country": "CA"},
+    "BHS6": {"id": "BHS6", "name": "Beauharnois, Quebec 6", "country": "CA"},
+    "DC1": {"id": "DC1", "name": "Paris DC1", "country": "FR"},
+    "FRA1": {"id": "FRA1", "name": "Frankfurt 1", "country": "DE"},
+    "GRA": {"id": "GRA", "name": "Gravelines ", "country": "FR"},
+    "GRA1": {"id": "GRA1", "name": "Gravelines 1", "country": "FR"},
+    "GRA2": {"id": "GRA2", "name": "Gravelines 2", "country": "FR"},
+    "GRA7": {"id": "GRA7", "name": "Gravelines 7", "country": "FR"},
+    "GSW": {"id": "GSW", "name": "Paris GSW", "country": "FR"},
+    "HIL1": {"id": "HIL1", "name": "Hillsboro, Oregon 1", "country": "US"},
+    "LON1": {"id": "LON1", "name": "London 1", "country": "UK"},
+    "P19": {"id": "P19", "name": "Paris P19", "country": "FR"},
+     "RBX": {"id": "RBX", "name": "Roubaix ", "country": "FR"},
+    "RBX1": {"id": "RBX1", "name": "Roubaix 1", "country": "FR"},
+    "RBX2": {"id": "RBX2", "name": "Roubaix 2", "country": "FR"},
+    "RBX3": {"id": "RBX3", "name": "Roubaix 3", "country": "FR"},
+    "RBX4": {"id": "RBX4", "name": "Roubaix 4", "country": "FR"},
+    "RBX5": {"id": "RBX5", "name": "Roubaix 5", "country": "FR"},
+    "RBX6": {"id": "RBX6", "name": "Roubaix 6", "country": "FR"},
+    "RBX7": {"id": "RBX7", "name": "Roubaix 7", "country": "FR"},
+    "SBG": {"id": "SBG", "name": "Strasbourg ", "country": "FR"},
+    "SBG1": {"id": "SBG1", "name": "Strasbourg 1", "country": "FR"},
+    "SBG2": {"id": "SBG2", "name": "Strasbourg 2", "country": "FR"},
+    "SBG3": {"id": "SBG3", "name": "Strasbourg 3", "country": "FR"},
+    "SGP1": {"id": "SGP1", "name": "Singapore 1", "country": "SG"},
+    "SYD1": {"id": "SYD1", "name": "Sydney 1", "country": "AU"},
+    "VIN1": {"id": "VIN1", "name": "Vint Hill, Virginia 1", "country": "US"},
+    "WAW1": {"id": "WAW1", "name": "Warsaw 1", "country": "PL"},
+}
 
+
+class BibindDriver(OvhNodeDriver):
+
+    BIBINDLOCATIONS = BIBINDLOCATIONS
+    def index_in_list(a_list, index):
+        print(index < len(a_list))
+
+    def _to_location(self, obj):
+        location = self.BIBINDLOCATIONS[obj]
+        return NodeLocation(driver=self, **location)
 
 
 
 class ochcloud_bibind(object):
     
-    DRIVERS = {
-    Provider.AZURE:
-    ('libcloud.compute.drivers.azure', 'AzureNodeDriver'),
-    Provider.AZURE_ARM:
-    ('libcloud.compute.drivers.azure_arm', 'AzureNodeDriver'),
-    Provider.DUMMY:
-    ('libcloud.compute.drivers.dummy', 'DummyNodeDriver'),
-    Provider.EC2:
-    ('libcloud.compute.drivers.ec2', 'EC2NodeDriver'),
-    Provider.ECP:
-    ('libcloud.compute.drivers.ecp', 'ECPNodeDriver'),
-    Provider.ELASTICHOSTS:
-    ('libcloud.compute.drivers.elastichosts', 'ElasticHostsNodeDriver'),
-    Provider.SKALICLOUD:
-    ('libcloud.compute.drivers.skalicloud', 'SkaliCloudNodeDriver'),
-    Provider.SERVERLOVE:
-    ('libcloud.compute.drivers.serverlove', 'ServerLoveNodeDriver'),
-    Provider.CLOUDSIGMA:
-    ('libcloud.compute.drivers.cloudsigma', 'CloudSigmaNodeDriver'),
-    Provider.GCE:
-    ('libcloud.compute.drivers.gce', 'GCENodeDriver'),
-    Provider.GOGRID:
-    ('libcloud.compute.drivers.gogrid', 'GoGridNodeDriver'),
-    Provider.RACKSPACE:
-    ('libcloud.compute.drivers.rackspace', 'RackspaceNodeDriver'),
-    Provider.RACKSPACE_FIRST_GEN:
-    ('libcloud.compute.drivers.rackspace', 'RackspaceFirstGenNodeDriver'),
-    Provider.KILI:
-    ('libcloud.compute.drivers.kili', 'KiliCloudNodeDriver'),
-    Provider.VPSNET:
-    ('libcloud.compute.drivers.vpsnet', 'VPSNetNodeDriver'),
-    Provider.LINODE:
-    ('libcloud.compute.drivers.linode', 'LinodeNodeDriver'),
-    Provider.RIMUHOSTING:
-    ('libcloud.compute.drivers.rimuhosting', 'RimuHostingNodeDriver'),
-    Provider.VOXEL:
-    ('libcloud.compute.drivers.voxel', 'VoxelNodeDriver'),
-    Provider.SOFTLAYER:
-    ('libcloud.compute.drivers.softlayer', 'SoftLayerNodeDriver'),
-    Provider.EUCALYPTUS:
-    ('libcloud.compute.drivers.ec2', 'EucNodeDriver'),
-    Provider.OPENNEBULA:
-    ('libcloud.compute.drivers.opennebula', 'OpenNebulaNodeDriver'),
-    Provider.BRIGHTBOX:
-    ('libcloud.compute.drivers.brightbox', 'BrightboxNodeDriver'),
-    Provider.NIMBUS:
-    ('libcloud.compute.drivers.ec2', 'NimbusNodeDriver'),
-    Provider.BLUEBOX:
-    ('libcloud.compute.drivers.bluebox', 'BlueboxNodeDriver'),
-    Provider.GANDI:
-    ('libcloud.compute.drivers.gandi', 'GandiNodeDriver'),
-    Provider.DIMENSIONDATA:
-    ('libcloud.compute.drivers.dimensiondata', 'DimensionDataNodeDriver'),
-    Provider.OPENSTACK:
-    ('libcloud.compute.drivers.openstack', 'OpenStackNodeDriver'),
-    Provider.VCLOUD:
-    ('libcloud.compute.drivers.vcloud', 'VCloudNodeDriver'),
-    Provider.TERREMARK:
-    ('libcloud.compute.drivers.vcloud', 'TerremarkDriver'),
-    Provider.CLOUDSTACK:
-    ('libcloud.compute.drivers.cloudstack', 'CloudStackNodeDriver'),
-    Provider.LIBVIRT:
-    ('libcloud.compute.drivers.libvirt_driver', 'LibvirtNodeDriver'),
-    Provider.JOYENT:
-    ('libcloud.compute.drivers.joyent', 'JoyentNodeDriver'),
-    Provider.VCL:
-    ('libcloud.compute.drivers.vcl', 'VCLNodeDriver'),
-    Provider.KTUCLOUD:
-    ('libcloud.compute.drivers.ktucloud', 'KTUCloudNodeDriver'),
-    Provider.HOSTVIRTUAL:
-    ('libcloud.compute.drivers.hostvirtual', 'HostVirtualNodeDriver'),
-    Provider.ABIQUO:
-    ('libcloud.compute.drivers.abiquo', 'AbiquoNodeDriver'),
-    Provider.DIGITAL_OCEAN:
-    ('libcloud.compute.drivers.digitalocean', 'DigitalOceanNodeDriver'),
-    Provider.NEPHOSCALE:
-    ('libcloud.compute.drivers.nephoscale', 'NephoscaleNodeDriver'),
-    Provider.EXOSCALE:
-    ('libcloud.compute.drivers.exoscale', 'ExoscaleNodeDriver'),
-    Provider.IKOULA:
-    ('libcloud.compute.drivers.ikoula', 'IkoulaNodeDriver'),
-    Provider.OUTSCALE_SAS:
-    ('libcloud.compute.drivers.ec2', 'OutscaleSASNodeDriver'),
-    Provider.OUTSCALE_INC:
-    ('libcloud.compute.drivers.ec2', 'OutscaleINCNodeDriver'),
-    Provider.VSPHERE:
-    ('libcloud.compute.drivers.vsphere', 'VSphereNodeDriver'),
-    Provider.PROFIT_BRICKS:
-    ('libcloud.compute.drivers.profitbricks', 'ProfitBricksNodeDriver'),
-    Provider.VULTR:
-    ('libcloud.compute.drivers.vultr', 'VultrNodeDriver'),
-    Provider.AURORACOMPUTE:
-    ('libcloud.compute.drivers.auroracompute', 'AuroraComputeNodeDriver'),
-    Provider.CLOUDWATT:
-    ('libcloud.compute.drivers.cloudwatt', 'CloudwattNodeDriver'),
-    Provider.PACKET:
-    ('libcloud.compute.drivers.packet', 'PacketNodeDriver'),
-    Provider.ONAPP:
-    ('libcloud.compute.drivers.onapp', 'OnAppNodeDriver'),
-    Provider.OVH:
-    ('libcloud.compute.drivers.ovh', 'OvhNodeDriver'),
-    Provider.INTERNETSOLUTIONS:
-    ('libcloud.compute.drivers.internetsolutions',
-     'InternetSolutionsNodeDriver'),
-    Provider.INDOSAT:
-    ('libcloud.compute.drivers.indosat', 'IndosatNodeDriver'),
-    Provider.MEDONE:
-    ('libcloud.compute.drivers.medone', 'MedOneNodeDriver'),
-    Provider.BSNL:
-    ('libcloud.compute.drivers.bsnl', 'BSNLNodeDriver'),
-    Provider.NTTA:
-    ('libcloud.compute.drivers.ntta', 'NTTAmericaNodeDriver'),
-    Provider.ALIYUN_ECS:
-    ('libcloud.compute.drivers.ecs', 'ECSDriver'),
-    Provider.CLOUDSCALE:
-    ('libcloud.compute.drivers.cloudscale', 'CloudscaleNodeDriver'),
-}
+
     
     def get_provider_cst(self):
-       
-        
-        Ovh = get_driver('ovh')
-        driver = Ovh('xUEdjyPkmNCJyRhl','YNexUap0BWHo0aWk5G3N8rA8QqMPocVy','9521feabdf2241bda7b22a8b37197dec', 'JpSb8OESQDkifwmnC2rWJPtX85XKE2eH')
-        for node in driver.list_nodes():
-            print node.state
+        Ovh = get_driver('bibind')
+        driver = Ovh('xUEdjyPkmNCJyRhl','YNexUap0BWHo0aWk5G3N8rA8QqMPocVy','407fc2f957624f9f8374cfb70b8fcfc9', 'JpSb8OESQDkifwmnC2rWJPtX85XKE2eH')
+        for node in driver.list_locations():
+            print(type(node))
  
     
     
@@ -241,15 +179,15 @@ class ochcloud_bibind(object):
         
         
         p = gl.projects.create({'name': 'test_jojo_projet'}, sudo='jojodoi')
-        print p
+        print(p)
         
     
     
     def create_node(self):
         
-        Ovh = get_driver('libbibind')
+        Ovh = get_driver('ovh')
         #driver = Ovh('aeNU3zwooBfui4hV','60XdgjYPnKDNgRHxpgVVgLB8DvQYK9g0','9521feabdf2241bda7b22a8b37197dec','8E0DJcWjpzQ45umYmZ28kb0FAl759MdP')
-        driver = Ovh('xUEdjyPkmNCJyRhl','YNexUap0BWHo0aWk5G3N8rA8QqMPocVy','9521feabdf2241bda7b22a8b37197dec', 'JpSb8OESQDkifwmnC2rWJPtX85XKE2eH')
+        driver = Ovh('xUEdjyPkmNCJyRhl','YNexUap0BWHo0aWk5G3N8rA8QqMPocVy','407fc2f957624f9f8374cfb70b8fcfc9', 'JpSb8OESQDkifwmnC2rWJPtX85XKE2eH')
         
         
         node = driver.ex_get_node('cccfddd1-59e5-4729-a29c-b919f02d04cc')   
@@ -284,9 +222,9 @@ class ochcloud_bibind(object):
         for node in driver.list_nodes():
            if node.name=='vps-ssd-1':
                fin = driver.destroy_node(node)
-               print 'fin'
+               print('fin')
            else:
-              print 'ok'
+              print('ok')
               
               
     def list_favore_or_size(self):
@@ -313,9 +251,9 @@ class ochcloud_bibind(object):
             
             proc = subprocess.Popen([ cmd ],shell=True, close_fds=True,  stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             out, err = proc.communicate()
-            print out
-            print err 
-            print proc.returncode
+            print(out)
+            print(err)
+            print(proc.returncode)
            
 
 
@@ -326,4 +264,4 @@ ochcloud_bibind()
 a = ochcloud_bibind()
 
 
-a.populate_depot()
+a.get_provider_cst()

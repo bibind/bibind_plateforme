@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    odoo, Open Source Management Solution
 #    Copyright (C) 2012 ASPerience SARL (<http://www.asperience.fr>).
 #    All Rights Reserved
 #
@@ -23,17 +23,15 @@
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import time, os, random, string
-from openerp import pooler
-from openerp import SUPERUSER_ID
+from odoo import SUPERUSER_ID
 
-from openerp.exceptions import Warning
-from openerp import models, fields, api, _
-from openerp import pooler, tools
-from openerp.tools.translate import _
-from openerp.osv.expression import get_unaccent_wrapper
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
-import openerp.addons.decimal_precision as dp
-from openerp import netsvc
+from odoo.exceptions import Warning
+from odoo import models, fields, api, _
+from odoo.tools.translate import _
+from odoo.osv.expression import get_unaccent_wrapper
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
+import odoo.addons.decimal_precision as dp
+from odoo import netsvc
 import logging
 import json
 import re
@@ -52,7 +50,7 @@ _logger = logging.getLogger("bibind_cloudservice")
 
 class cloud_service(models.Model):
         _name = 'cloud.service'
-        _inherit = ['mail.thread', 'ir.needaction_mixin']
+        _inherit = ['mail.thread']
         _description = 'Cloud service'
    
    
@@ -180,11 +178,9 @@ class cloud_service(models.Model):
   
         is_env = fields.Boolean('check envi', default=_defaut_env)
         # param_host=fields.Many2one()
-        
-        
-        
-        @api.multi
-        def get_environnement(self):
+
+        @api.model
+        def get_environnement(self, context):
               
               _logger.info('*******id environnement : %s' % (self.cloud_service_environnement_id))
              # return view
@@ -214,7 +210,7 @@ class cloud_service(models.Model):
         
        
     
-        @api.one
+
         @api.constrains('cloud_service_fournisseur_id')
         def _check_service_limit(self):
             if self.cloud_service_fournisseur_id.availaible_service < 0:
@@ -291,7 +287,7 @@ class cloud_service(models.Model):
             # returns 
             return
         
-        @api.multi
+        @api.model
         def choose_provider(self):
             
             if  self.provider_id:
@@ -337,7 +333,7 @@ class cloud_service(models.Model):
             # returns 
             return
         
-        @api.multi
+        @api.model
         def activer(self) :
             # returns 
             return 
@@ -365,7 +361,7 @@ class cloud_service(models.Model):
                 if f == this.code:
                     stdin, stdout, stderr = client.exec_command('cat /opt/queue/out/%s' % (f,))
                     res = stdout.read()
-                    print res
+                    print(res)
                     client.exec_command('mv /opt/queue/out/%s /opt/queue/out/ok/' % (f,))
         
         
@@ -506,7 +502,7 @@ class Cloud_Service_environnement(models.Model):
         
         
         
-        @api.multi
+        @api.model
         def backup_dev(self):
             return {'value':{}, 'warning':{'title':'warning', 'message':'Your message'}}
         
@@ -543,7 +539,7 @@ class Cloud_Service_environnement_dev(models.Model):
         environnement_id = fields.Many2one('cloud.service.environnement')
         application_name = fields.Char('Nom de Application')
         
-        @api.multi
+        @api.model
         def backup_dev(self):
             self.git_ref_id = 'jjjjjjj'
         
@@ -610,7 +606,7 @@ class Cloud_Service_environnement_branch(models.Model):
         git_ref_id = fields.Char('Ref commit last')
         application_name = fields.Char('Nom de Application')
        
-        @api.multi
+
         def branch_merge(self):
             raise Warning('Lorem ipsum dolor sit amet')
         

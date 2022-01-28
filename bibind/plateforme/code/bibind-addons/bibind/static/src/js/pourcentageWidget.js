@@ -1,7 +1,7 @@
 /*
 ##############################################################################
 #
-#    percentage widget for openerp 7.0
+#    percentage widget for odoo 7.0
 #    Copyright 2014 figol <figolliu@gmail.com>
 #
 #    This program is free software: you can redistribute it and/or modify

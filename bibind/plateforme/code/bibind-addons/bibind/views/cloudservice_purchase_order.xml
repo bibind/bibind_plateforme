@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-	<data>
+<odoo>
+
 	    
 	     
     <record model="ir.ui.view" id="view_purchase_oder_form">
@@ -26,11 +26,11 @@
     <record model="ir.actions.act_window" id="action_purchase_oder">
         <field name="name">purchase_oder</field>
         <field name="res_model">purchase.oder</field>
-        <field name="view_type">form</field>
+
         <field name="view_mode">tree,form</field>
     </record>
     <menuitem name="Unknown/purchase_oder" id="menu_purchase_oder" action="action_purchase_oder"/>
      
 	 
-	 </data>
-</openerp>
+
+</odoo>

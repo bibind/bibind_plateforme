@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data >
-    
-     
-        
-      
-    
+<odoo>
+    <data noupdate="0">
     <record id="base.main_company" model="res.company">
     <field name="name">Bibind</field>
     <field name="partner_id" ref="base.main_partner"/>
-    <field eval="1" name="supplier"/>
-    <field eval="1" name="is_cloud_fournisseur"/>
-    <field name="rml_header1">Plateforme numérique</field>
+    <field name="report_header">Plateforme numérique</field>
     <field name="currency_id" ref="base.EUR"/>
     <field name="zip">44340</field>
     <field name="city">Bouguenais les couets</field>
@@ -20,51 +13,50 @@
     <field name="street">10 avenue des frenes</field>
     <field name="email">audreyroch.houssou@gmail.com</field>
     <field name="phone">06 03 57 02 42</field>
-   
     </record>
-    
+
        <record id="bibind_me_bibind" model="bibind.user">
         <field name="name">Bibind</field>
               <field name="partner_id"  ref="base.main_partner" />
               <field name="zip">44340</field>
 			  <field name="city">Bouguenais les couets</field>
-			  <field name="country_id" ref="base.fr"/> 
+			  <field name="country_id" ref="base.fr"/>
 			  <field name="street">10 avenue des frenes</field>
 			  <field name="email">audreyroch.houssou@gmail.com</field>
 			  <field name="phone">06 03 57 02 42</field>
         </record>
-     
-     
+
+
      <record id="bibind_api_fournisseur" model="cloud.service.api.bibind">
-          
+
             <field name="name">Bibind</field>
              <field name="description">Bibind api (driver ovh an rancher)</field>
-             
+
              <field name="applicationkey">xUEdjyPkmNCJyRhl</field>
              <field name="secretkey">YNexUap0BWHo0aWk5G3N8rA8QqMPocVy</field>
              <field name="consumerkey">JpSb8OESQDkifwmnC2rWJPtX85XKE2eH</field>
              <field name="projetid">9521feabdf2241bda7b22a8b37197dec</field>
-             
+
         </record>
-        
-        
-      
-    
+
+
+
+
       <record id="bibind_me_driver_ovh" model="bibind.me.drivers">
-         
+
             <field name="name">Bibind driver </field>
              <field name="partner_id" ref="base.main_partner"/>
              <field name="drivers" >ovh</field>
-             
+
              <field name="ovh_applicationkey">xUEdjyPkmNCJyRhl</field>
              <field name="ovh_secretkey">YNexUap0BWHo0aWk5G3N8rA8QqMPocVy</field>
              <field name="ovh_consumerkey">JpSb8OESQDkifwmnC2rWJPtX85XKE2eH</field>
              <field name="ovh_projetid">9521feabdf2241bda7b22a8b37197dec</field>
-             
+
         </record>
-        
+
           <record id="bibind_api_fournisseur" model="cloud.service.api.bibind">
-          
+
             <field name="name">Bibind Compute</field>
              <field name="description">Bibind api compute (driver Ovh et rancher)</field>
              <field name="auth_param" ref="bibind_me_driver_ovh"></field>
@@ -72,11 +64,11 @@
              <field name="secretkey">YNexUap0BWHo0aWk5G3N8rA8QqMPocVy</field>
              <field name="consumerkey">JpSb8OESQDkifwmnC2rWJPtX85XKE2eH</field>
              <field name="projetid">9521feabdf2241bda7b22a8b37197dec</field>
-             
+
         </record>
-        
+
         <record id="bibind_me_driver_rancher" model="bibind.me.drivers">
-         
+
             <field name="name">Bibind driver Rancher</field>
              <field name="partner_id" ref="base.main_partner"/>
              <field name="rancher_accesskey">15885440FBC11F4B5520</field>
@@ -84,19 +76,14 @@
              <field name="rancher_url">http://91.121.79.171</field>
              <field name="rancher_port">8080</field>
               <field  eval="0" name="rancher_secure"></field>
-             
+
         </record>
-        
+
          <record id="bibind_api_container_rancher" model="bibind.api.container">
-          
             <field name="name">Bibind api container</field>
             <field name="description">Bibind api container driver Rancher</field>
-             
-             <field name="auth_param" ref="bibind_me_driver_rancher"></field>
-            
-             
         </record>
-    
+
      <record id="product_category_provider_all" model="product.category">
             <field name="parent_id" ref="product.product_category_1"/>
             <field name="name">Provider</field>
@@ -105,8 +92,8 @@
             <field name="parent_id" ref="bibind.product_category_provider_all"/>
             <field name="name">Bibind</field>
             <field name="provider_id" ref="base.main_partner"/>
-        </record>   
-        
+        </record>
+
          <record id="product_product_bibind_1" model="product.product">
             <field name="name">Service Drupal delivery -Local Bibind product</field>
             <field name="categ_id" ref="product_category_provider_bibind"/>
@@ -118,7 +105,7 @@
             <field name="description">Produit Bibind de test en local. Implémentant un service d'intégration et de livraison  continue pour les application sous Drupal</field>
             <field name="description_sale">Produit Bibind de test en local. Implémentant un service d'intégration et de livraison  continue pour les application sous Drupal.</field>
         </record>
-        
+
         <record id="product_product_bibind_2" model="product.product">
             <field name="name">Delivery Drupal professionnel -Local Bibind product</field>
             <field name="categ_id" ref="product_category_provider_bibind"/>
@@ -130,7 +117,7 @@
             <field name="description">Produit Bibind de test en local. Implémentant un service d'intégration et de livraison  continue pour les application sous Drupal</field>
             <field name="description_sale">Produit Bibind de test en local. Implémentant un service d'intégration et de livraison  continue pour les application sous Drupal.</field>
         </record>
-        
+
           <record id="product_product_bibind_3" model="product.product">
             <field name="name">Delivery Drupal Business -Local Bibind product</field>
             <field name="categ_id" ref="product_category_provider_bibind"/>
@@ -142,7 +129,7 @@
             <field name="description">Produit Bibind de test en local. Implémentant un service d'intégration et de livraison  continue pour les application sous Drupal</field>
             <field name="description_sale">Produit Bibind de test en local. Implémentant un service d'intégration et de livraison  continue pour les application sous Drupal.</field>
         </record>
-        
+
            <record id="product_product_bibind_4" model="product.product">
             <field name="name">Delivery Drupal Large organization -Local Bibind product</field>
             <field name="categ_id" ref="product_category_provider_bibind"/>
@@ -154,7 +141,7 @@
             <field name="description">Produit Bibind de test en local. Implémentant un service d'intégration et de livraison  continue pour les application sous Drupal</field>
             <field name="description_sale">Produit Bibind de test en local. Implémentant un service d'intégration et de livraison  continue pour les application sous Drupal.</field>
         </record>
-        
+
         <record id="product_product_bibind_5" model="product.product">
             <field name="name">Delivery wordpress Large organization -Local Bibind product</field>
             <field name="categ_id" ref="product_category_provider_bibind"/>
@@ -166,46 +153,43 @@
             <field name="description">Produit Bibind de test en local. Implémentant un service d'intégration et de livraison  continue pour les application sous Drupal</field>
             <field name="description_sale">Produit Bibind de test en local. Implémentant un service d'intégration et de livraison  continue pour les application sous Drupal.</field>
         </record>
-        
-        
-        
+
+
+
           <record id="category_application_bibind_cms" model="bibind.application.category">
             <field name="name">CMS - Content systeme management </field>
-            
+
             <field name="description">Content systeme management</field>
           </record>
-          
+
           <record id="category_application_bibind_drupal" model="bibind.application.category">
             <field name="name">Drupal application</field>
             <field name="parent_id" ref="category_application_bibind_cms"></field>
             <field name="description">Drupal application</field>
           </record>
-          
+
            <record id="category_application_bibind_wordpress" model="bibind.application.category">
             <field name="name">wordpress</field>
             <field name="parent_id" ref="category_application_bibind_cms"></field>
             <field name="description">Wordpress application</field>
           </record>
-          
+
           <record id="appliquation_bibind_wordpress" model="bibind.application">
             <field name="name">wordpress </field>
             <field name="category" ref="category_application_bibind_wordpress" />
             <field name="description">wordpress</field>
           </record>
-          
+
           <record id="appliquation_bibind_drupal_1" model="bibind.application">
             <field name="name">Drupal 7 </field>
             <field name="category" ref="category_application_bibind_drupal" />
             <field name="description">Drupal 7 latest</field>
           </record>
-          
+
           <record id="appliquation_bibind_drupal_2" model="bibind.application">
             <field name="name">Drupal 8 </field>
              <field name="category" ref="category_application_bibind_drupal" />
             <field name="description">Drupal 8 latest</field>
           </record>
-        
-        
-        
     </data>
-</openerp>
+</odoo>

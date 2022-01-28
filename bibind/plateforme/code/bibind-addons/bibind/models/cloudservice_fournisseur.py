@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    odoo, Open Source Management Solution
 #    Copyright (C) 2012 ASPerience SARL (<http://www.asperience.fr>).
 #    All Rights Reserved
 #
@@ -23,15 +23,14 @@
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import time, os, random, string
-from openerp import pooler
-from openerp import SUPERUSER_ID
-from openerp.osv import fields, osv
-from openerp import pooler, tools
-from openerp.tools.translate import _
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
-import openerp.addons.decimal_precision as dp
-from openerp import netsvc
-from openerp import models, fields, api, _
+
+from odoo import SUPERUSER_ID
+
+from odoo.tools.translate import _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
+import odoo.addons.decimal_precision as dp
+from odoo import netsvc
+from odoo import models, fields, api, _
 import logging
 import json
 import re
@@ -130,14 +129,14 @@ class cloud_service_host(models.Model):
                 self.state = 'NONODE'
         
         
-        @api.multi      
+
         def destroy_node(self):
             if self.nodeid:
                 delete = self.nodeid.destroy_node()
                 if(delete):
                     self.state = 'TERMINATED'
         
-        @api.multi
+
         def script_deployed(self):
             
             deplo ={}
@@ -147,7 +146,7 @@ class cloud_service_host(models.Model):
             self.scriptdeployed = json.dumps(deplo)
             
 
-        @api.multi
+
         def script_is_deployed(self):
             notedploy = []
             _logger.info('context script  id %s' % (json.loads(self.scriptdeployed)))
@@ -160,7 +159,7 @@ class cloud_service_host(models.Model):
             else :
                 self.log = notedploy
                 
-        @api.multi
+
         def button_script_is_deployed(self, script):
                         
             if not any(str(script.id) in s for s in json.loads(self.scriptdeployed)):
@@ -168,7 +167,7 @@ class cloud_service_host(models.Model):
             else :
                return True
             
-        @api.multi
+
         def deployer_script_notinstalled(self, script):
             
             _logger.info('context script notinstalled  name %s' % (script.name))
@@ -178,7 +177,7 @@ class cloud_service_host(models.Model):
             if rep:
                 return rep
             
-        @api.multi
+
         def deployer_script_install_docker(self, script):
             
             script = self.env.ref('bibind.script_install_docker_rancher')
@@ -190,7 +189,7 @@ class cloud_service_host(models.Model):
                 self.log = rep
                 return rep
         
-        @api.multi
+
         def deployer_script_is_docker_exist(self):
             
             script = self.env.ref('bibind.script_is_docker_exist')
@@ -220,7 +219,7 @@ cloud_service_host()
 
 class Cloud_Service_fournisseur(models.Model):
         _name = 'cloud.service.fournisseur'
-        _inherit = ['mail.thread', 'ir.needaction_mixin']
+        _inherit = ['mail.thread', 'mail.activity.mixin']
         
         
         
@@ -271,13 +270,13 @@ class Cloud_Service_fournisseur(models.Model):
         log_state_script = fields.Text('log de retour des script de post traitement')
         service_fournisseur_management = fields.Reference(selection=[('service.fournisseur.management.bibind','Gestion de Service fournisseur Bibind')])
         
-        @api.one
+
         @api.constrains( 'availaible_service')
         def _check_service_limit(self):
             if self.availaible_service <0:
                     raise Warning(_('No more available service for this service fournisseur .'))
        
-        @api.multi
+
         @api.depends('availaible_service', 'nbr_service', 'cloud_service_ids')
         def _compute_available_service(self):
             """ Determine service available, """
@@ -288,7 +287,7 @@ class Cloud_Service_fournisseur(models.Model):
                 self.availaible_service = self.nbr_service
                 
        
-        @api.multi
+
         def _get_fournisseur(self):
             if not self.fournisseur:
                 tpml = self.service_fournisseur_tmpl_id
@@ -297,7 +296,7 @@ class Cloud_Service_fournisseur(models.Model):
             else:
                 return self.fournisseur
         
-        @api.multi
+
         def _set_type_service(self):
              
             tpml = self.service_fournisseur_tmpl_id
@@ -334,7 +333,7 @@ class Cloud_Service_fournisseur(models.Model):
         
         
         
-        @api.multi
+
         def deploy_node(self):
             if not self.fournisseur:
                 war = { 'warning': {'title': 'fournisseur', 'message':'Veuillez selectionner un fournisseur'} }
@@ -360,7 +359,7 @@ class Cloud_Service_fournisseur(models.Model):
             return True
         
         
-        @api.multi
+
         def deploy_script(self):
             if not self.fournisseur:
                 war = { 'warning': {'title': 'fournisseur', 'message':'Veuillez selectionner un fournisseur'} }
@@ -390,7 +389,7 @@ class Cloud_Service_fournisseur(models.Model):
             return True
         
         
-        @api.multi
+
         def deploy_specific_script(self):
             if not self.fournisseur:
                 war = { 'warning': {'title': 'fournisseur', 'message':'Veuillez selectionner un fournisseur'} }
@@ -425,7 +424,7 @@ class Cloud_Service_fournisseur(models.Model):
             
             
         
-        @api.multi
+
         def run_service(self):
              
             if not self.fournisseur:
@@ -695,7 +694,7 @@ class Cloud_Service_fournisseur(models.Model):
                 return False
             return param_host
         
-        @api.multi   
+
         def launch_scripts_configuration_service(self):
             self.state ='en_attente_post_traitement'
             
@@ -893,7 +892,7 @@ class cloud_service_tmpl_fournisseur(models.Model):
         
         
         
-        @api.multi
+
         def config_url_param(self):
             if not self.requete_api_service:
                     res = {'warning': {

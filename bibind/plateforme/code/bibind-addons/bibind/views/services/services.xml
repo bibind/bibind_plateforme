@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-	<data>
+<odoo>
+
 
  <record model="ir.ui.view" id="bibind_services_form">
         <field name="name">bibind.services.form</field>
@@ -86,7 +86,7 @@
     <record model="ir.actions.act_window" id="action_bibind_services">
         <field name="name">Services client</field>
         <field name="res_model">bibind.services</field>
-        <field name="view_type">form</field>
+
         <field name="view_mode">tree,form</field>
     </record>
          	
@@ -95,6 +95,6 @@
 
 	 <!-- fin  object service  -->
 	 
-	 </data>
-	 </openerp>
+
+	 </odoo>
 	 

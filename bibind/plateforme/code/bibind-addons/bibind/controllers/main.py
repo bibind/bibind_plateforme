@@ -1,23 +1,51 @@
 # -*- coding: utf-8 -*-
-import cStringIO
+
+import base64
+import copy
 import datetime
-from itertools import islice
+import functools
+import hashlib
+import io
+import itertools
 import json
-import xml.etree.ElementTree as ET
-
 import logging
+import operator
+import os
 import re
+import sys
+import tempfile
+import unicodedata
+from collections import OrderedDict, defaultdict
 
+import babel.messages.pofile
+import werkzeug
+import werkzeug.exceptions
 import werkzeug.utils
-import urllib2
 import werkzeug.wrappers
-from PIL import Image
+import werkzeug.wsgi
+from lxml import etree, html
+from markupsafe import Markup
+from werkzeug.urls import url_encode, url_decode, iri_to_uri
 
-import openerp
-from openerp.addons.web.controllers.main import WebClient
-from openerp.addons.web import http
-from openerp.http import  Controller , request, route, STATIC_CACHE
-from openerp.tools import image_save_for_web
+import odoo
+import odoo.modules.registry
+from odoo.api import call_kw
+
+from odoo.modules import get_resource_path, module
+from odoo.tools import html_escape, pycompat, ustr, apply_inheritance_specs, lazy_property, float_repr, osutil
+from odoo.tools.mimetypes import guess_mimetype
+from odoo.tools.translate import _
+from odoo.tools.misc import str2bool, xlsxwriter, file_open, file_path
+from odoo.tools.safe_eval import safe_eval, time
+from odoo import http
+from odoo.http import content_disposition, dispatch_rpc, request, serialize_exception as _serialize_exception
+from odoo.exceptions import AccessError, UserError, AccessDenied
+from odoo.models import check_method_name
+from odoo.service import db, security
+
+from odoo.addons.web.controllers.main import WebClient
+
+
 from ..tools import make_response, eval_request_params
 
 _logger = logging.getLogger("bibind_cloudservice")
@@ -27,7 +55,7 @@ _logger = logging.getLogger("bibind_cloudservice")
     
 
 
-class Console(openerp.addons.web.controllers.main.Home):
+class Console(odoo.addons.web.controllers.main.Home):
     #------------------------------------------------------
     # View
     #------------------------------------------------------
@@ -45,9 +73,10 @@ class Console(openerp.addons.web.controllers.main.Home):
                     return werkzeug.utils.redirect(kw.get('redirect'), 303)
                 if not request.uid:
                     request.uid = request.session.uid
-    
-                menu_data = request.registry['ir.ui.menu'].load_menus(request.cr, request.uid, context=request.context)
-                return request.render('bibind.bibindwebclient_bootstrap', qcontext={'menu_data': menu_data})
+                    context = request.env['ir.http'].webclient_rendering_context()
+                    response = request.render('bibind.bibindwebclient_bootstrap', qcontext=context)
+                    response.headers['X-Frame-Options'] = 'DENY'
+                    return response
             else:
                 return login_redirect()
         else :
@@ -57,8 +86,10 @@ class Console(openerp.addons.web.controllers.main.Home):
                 if not request.uid:
                     request.uid = request.session.uid
     
-                menu_data = request.registry['ir.ui.menu'].load_menus(request.cr, request.uid, context=request.context)
-                return request.render('web.webclient_bootstrap', qcontext={'menu_data': menu_data})
+                context = request.env['ir.http'].webclient_rendering_context()
+                response = request.render('bibind.bibindwebclient_bootstrap', qcontext=context)
+                response.headers['X-Frame-Options'] = 'DENY'
+                return response
             else:
                 return login_redirect()
 
@@ -66,7 +97,7 @@ class Console(openerp.addons.web.controllers.main.Home):
         
 
 
-class RestApi(Controller):
+class RestApi(http.Controller):
     """
     /api/auth                   POST    - Login in Odoo and set cookies
 
@@ -89,54 +120,54 @@ class RestApi(Controller):
             "company_id": request.env.user.company_id.id if request.session.uid else None,
         }
 
-    @route('/api/echo', auth='none', methods=["GET"])
+    @http.route('/api/echo', auth='none', methods=["GET"])
     @make_response()
     def describr(self,):
         # Before calling /api/auth, call /web?db=*** otherwise web service is not found
         return {'hello_word':'hello word'}
 
 
-    @route('/api/auth', auth='none', methods=["POST"])
+    @http.route('/api/auth', auth='none', methods=["POST"])
     @make_response()
     def authenticate(self, db, login, password):
         # Before calling /api/auth, call /web?db=*** otherwise web service is not found
         request.session.authenticate(db, login, password)
         return self.session_info(request)
 
-    @route('/api/<string:model>', auth='user', methods=["GET"])
+    @http.route('/api/<string:model>', auth='user', methods=["GET"])
     @make_response()
     def search_read(self, model, **kwargs):
         eval_request_params(kwargs)
         return request.env[model].search_read(**kwargs)
 
-    @route('/api/<string:model>/<int:id>', auth='user', methods=["GET"])
+    @http.route('/api/<string:model>/<int:id>', auth='user', methods=["GET"])
     @make_response()
     def read(self, model, id, **kwargs):
         eval_request_params(kwargs)
         result = request.env[model].browse(id).read(**kwargs)
         return result and result[0] or {}
 
-    @route('/api/<string:model>', auth='user',
+    @http.route('/api/<string:model>', auth='user',
            methods=["POST"], csrf=False)
     @make_response()
     def create(self, model, **kwargs):
         eval_request_params(kwargs)
         return request.env[model].create(**kwargs).id
 
-    @route('/api/<string:model>/<int:id>', auth='user',
+    @http.route('/api/<string:model>/<int:id>', auth='user',
            methods=["PUT"], csrf=False)
     @make_response()
     def write(self, model, id, **kwargs):
         eval_request_params(kwargs)
         return request.env[model].browse(id).write(**kwargs)
 
-    @route('/api/<string:model>/<int:id>', auth='user',
+    @http.route('/api/<string:model>/<int:id>', auth='user',
            methods=["DELETE"], csrf=False)
     @make_response()
     def unlink(self, model, id):
         return request.env[model].browse(id).unlink()
 
-    @route('/api/<string:model>/<int:id>/<string:method>', auth='user',
+    @http.route('/api/<string:model>/<int:id>/<string:method>', auth='user',
            methods=["PUT"], csrf=False)
     @make_response()
     def custom_method(self, model, id, method, **kwargs):

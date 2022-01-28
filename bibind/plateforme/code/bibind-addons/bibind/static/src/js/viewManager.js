@@ -1,7 +1,7 @@
 
 (function() {
 
-	var instance = openerp;
+	var instance = odoo;
 	
 	var QWeb = instance.web.qweb,
 	    _t = instance.web._t;

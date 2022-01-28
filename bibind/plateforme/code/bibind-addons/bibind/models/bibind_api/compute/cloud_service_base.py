@@ -1,7 +1,7 @@
 ## -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    odoo, Open Source Management Solution
 #    Copyright (C) 2012 ASPerience SARL (<http://www.asperience.fr>).
 #    All Rights Reserved
 #
@@ -22,15 +22,15 @@
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import time, os, random, string
-from openerp import pooler
-from openerp import SUPERUSER_ID
-from openerp.osv import fields, osv
-from openerp import pooler, tools
-from openerp.tools.translate import _
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
-import openerp.addons.decimal_precision as dp
-from openerp import netsvc
-from openerp import models, fields, api, _
+
+from odoo import SUPERUSER_ID
+
+
+from odoo.tools.translate import _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
+import odoo.addons.decimal_precision as dp
+from odoo import netsvc
+from odoo import models, fields, api, _
 import logging
 import json
 import re
@@ -95,8 +95,14 @@ class cloud_service_node(models.Model):
     extra =fields.Text('extra json type')
    
     
-    
-    @api.multi
+    def get_date_created(self):
+
+        api = self.api_driver
+        driver = api.run_bibind_driver()
+        idnode = self.idnode
+        ex = driver.ex_get_json_node(idnode)
+        self.extra = ex
+
     def valide_size(self):
     
         api = self.api_driver
@@ -104,7 +110,7 @@ class cloud_service_node(models.Model):
         size_id = self.size.id_size
         self.extra = driver.ex_get_size_json_extra(size_id)
         
-    @api.multi
+
     def start_node(self):
         
         api = self.api_driver
@@ -116,7 +122,7 @@ class cloud_service_node(models.Model):
         _logger.info('+vimage extr %s  ' %(img.id_image) )
         _logger.info('+vimage extr %s  ' %(nodesize.id) )
         _logger.info('+vimage extr %s  ' %(nodelocation.id_location) )
-        driver = api.run_driver()
+        driver = api.run_bibind_driver()
         location = [l for l in driver.list_locations() if l.id == nodelocation.id_location][0]
         image = [i for i in driver.list_images() if img.id_image == i.id][0]
         size = [s for s in driver.list_sizes() if s.id == nodesize.id_size][0]
@@ -139,7 +145,7 @@ class cloud_service_node(models.Model):
         api = self.api_driver
         api.reboot_node(self.idnode)
     
-    @api.multi
+
     def confirme_destroy_node(self):
         
         return {
@@ -154,7 +160,7 @@ class cloud_service_node(models.Model):
                 
                 }
     
-    @api.multi   
+
     def destroy_node(self):
         
         Driver_api = self.api_driver.run_driver()
@@ -165,7 +171,7 @@ class cloud_service_node(models.Model):
             self.terminated_date = fields.datetime.now()
             return delete
     
-    @api.multi
+
     def terminated_node(self):
         self.state = 'TERMINATED'
         self.terminated_date = fields.datetime.now()
@@ -200,14 +206,15 @@ class cloud_service_node(models.Model):
             return False
         if(state == 'RUNNING'):
             return True
-            
+                        
           
-    @api.multi    
+
     def ex_get_state_node(self):
         api = self.api_driver
         node = self.ex_get_node()
         state = node.state.upper()
-        self.extra = state;
+        self.state = state
+        self.extra = state
         
     
     
@@ -232,7 +239,7 @@ class cloud_service_node(models.Model):
         
         return True
     
-    @api.multi
+
     def get_log_node(self):
         
         node = self.ex_get_node()
@@ -301,7 +308,7 @@ class cloud_service_nodesize(models.Model):
     
     
     
-    @api.multi
+
     def get_extra(self):
         
         bibindapi = self.bibindapi_id

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-	<data>
+<odoo>
+
 	
 
 	
@@ -14,16 +14,7 @@
         <field name="arch" type="xml">
             <form string="cloud.service.node">
             <header>
-            <button 
-             attrs="{'invisible': [('state','in',[ 'TERMINATED'])]}"
-            class="oe_highlight" 
-            		type="object" 
-                    name="confirme_destroy_node"
-                    string="Destroy node" />
-            <button  attrclass="oe_inline" 
-            		type="object" 
-                    name="get_log_node"
-                    string="log node" />
+
              <field name="state" statusbar_visible="PENDING, STARTING,RUNNING,STOPPING,SUSPENDED,STOPPED,TERMINATED" widget="statusbar" readonly="1" />
           
             
@@ -66,7 +57,6 @@
     <record model="ir.actions.act_window" id="action_bibind_container">
         <field name="name">container</field>
         <field name="res_model">bibind.container</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
     
@@ -74,7 +64,7 @@
     id="menu_bibind_container" 
     parent="menu_cloudservice_config"
     groups="bibind.group_administrateur" 
-    action="action_bibind_container"/>
+    action="action_bibind_container" />
   
   
    <!--fin container-->
@@ -88,23 +78,7 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="image container">
-            <header>
-            <button 
-            
-            class="oe_highlight" 
-            		type="object" 
-                    name="confirme_destroy_node"
-                    string="Destroy node" />
-            <button  attrclass="oe_inline" 
-            		type="object" 
-                    name="get_log_node"
-                    string="log node" />
-             
-          
-            
-                    
-             
-            </header>
+
             <group name="infos" string="Information general">
 				<field name="name"  />
 				<field name="container_image_id" />
@@ -132,7 +106,6 @@
     <record model="ir.actions.act_window" id="action_bibind_container_image">
         <field name="name">container</field>
         <field name="res_model">bibind.container.image</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
     
@@ -140,7 +113,7 @@
     id="menu_bibind_container_image" 
     parent="menu_cloudservice_config"
     groups="bibind.group_administrateur" 
-    action="action_bibind_container_image"/>
+    action="action_bibind_container_image" />
   
   
    <!--fin container image-->
@@ -180,7 +153,6 @@
     <record model="ir.actions.act_window" id="action_bibind_container_driver">
         <field name="name">container driver</field>
         <field name="res_model">bibind.container.driver</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
     
@@ -188,7 +160,7 @@
     id="menu_bibind_container_driver" 
     parent="menu_cloudservice_config"
     groups="bibind.group_administrateur" 
-    action="action_bibind_container_driver"/>
+    action="action_bibind_container_driver" />
   
   
    <!--fin container driver-->
@@ -228,7 +200,6 @@
     <record model="ir.actions.act_window" id="action_bibind_rancher_project">
         <field name="name">Rancher Projet</field>
         <field name="res_model">bibind.rancher.project</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
     
@@ -236,11 +207,11 @@
     id="menu_bibind_rancher_projet" 
     parent="menu_cloudservice_config"
     groups="bibind.group_administrateur" 
-    action="action_bibind_rancher_project"/>
+    action="action_bibind_rancher_project" />
   
   
    <!--fin rancher projet env-->
    
    
-    </data>
-</openerp>
+
+</odoo>

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-	<data>
-	
+<odoo>
+
+
+
+
+
   <record model="ir.ui.view" id="cloud_service_application_form">
         <field name="name">bibind.application.form</field>
         <field name="model">bibind.application</field>
@@ -54,7 +57,7 @@
     <record model="ir.actions.act_window" id="action_cloud_service_application">
         <field name="name">Applications</field>
         <field name="res_model">bibind.application</field>
-        <field name="view_type">form</field>
+
         <field name="view_mode">tree,form</field>
     </record>
     
@@ -119,7 +122,7 @@
     <record model="ir.actions.act_window" id="action_cloud_service_category_application">
         <field name="name">Category Applications</field>
         <field name="res_model">bibind.application.category</field>
-        <field name="view_type">form</field>
+
         <field name="view_mode">tree,form</field>
     </record>
        
@@ -130,5 +133,5 @@
 			id="menu_cloudservice_category_application" 
 			sequence="2" />
          
-	</data>
-</openerp>
+
+</odoo>

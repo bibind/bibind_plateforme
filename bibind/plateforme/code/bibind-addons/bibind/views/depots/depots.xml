@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-	<data>
+<odoo>
+
 	
 
  <!-- Cloud Manager service delivery -->
@@ -11,8 +11,8 @@
         <field name="arch" type="xml">
             <form  string="Depot | Gitlab">
             <header>
-               <button class="" type="object"  name="create_depot" string="create depot" />
-                <button class=" " type="object"  name="get_branch_env" string="get branche" />
+               <button class="" type="object"  name="bibind_create_depot" string="create depot" />
+
                   </header>
             <sheet>
             <h1>
@@ -63,7 +63,7 @@
      <record model="ir.actions.act_window" id="action_bibind_bibind_depot">
         <field name="name">Depot Gitlab</field>
         <field name="res_model">bibind.depot</field>
-        <field name="view_type">form</field>
+
         <field name="view_mode">tree,form</field>
     </record>
          	
@@ -75,5 +75,5 @@
     
     
     
-    </data>
-    </openerp>
+
+    </odoo>

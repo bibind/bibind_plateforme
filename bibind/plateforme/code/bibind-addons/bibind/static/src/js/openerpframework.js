@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, OpenERP S.A.
+ * Copyright (c) 2012, odoo S.A.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@
 "use strict";
 
 function declare($, _, QWeb2) {
-var openerp = {};
+var odoo = {};
 
 /**
  * Improved John Resig's inheritance, based on:
@@ -51,7 +51,7 @@ var openerp = {};
  *
  * Example:
  *
- * var Person = openerp.Class.extend({
+ * var Person = odoo.Class.extend({
  *  init: function(isDancing){
  *     this.dancing = isDancing;
  *   },
@@ -87,14 +87,14 @@ var openerp = {};
     var initializing = false,
         fnTest = /xyz/.test(function(){xyz();}) ? /\b_super\b/ : /.*/;
     // The web Class implementation (does nothing)
-    openerp.Class = function(){};
+    odoo.Class = function(){};
 
     /**
      * Subclass an existing class
      *
      * @param {Object} prop class-level properties (class attributes and instance methods) to set on the new class
      */
-    openerp.Class.extend = function() {
+    odoo.Class.extend = function() {
         var _super = this.prototype;
         // Support mixins arguments
         var args = _.toArray(arguments);
@@ -134,7 +134,7 @@ var openerp = {};
 
         // The dummy class constructor
         function Class() {
-            if(this.constructor !== openerp.Class){
+            if(this.constructor !== odoo.Class){
                 throw new Error("You can only instanciate objects with the 'new' operator");
             }
             // All construction is actually done in the init method
@@ -196,7 +196,7 @@ var openerp = {};
  * When an object is destroyed, all its children are destroyed too releasing
  * any resource they could have reserved before.
  */
-openerp.ParentedMixin = {
+odoo.ParentedMixin = {
     __parentedMixin : true,
     init: function() {
         this.__parentedDestroyed = false;
@@ -305,7 +305,7 @@ openerp.ParentedMixin = {
  * http://backbonejs.org
  *
  */
-var Events = openerp.Class.extend({
+var Events = odoo.Class.extend({
     on : function(events, callback, context) {
         var ev;
         events = events.split(/\s+/);
@@ -394,10 +394,10 @@ var Events = openerp.Class.extend({
     from ParentedMixin is called). Removing those references is necessary to avoid memory leak
     and phantom events (events which are raised and sent to a previously destroyed object).
 */
-openerp.EventDispatcherMixin = _.extend({}, openerp.ParentedMixin, {
+odoo.EventDispatcherMixin = _.extend({}, odoo.ParentedMixin, {
     __eventDispatcherMixin: true,
     init: function() {
-        openerp.ParentedMixin.init.call(this);
+        odoo.ParentedMixin.init.call(this);
         this.__edispatcherEvents = new Events();
         this.__edispatcherRegisteredEvents = [];
     },
@@ -442,13 +442,13 @@ openerp.EventDispatcherMixin = _.extend({}, openerp.ParentedMixin, {
             this.off(cal[0], cal[2], cal[1]);
         }, this);
         this.__edispatcherEvents.off();
-        openerp.ParentedMixin.destroy.call(this);
+        odoo.ParentedMixin.destroy.call(this);
     }
 });
 
-openerp.PropertiesMixin = _.extend({}, openerp.EventDispatcherMixin, {
+odoo.PropertiesMixin = _.extend({}, odoo.EventDispatcherMixin, {
     init: function() {
-        openerp.EventDispatcherMixin.init.call(this);
+        odoo.EventDispatcherMixin.init.call(this);
         this.__getterSetterInternalMap = {};
     },
     set: function(arg1, arg2, arg3) {
@@ -472,7 +472,7 @@ openerp.PropertiesMixin = _.extend({}, openerp.EventDispatcherMixin, {
                 var digits = self.field.digits;
                 if (digits !== 0){
                     digits = digits ? digits[1] : 2;
-                    if (openerp.web.float_is_zero(tmp - val, digits)){
+                    if (odoo.web.float_is_zero(tmp - val, digits)){
                         return;
                     }
                 }
@@ -508,7 +508,7 @@ openerp.PropertiesMixin = _.extend({}, openerp.EventDispatcherMixin, {
  *
  * Here is a sample child class:
  *
- * MyWidget = openerp.base.Widget.extend({
+ * MyWidget = odoo.base.Widget.extend({
  *     // the name of the QWeb template to use for rendering
  *     template: "MyQWebTemplate",
  *
@@ -541,7 +541,7 @@ openerp.PropertiesMixin = _.extend({}, openerp.EventDispatcherMixin, {
  *
  * That will kill the widget in a clean way and erase its content from the dom.
  */
-openerp.Widget = openerp.Class.extend(openerp.PropertiesMixin, {
+odoo.Widget = odoo.Class.extend(odoo.PropertiesMixin, {
     // Backbone-ish API
     tagName: 'div',
     id: null,
@@ -558,14 +558,14 @@ openerp.Widget = openerp.Class.extend(openerp.PropertiesMixin, {
     /**
      * Constructs the widget and sets its parent if a parent is given.
      *
-     * @constructs openerp.Widget
+     * @constructs odoo.Widget
      *
-     * @param {openerp.Widget} parent Binds the current instance to the given Widget instance.
+     * @param {odoo.Widget} parent Binds the current instance to the given Widget instance.
      * When that widget is destroyed by calling destroy(), the current instance will be
      * destroyed too. Can be null.
      */
     init: function(parent) {
-        openerp.PropertiesMixin.init.call(this);
+        odoo.PropertiesMixin.init.call(this);
         this.setParent(parent);
         // Bind on_/do_* methods to this
         // We might remove this automatic binding in the future
@@ -589,7 +589,7 @@ openerp.Widget = openerp.Class.extend(openerp.PropertiesMixin, {
         if(this.$el) {
             this.$el.remove();
         }
-        openerp.PropertiesMixin.destroy.call(this);
+        odoo.PropertiesMixin.destroy.call(this);
     },
     /**
      * Renders the current widget and appends it to the given jQuery object or Widget.
@@ -670,7 +670,7 @@ openerp.Widget = openerp.Class.extend(openerp.PropertiesMixin, {
     renderElement: function() {
         var $el;
         if (this.template) {
-            $el = $(openerp.qweb.render(this.template, {widget: this}).trim());
+            $el = $(odoo.qweb.render(this.template, {widget: this}).trim());
         } else {
             $el = this._make_descriptive();
         }
@@ -794,7 +794,7 @@ openerp.Widget = openerp.Class.extend(openerp.PropertiesMixin, {
      *
      * Other methods will fix the bound method to what it is when creating the
      * binding/proxy, which is fine in most javascript code but problematic in
-     * OpenERP Web where developers may want to replace existing callbacks with
+     * odoo Web where developers may want to replace existing callbacks with
      * theirs.
      *
      * The semantics of this precisely replace closing over the method call.
@@ -838,7 +838,7 @@ var genericJsonRpc = function(fct_name, params, fct) {
 
 /**
  * Replacer function for JSON.stringify, serializes Date objects to UTC
- * datetime in the OpenERP Server format.
+ * datetime in the odoo Server format.
  *
  * However, if a serialized value has a toJSON method that method is called
  * *before* the replacer is invoked. Date#toJSON exists, and thus the value
@@ -853,10 +853,10 @@ function date_to_utc(k, v) {
     var value = this[k];
     if (!(value instanceof Date)) { return v; }
 
-    return openerp.datetime_to_str(value);
+    return odoo.datetime_to_str(value);
 }
 
-openerp.jsonRpc = function(url, fct_name, params, settings) {
+odoo.jsonRpc = function(url, fct_name, params, settings) {
     return genericJsonRpc(fct_name, params, function(data) {
         return $.ajax(url, _.extend({}, settings, {
             url: url,
@@ -868,7 +868,7 @@ openerp.jsonRpc = function(url, fct_name, params, settings) {
     });
 };
 
-openerp.jsonpRpc = function(url, fct_name, params, settings) {
+odoo.jsonpRpc = function(url, fct_name, params, settings) {
     settings = settings || {};
     return genericJsonRpc(fct_name, params, function(data) {
         var payload_str = JSON.stringify(data, date_to_utc);
@@ -942,7 +942,7 @@ openerp.jsonpRpc = function(url, fct_name, params, settings) {
     });
 };
 
-openerp.loadCSS = function (url) {
+odoo.loadCSS = function (url) {
     if (!$('link[href="' + url + '"]').length) {
         $('head').append($('<link>', {
             'href': url,
@@ -951,7 +951,7 @@ openerp.loadCSS = function (url) {
         }));
     }
 };
-openerp.loadJS = function (url) {
+odoo.loadJS = function (url) {
     var def = $.Deferred();
     if ($('script[src="' + url + '"]').length) {
         def.resolve();
@@ -975,10 +975,10 @@ openerp.loadJS = function (url) {
     }
     return def;
 };
-openerp.loadBundle = function (name) {
+odoo.loadBundle = function (name) {
     return $.when(
-        openerp.loadCSS('/web/css/' + name),
-        openerp.loadJS('/web/js/' + name)
+        odoo.loadCSS('/web/css/' + name),
+        odoo.loadJS('/web/js/' + name)
     );
 };
 
@@ -995,7 +995,7 @@ var realSetTimeout = function(fct, millis) {
     setTimeout(wait, millis);
 };
 
-openerp.Session = openerp.Class.extend(openerp.PropertiesMixin, {
+odoo.Session = odoo.Class.extend(odoo.PropertiesMixin, {
     triggers: {
         'request': 'Request sent',
         'response': 'Response received',
@@ -1003,10 +1003,10 @@ openerp.Session = openerp.Class.extend(openerp.PropertiesMixin, {
         'error': 'The received response is an JSON-RPC error'
     },
     /**
-    @constructs openerp.Session
+    @constructs odoo.Session
     
     @param parent The parent of the newly created object.
-    @param {String} origin Url of the OpenERP server to contact with this session object
+    @param {String} origin Url of the odoo server to contact with this session object
     or `null` if the server to contact is the origin server.
     @param {Dict} options A dictionary that can contain the following options:
         
@@ -1017,7 +1017,7 @@ openerp.Session = openerp.Class.extend(openerp.PropertiesMixin, {
           "override_session" is set to true.
      */
     init: function(parent, origin, options) {
-        openerp.PropertiesMixin.init.call(this, parent);
+        odoo.PropertiesMixin.init.call(this, parent);
         options = options || {};
         this.server = null;
         this.session_id = options.session_id || null;
@@ -1083,7 +1083,7 @@ openerp.Session = openerp.Class.extend(openerp.PropertiesMixin, {
             });
         } else {
             // normal use case, just use the cookie
-            self.session_id = openerp.get_cookie("session_id");
+            self.session_id = odoo.get_cookie("session_id");
             return $.when();
         }
     },
@@ -1118,23 +1118,23 @@ openerp.Session = openerp.Class.extend(openerp.PropertiesMixin, {
                 self.trigger('request');
             var fct;
             if (self.origin_server) {
-                fct = openerp.jsonRpc;
+                fct = odoo.jsonRpc;
                 if (self.override_session) {
                     options.headers = _.extend({}, options.headers, {
-                        "X-Openerp-Session-Id": self.override_session ? self.session_id || '' : ''
+                        "X-odoo-Session-Id": self.override_session ? self.session_id || '' : ''
                     });
                 }
             } else if (self.use_cors) {
-                fct = openerp.jsonRpc;
+                fct = odoo.jsonRpc;
                 url = self.url(url, null);
                 options.session_id = self.session_id || '';
                 if (self.override_session) {
                     options.headers = _.extend({}, options.headers, {
-                        "X-Openerp-Session-Id": self.override_session ? self.session_id || '' : ''
+                        "X-odoo-Session-Id": self.override_session ? self.session_id || '' : ''
                     });
                 }
             } else {
-                fct = openerp.jsonpRpc;
+                fct = odoo.jsonpRpc;
                 url = self.url(url, null);
                 options.session_id = self.session_id || '';
             }
@@ -1184,20 +1184,20 @@ openerp.Session = openerp.Class.extend(openerp.PropertiesMixin, {
         return prefix + path + qs;
     },
     model: function(model_name) {
-        return new openerp.Model(this, model_name);
+        return new odoo.Model(this, model_name);
     }
 });
 
-openerp.Model = openerp.Class.extend({
+odoo.Model = odoo.Class.extend({
     /**
-    new openerp.Model([session,] model_name)
+    new odoo.Model([session,] model_name)
 
     @constructs instance.Model
     @extends instance.Class
     
-    @param {openerp.Session} [session] The session object used to communicate with
+    @param {odoo.Session} [session] The session object used to communicate with
     the server.
-    @param {String} model_name name of the OpenERP model this object is bound to
+    @param {String} model_name name of the odoo model this object is bound to
     @param {Object} [context]
     @param {Array} [domain]
     */
@@ -1206,7 +1206,7 @@ openerp.Model = openerp.Class.extend({
         var args = _.toArray(arguments);
         args.reverse();
         session = args.pop();
-        if (session && ! (session instanceof openerp.Session)) {
+        if (session && ! (session instanceof odoo.Session)) {
             model_name = session;
             session = null;
         } else {
@@ -1222,7 +1222,7 @@ openerp.Model = openerp.Class.extend({
         return this._session;
     },
     /**
-     * Call a method (over RPC) on the bound OpenERP model.
+     * Call a method (over RPC) on the bound odoo model.
      *
      * @param {String} method name of the method to call
      * @param {Array} [args] positional arguments
@@ -1248,8 +1248,8 @@ openerp.Model = openerp.Class.extend({
     }
 });
 
-/** OpenERP Translations */
-openerp.TranslationDataBase = openerp.Class.extend(/** @lends instance.TranslationDataBase# */{
+/** odoo Translations */
+odoo.TranslationDataBase = odoo.Class.extend(/** @lends instance.TranslationDataBase# */{
     /**
      * @constructs instance.TranslationDataBase
      * @extends instance.Class
@@ -1297,9 +1297,9 @@ openerp.TranslationDataBase = openerp.Class.extend(/** @lends instance.Translati
         return this.db[key];
     },
     /**
-        Loads the translations from an OpenERP server.
+        Loads the translations from an odoo server.
 
-        @param {openerp.Session} session The session object to contact the server.
+        @param {odoo.Session} session The session object to contact the server.
         @param {Array} [modules] The list of modules to load the translation. If not specified,
         it will default to all the modules installed in the current database.
         @param {Object} [lang] lang The language. If not specified it will default to the language
@@ -1317,9 +1317,9 @@ openerp.TranslationDataBase = openerp.Class.extend(/** @lends instance.Translati
     }
 });
 
-openerp._t = new openerp.TranslationDataBase().build_translation_function();
+odoo._t = new odoo.TranslationDataBase().build_translation_function();
 
-openerp.get_cookie = function(c_name) {
+odoo.get_cookie = function(c_name) {
     var cookies = document.cookie ? document.cookie.split('; ') : [];
     for (var i = 0, l = cookies.length; i < l; i++) {
         var parts = cookies[i].split('=');
@@ -1333,15 +1333,15 @@ openerp.get_cookie = function(c_name) {
     return "";
 };
 
-openerp.qweb = new QWeb2.Engine();
+odoo.qweb = new QWeb2.Engine();
 
-openerp.qweb.default_dict = {
+odoo.qweb.default_dict = {
     '_' : _,
     'JSON': JSON,
-    '_t' : openerp._t
+    '_t' : odoo._t
 };
 
-openerp.Mutex = openerp.Class.extend({
+odoo.Mutex = odoo.Class.extend({
     init: function() {
         this.def = $.Deferred().resolve();
     },
@@ -1357,16 +1357,16 @@ openerp.Mutex = openerp.Class.extend({
 });
 
 /**
- * Converts a string to a Date javascript object using OpenERP's
+ * Converts a string to a Date javascript object using odoo's
  * datetime string format (exemple: '2011-12-01 15:12:35.832').
  * 
- * The time zone is assumed to be UTC (standard for OpenERP 6.1)
+ * The time zone is assumed to be UTC (standard for odoo 6.1)
  * and will be converted to the browser's time zone.
  * 
  * @param {String} str A string representing a datetime.
  * @returns {Date}
  */
-openerp.str_to_datetime = function(str) {
+odoo.str_to_datetime = function(str) {
     if(!str) {
         return str;
     }
@@ -1391,7 +1391,7 @@ openerp.str_to_datetime = function(str) {
 };
 
 /**
- * Converts a string to a Date javascript object using OpenERP's
+ * Converts a string to a Date javascript object using odoo's
  * date string format (exemple: '2011-12-01').
  * 
  * As a date is not subject to time zones, we assume it should be
@@ -1401,7 +1401,7 @@ openerp.str_to_datetime = function(str) {
  * @param {String} str A string representing a date.
  * @returns {Date}
  */
-openerp.str_to_date = function(str) {
+odoo.str_to_date = function(str) {
     if(!str) {
         return str;
     }
@@ -1421,17 +1421,17 @@ openerp.str_to_date = function(str) {
 };
 
 /**
- * Converts a string to a Date javascript object using OpenERP's
+ * Converts a string to a Date javascript object using odoo's
  * time string format (exemple: '15:12:35').
  * 
- * The OpenERP times are supposed to always be naive times. We assume it is
+ * The odoo times are supposed to always be naive times. We assume it is
  * represented using a javascript Date with a date 1 of January 1970 and a
  * time corresponding to the meant time in the browser's time zone.
  * 
  * @param {String} str A string representing a time.
  * @returns {Date}
  */
-openerp.str_to_time = function(str) {
+odoo.str_to_time = function(str) {
     if(!str) {
         return str;
     }
@@ -1470,16 +1470,16 @@ var rpad = function(str, size) {
 };
 
 /**
- * Converts a Date javascript object to a string using OpenERP's
+ * Converts a Date javascript object to a string using odoo's
  * datetime string format (exemple: '2011-12-01 15:12:35').
  * 
  * The time zone of the Date object is assumed to be the one of the
- * browser and it will be converted to UTC (standard for OpenERP 6.1).
+ * browser and it will be converted to UTC (standard for odoo 6.1).
  * 
  * @param {Date} obj
  * @returns {String} A string representing a datetime.
  */
-openerp.datetime_to_str = function(obj) {
+odoo.datetime_to_str = function(obj) {
     if (!obj) {
         return false;
     }
@@ -1489,7 +1489,7 @@ openerp.datetime_to_str = function(obj) {
 };
 
 /**
- * Converts a Date javascript object to a string using OpenERP's
+ * Converts a Date javascript object to a string using odoo's
  * date string format (exemple: '2011-12-01').
  * 
  * As a date is not subject to time zones, we assume it should be
@@ -1499,7 +1499,7 @@ openerp.datetime_to_str = function(obj) {
  * @param {Date} obj
  * @returns {String} A string representing a date.
  */
-openerp.date_to_str = function(obj) {
+odoo.date_to_str = function(obj) {
     if (!obj) {
         return false;
     }
@@ -1508,17 +1508,17 @@ openerp.date_to_str = function(obj) {
 };
 
 /**
- * Converts a Date javascript object to a string using OpenERP's
+ * Converts a Date javascript object to a string using odoo's
  * time string format (exemple: '15:12:35').
  * 
- * The OpenERP times are supposed to always be naive times. We assume it is
+ * The odoo times are supposed to always be naive times. We assume it is
  * represented using a javascript Date with a date 1 of January 1970 and a
  * time corresponding to the meant time in the browser's time zone.
  * 
  * @param {Date} obj
  * @returns {String} A string representing a time.
  */
-openerp.time_to_str = function(obj) {
+odoo.time_to_str = function(obj) {
     if (!obj) {
         return false;
     }
@@ -1526,15 +1526,15 @@ openerp.time_to_str = function(obj) {
          + lpad(obj.getSeconds(),2);
 };
 
-openerp.declare = declare;
+odoo.declare = declare;
 
-return openerp;
+return odoo;
 }
 
 if (typeof(define) !== "undefined") { // amd
     define(["jquery", "underscore", "qweb2"], declare);
 } else {
-    window.openerp = declare($, _, QWeb2);
+    window.odoo = declare($, _, QWeb2);
 }
 
 })();

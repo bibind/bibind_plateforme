@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data noupdate="1">
+<odoo>
+
 
         <!-- Sequences for cloud.service -->
-        <record id="seq_type_cloud_service" model="ir.sequence.type">
-            <field name="name">Cloud service</field>
-            <field name="code">cloud.service</field>
-        </record>
+
 
         <record id="seq_cloud_service" model="ir.sequence">
             <field name="name">Cloud Service</field>
@@ -18,10 +15,7 @@
         
         
          <!-- Sequences for cloud.service -->
-        <record id="seq_type_cloud_service_fournisseur" model="ir.sequence.type">
-            <field name="name">Cloud service fournisseur</field>
-            <field name="code">cloud.service.fournisseur</field>
-        </record>
+
 
         <record id="seq_cloud_service_fournisseur" model="ir.sequence">
             <field name="name">Cloud Service fournisseur</field>
@@ -31,5 +25,5 @@
             <field name="company_id" eval="False"/>
         </record>
 
-    </data>
-</openerp>
+
+</odoo>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-	<data>
+<odoo>
+
 	
 
  <!-- Cloud Manager service delivery -->
@@ -19,7 +19,7 @@
               <button class=" " type="object"  name="get_rancher_env_id" string="get rancher env id" />
               <button class=" " type="object"  name="deploy_dev_env" string="deploy dev env" />
                
-                <button class=" " type="object"  name="get_rancher_stack_id" string="get rancher stack id" />
+                <button class=" " type="object"  name="get_stack" string="get rancher stack id" />
               <button class=" " type="object"  name="get_service_lb" string="get lb" />
               
                <button class=" " type="object"  name="update_lb" string="update lb" />
@@ -115,8 +115,8 @@
      <record model="ir.actions.act_window" id="action_bibind_service_delivery_continous">
         <field name="name">Services Delivery continous</field>
         <field name="res_model">bibind.service.delivery</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form, diagram</field>
+
+        <field name="view_mode">tree,form</field>
     </record>
          	
 		<menuitem action="action_bibind_service_delivery_continous" name="Services" id="menu_bibind_label_delivery_continous"
@@ -198,7 +198,7 @@
      <record model="ir.actions.act_window" id="action_bibind_service_delivery_environnement">
         <field name="name">Services Delivery continous</field>
         <field name="res_model">bibind.continous.environnement</field>
-        <field name="view_type">form</field>
+
         <field name="view_mode">tree,form</field>
     </record>
          	
@@ -209,5 +209,5 @@
     
     
     
-    </data>
-    </openerp>
+
+    </odoo>

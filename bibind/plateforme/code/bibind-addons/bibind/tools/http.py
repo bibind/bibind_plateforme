@@ -3,8 +3,8 @@
 from functools import wraps
 import json
 
-from openerp.http import request
-from openerp.tools.safe_eval import safe_eval
+from odoo.http import request
+from odoo.tools.safe_eval import safe_eval
 
 
 class make_response():

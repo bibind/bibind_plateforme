@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    odoo, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 ##############################################################################
 import logging
 import time
-from openerp import models, fields, api
+from odoo import models, fields, api
 
 
 _logger = logging.getLogger("bibind_cloudservice")
@@ -33,7 +33,7 @@ class wizard_destroy_confirm(models.TransientModel):
     _name = "wizard.destroy.confirm"
     
     
-    @api.multi
+
     def action_confirm(self):
        
        node = self.env['cloud.service.node'].browse(self._context['node_id'])
@@ -57,7 +57,7 @@ class wizard_import_rancher(models.TransientModel):
     _name = "wizard.import.rancher"
     
     
-    @api.multi
+
     def action_confirm(self):
        
         api = self.env.ref('bibind.bibind_api_container_rancher')
@@ -268,7 +268,7 @@ class services_builder(models.TransientModel):
         if step=='progress':
             return 'run'
     
-    @api.multi
+
     def action_next(self):
       #your treatment to click  button next 
       #...
@@ -298,7 +298,7 @@ class services_builder(models.TransientModel):
              }
       
       
-    @api.multi  
+
     def action_previous(self):
       #your treatment to click  button next 
       #...
@@ -333,7 +333,7 @@ class services_builder(models.TransientModel):
     
     
     
-    @api.multi
+
     def confirm(self):
           
       provider =self.provider_id
@@ -364,7 +364,7 @@ class services_builder(models.TransientModel):
       
       
       
-    @api.multi
+
     def action_server_maybe(self):
         rec = self.env['cloud.service'].projetname_search(self.name_projet)
         if  rec:
@@ -569,7 +569,7 @@ class wizard_wordpress_continous(models.TransientModel):
         if step=='progress':
             return 'run'
     
-    @api.multi
+
     def action_next(self):
       #your treatment to click  button next 
       #...
@@ -599,7 +599,7 @@ class wizard_wordpress_continous(models.TransientModel):
              }
       
       
-    @api.multi  
+
     def action_previous(self):
       #your treatment to click  button next 
       #...
@@ -634,7 +634,7 @@ class wizard_wordpress_continous(models.TransientModel):
     
     
     
-    @api.multi
+
     def confirm(self):
           
       provider =self.provider_id
@@ -665,7 +665,7 @@ class wizard_wordpress_continous(models.TransientModel):
       
       
       
-    @api.multi
+
     def action_server_maybe(self):
         rec = self.env['cloud.service'].projetname_search(self.name_projet)
         if  rec:
@@ -733,7 +733,7 @@ class wizard_ansible_execute(models.TransientModel):
     log = fields.Char(string='log', size=128, default=_default_context)
     scripts = fields.Many2many('launch.script')
     
-    @api.multi
+
     def action_confirm(self):
        result ={}
        for script in self.scripts:

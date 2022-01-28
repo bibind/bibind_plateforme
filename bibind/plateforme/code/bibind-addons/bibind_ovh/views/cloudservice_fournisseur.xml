@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	
+   <record id="view_cloud_service_fournisseur_ovh_form" model="ir.ui.view">
+            <field name="name">cloud.service.fournisseur.form.inherit</field>
+            <field name="model">cloud.service.fournisseur</field>
+            <field name="priority">2</field>
+            <field name="inherit_id" ref="bibind.view_cloud_service_fournisseur_form"/>
+            <field name="arch" type="xml">
+  			 <notebook position="inside">
+                <page string="OVH" attrs="{'invisible': [('fournisseur','!=',10)]}" >
+                <header>
+                <button name="get_list_service_ovh" string="import service" type="object" class="oe_highlight"/>
+                </header>
+                <group>
+                
+                  <field name="import_service"/>
+                      <field name="logservice"/>
+                        <field name="listservice"/>
+                </group>
+                  
+                </page>
+  			</notebook>
+  			</field>
+  </record>
+
+		
+
+	</data>
+</openerp>

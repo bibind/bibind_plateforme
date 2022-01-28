@@ -1,5 +1,5 @@
 
-openerp.bibind = function(instance, local) {
+odoo.bibind = function(instance, local) {
 	console.log('rrrxxxrr');
 	
 	var _t = instance.web._t,
@@ -191,7 +191,7 @@ var QWeb = instance.web.qweb;
             console.log('set value es init');
             this.records_orderer = new instance.web.DropMisordered();
             this.field_manager.on("view_content_has_changed", this, function() {
-                var domain = new openerp.web.CompoundDomain(this.build_domain()).eval();
+                var domain = new odoo.web.CompoundDomain(this.build_domain()).eval();
                 if (! _.isEqual(domain, this.get("domain"))) {
                     this.set("domain", domain);
                 }
@@ -200,7 +200,7 @@ var QWeb = instance.web.qweb;
         initialize_field: function() {
             instance.web.form.ReinitializeFieldMixin.initialize_field.call(this);
             this.on("change:domain", this, this.query_values);
-            this.set("domain", new openerp.web.CompoundDomain(this.build_domain()).eval());
+            this.set("domain", new odoo.web.CompoundDomain(this.build_domain()).eval());
             this.on("change:values", this, this.render_value);
             console.log('initialize_field');
         },
@@ -210,10 +210,10 @@ var QWeb = instance.web.qweb;
             console.log(this.field.type);
             if (this.field.type === "many2one") {
             	console.log('ffffmany');
-                var model = new openerp.Model(openerp.session, this.field.relation);
+                var model = new odoo.Model(odoo.session, this.field.relation);
                 def = model.call("name_search", ['', this.get("domain")], {"context": this.build_context()});
             } else {
-            	//var model = new openerp.Model(openerp.session, this.field);
+            	//var model = new odoo.Model(odoo.session, this.field);
                 //def = model.call("name_search", ['', this.get("domain")], {"context": this.build_context()});
             
                console.log(' query values domain ffff');

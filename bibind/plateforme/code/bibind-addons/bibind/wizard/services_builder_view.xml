@@ -1,217 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
-        <record id="view_services_builder" model="ir.ui.view">
-            <field name="name">services_builder</field>
-            <field name="model">services.builder</field>
-            <field name="arch" type="xml">
-            
-             <form string="Choose your provider">
-            <header>
-            <field  name="state"  widget="statusbar" readonly="1" />
-             </header>
-                <!--  #name_projet Provider offres_environnement application run progress -->
-               <field name="is_confirm" invisible="1" />
-                 <group strin="projet" attrs="{'invisible': [('state','in', [ 'Provider', 'offres_environnement', 'application', 'progress', 'run'])]}"  >
-                 <field name="name_projet"/>
-                 
-                 <field name="nameprojetdnsdev" readonly="1"/>
-                 <field name="nameprojetdnstest" readonly="1"/>
-                <field name="nameprojetdnslive" readonly="1"/>
-                 
-                 </group>
-                 
-                  <group string="Provider" attrs="{'invisible': [('state','in', ['name_projet','application', 'progress', 'run','offres_environnement'])]}" >
-                  <field name="name"  readonly="1"></field>
-                    <field name="partner_id"  ></field>
-                    <field name="service_id"  ></field>
-                    <field name="provider_id" domain="[('is_cloud_fournisseur','=',True)]" widget="radio"  />
-                   <field name="category_id"  ></field>
-                  
-                  </group>
-                  
-                   <group string="Pattern Architectural" attrs="{'invisible': [('state','in',[ 'name_projet', 'Provider', 'application', 'progress', 'run'])]}" >
-                  <field name="product_id" string="les offres" widget="radio"  domain="[('categ_id','in',[4])]" >
-
-                   </field>
-                  </group>
-                   
-                   <group string="Choisir son application" attrs="{'invisible': [('state','in',[ 'name_projet', 'Provider', 'offres_environnement', 'progress', 'run'])]}" >
-                   <field name="category_application_id" widget="radio" />
-                   <field name="category_app_id" />
-                   <field name="application_ids" widget="radio" domain="[('category','in',[1])]" />
-                   </group>
-                   
-                   
-                    <group string="Resume" attrs="{'invisible': [('state','in',[ 'name_projet', 'Provider', 'offres_environnement', 'progress', 'application'])]}" >
-                 	<div>resumé test</div>
-                   </group>
-                   
-                   <group string="Service en création" attrs="{'invisible': [('state','in',[ 'name_projet', 'Provider', 'offres_environnement', 'run', 'application'])]}" >
-                     
-                     
-                     <field name="run_button"  />
-                     
-                     <field name="progressbar" widget="ProgressBarWrite" />
-                   </group>
-                  
-                  <footer>
-                      <button string="previous"  type="object" name="action_previous" attrs="{'invisible': [('state','in', ['name_projet', 'progress'])]}"  />
-                        
-                        <button string="next"  type="object" name="action_next" attrs="{'invisible': [('state','in', ['run', 'progress'])]}"  />
-                        <button attrs="{'invisible': [('state','in', ['name_projet','offres_environnement','Provider','application','progress'])]}"  string="run Service"  type="object" name="confirm" />
-                  </footer>
+<odoo>
+    <record id="view_services_builder" model="ir.ui.view">
+        <field name="name">services.builder.wizard.view.form</field>
+        <field name="model">services.builder</field>
+        <field name="arch" type="xml">
+            <form string="Choose your provider">
+                <header>
+                    <field name="state" widget="statusbar" readonly="1"/>
+                </header>
+                <field name="is_confirm" invisible="1"/>
+                <group string="projet"
+                       attrs="{'invisible': [('state','in', [ 'Provider', 'offres_environnement', 'application', 'progress', 'run'])]}">
+                    <field name="name_projet"/>
+                    <field name="nameprojetdnsdev" readonly="1"/>
+                    <field name="nameprojetdnstest" readonly="1"/>
+                    <field name="nameprojetdnslive" readonly="1"/>
+                </group>
+                <group string="Provider"
+                       attrs="{'invisible': [('state','in', ['name_projet','application', 'progress', 'run','offres_environnement'])]}">
+                    <field name="name" readonly="1"/>
+                    <field name="partner_id"/>
+                    <field name="service_id"/>
+                    <field name="provider_id" domain="[('is_cloud_fournisseur','=',True)]" widget="radio"/>
+                    <field name="category_id"/>
+                </group>
+                <group string="Pattern Architectural"
+                       attrs="{'invisible': [('state','in',[ 'name_projet', 'Provider', 'application', 'progress', 'run'])]}">
+                    <field name="product_id" string="les offres" widget="radio" domain="[('categ_id','in',[4])]"/>
+                </group>
+                <group string="Choisir son application"
+                       attrs="{'invisible': [('state','in',[ 'name_projet', 'Provider', 'offres_environnement', 'progress', 'run'])]}">
+                    <field name="category_application_id" widget="radio"/>
+                    <field name="category_app_id"/>
+                    <field name="application_ids" widget="radio" domain="[('category','in',[1])]"/>
+                </group>
+                <group string="Resume"
+                       attrs="{'invisible': [('state','in',[ 'name_projet', 'Provider', 'offres_environnement', 'progress', 'application'])]}">
+                    <div>resumé test</div>
+                </group>
+                <group string="Service en création"
+                       attrs="{'invisible': [('state','in',[ 'name_projet', 'Provider', 'offres_environnement', 'run', 'application'])]}">
+                    <field name="run_button"/>
+                    <field name="progressbar" widget="ProgressBarWrite"/>
+                </group>
+                <footer>
+                    <button string="previous" type="object" name="action_previous"
+                            attrs="{'invisible': [('state','in', ['name_projet', 'progress'])]}"/>
+                    <button string="next" type="object" name="action_next"
+                            attrs="{'invisible': [('state','in', ['run', 'progress'])]}"/>
+                    <button attrs="{'invisible': [('state','in', ['name_projet','offres_environnement','Provider','application','progress'])]}"
+                            string="run Service" type="object" name="confirm"/>
+                </footer>
             </form>
-            </field>
-        </record>
+        </field>
+    </record>
 
-        <record id="action_services_builder" model="ir.actions.act_window">
-            <field name="name">services.builder</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">services.builder</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="view_services_builder"/>
-            <field name="context">{'record_id' : active_id}</field>
-            <field name="target">current</field>
-        </record>
-        
-        
-        
-            <record id="view_wizard_wordpress_continous" model="ir.ui.view">
-            <field name="name">wizard_wordpress_continous</field>
-            <field name="model">wizard.wordpress.continous</field>
-            <field name="arch" type="xml">
-           
-             <form string="Wordpress  Delivery Continous">
-            
-              <sheet>
-              <img width="50px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Wordpress_logo_8.png/242px-Wordpress_logo_8.png" />
-                <!--  #name_projet Provider offres_environnement application run progress -->
-              
-                 <group string="Votre site web"   >
-                 <group>
-                 <label for="name_projet" class="floating-label"/>
-                 <field name="name_projet"  nolabel="1" />
-                 </group >
-                 <group string="Urls des vos environnements">
-                 <field name="nameprojetdnsdev" readonly="1"/>
-                 <field name="nameprojetdnstest" readonly="1"/>
-                 <field name="nameprojetdnslive" readonly="1"/>
-                 </group>
-                 </group>
-                 
-                  <group   >
-                  <field name="name" invisible="1"  readonly="1"></field>
-                  <field name="partner_id" invisible="1"   ></field>
-                  <field name="service_id" invisible="1"   ></field>
-    				<field name="product_id"  invisible="1" string="les offres" widget="radio"  ></field>
-                  </group>
+    <record id="action_services_builder" model="ir.actions.act_window">
+        <field name="name">services.builder</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">services.builder</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_services_builder"/>
+        <field name="context">{'record_id' : active_id}</field>
+        <field name="target">current</field>
+    </record>
 
-                  
-                  <footer>
-
-                        <button  string="run Service"  type="object" name="confirm" />
-                  </footer>
-                  </sheet>
-            </form>
-            </field>
-        </record>
-
-        <record id="action_wordpress_continous" model="ir.actions.act_window">
-            <field name="name">services.builder</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">wizard.wordpress.continous</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="view_wizard_wordpress_continous"/>
-            <field name="context">{'record_id' : active_id}</field>
-            <field name="target">current</field>
-        </record>
-        
-        
-        
-        <record id="view_destroy_host" model="ir.ui.view">
-            <field name="name">Destroy Node or Host</field>
-            <field name="model">wizard.destroy.confirm</field>
-            <field name="arch" type="xml">
-                <form string="Confirm Sale Order" version="7.0">
-                    <group>
-                        <label string="Ar you sur you want destroy this host (node)?"/>
-                    </group>
-                    <footer>
-                        <button name="action_confirm" string="Yes" type="object" class="oe_highlight"/>
-                        or
-                        <button string="Cancel" class="oe_link" special="cancel" />
-                    </footer>
-                </form>
-            </field>
-        </record>
-        
-         <record id="view_import_rancher" model="ir.ui.view">
-            <field name="name">Import rancher</field>
-            <field name="model">wizard.import.rancher</field>
-            <field name="arch" type="xml">
-                <form string="Confirm Sale Order" version="7.0">
-                    <group>
-                        <label string="Import project (or environnement) of Rancher?"/>
-                    </group>
-                    <footer>
-                        <button name="action_confirm" string="Yes" type="object" class="oe_highlight"/>
-                        or
-                        <button string="Cancel" class="oe_link" special="cancel" />
-                    </footer>
-                </form>
-            </field>
-        </record>
-         <record id="action_import_rancher" model="ir.actions.act_window">
-            <field name="name">wizard.import.rancher</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">wizard.import.rancher</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="view_import_rancher"/>
-          
-            <field name="target">new</field>
-        </record>
-        
-         <record id="view_ansible_execute" model="ir.ui.view">
-            <field name="name">ansible_scripts</field>
-            <field name="model">wizard.ansible.execute</field>
-            <field name="arch" type="xml">
-                <form string="Scripts ansible" version="7.0">
-                  <label string="script ansible executer"/>
-                        <field name="name"/>
-                
-                    <group>
-                    <group>
-                       <field name="log" />
+    <record id="view_wizard_wordpress_continous" model="ir.ui.view">
+        <field name="name">wizard_wordpress_continous</field>
+        <field name="model">wizard.wordpress.continous</field>
+        <field name="arch" type="xml">
+            <form string="Wordpress  Delivery Continous">
+                <sheet>
+                    <img width="50px"
+                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Wordpress_logo_8.png/242px-Wordpress_logo_8.png"/>
+                    <group string="Votre site web">
+                        <group>
+                            <label for="name_projet" class="floating-label"/>
+                            <field name="name_projet" nolabel="1"/>
+                        </group>
+                        <group string="Urls des vos environnements">
+                            <field name="nameprojetdnsdev" readonly="1"/>
+                            <field name="nameprojetdnstest" readonly="1"/>
+                            <field name="nameprojetdnslive" readonly="1"/>
                         </group>
                     </group>
-                     <group>
-                        <field name="scripts" />
-                       </group>
+                    <group>
+                        <field name="name" invisible="1" readonly="1"></field>
+                        <field name="partner_id" invisible="1"></field>
+                        <field name="service_id" invisible="1"></field>
+                        <field name="product_id" invisible="1" string="les offres" widget="radio"></field>
+                    </group>
                     <footer>
-                        <button name="action_confirm" string="Yes" type="object" class="oe_highlight"/>
-                        or
-                        <button string="Cancel" class="oe_link" special="cancel" />
+                        <button string="run Service" type="object" name="confirm"/>
                     </footer>
-                </form>
-            </field>
-        </record>
-                
-        <act_window id="action_import_rancher"
-            multi="True"
-            key2="client_action_multi" name="Exécuter scripts"
-            res_model="wizard.ansible.execute" src_model="bibind.host"
-            view_mode="form,tree" target="new" view_type="form"
-        />
-        
-         <menuitem name="importRancher Projet" 
-    id="menu_bibind_import_rancher_projet" 
-    parent="menu_cloudservice_config"
-    groups="bibind.group_administrateur" 
-    action="action_import_rancher"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
-    </data>
-</openerp>
+    <record id="action_wordpress_continous" model="ir.actions.act_window">
+        <field name="name">services.builder</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wizard.wordpress.continous</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_wizard_wordpress_continous"/>
+        <field name="context">{'record_id' : active_id}</field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="view_destroy_host" model="ir.ui.view">
+        <field name="name">Destroy Node or Host</field>
+        <field name="model">wizard.destroy.confirm</field>
+        <field name="arch" type="xml">
+            <form string="Confirm Sale Order" version="7.0">
+                <group>
+                    <h2>"Ar you sur you want destroy this host (node)?"</h2>
+                </group>
+                <footer>
+                    <button name="action_confirm" string="Yes" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_import_rancher" model="ir.ui.view">
+        <field name="name">Import rancher</field>
+        <field name="model">wizard.import.rancher</field>
+        <field name="arch" type="xml">
+            <form string="Confirm Sale Order" version="7.0">
+                <group>
+                    <h1>"Import project (or environnement) of Rancher?"</h1>
+                </group>
+                <footer>
+                    <button name="action_confirm" string="Yes" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_import_rancher" model="ir.actions.act_window">
+        <field name="name">wizard.import.rancher</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wizard.import.rancher</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_import_rancher"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_ansible_execute" model="ir.ui.view">
+        <field name="name">ansible_scripts</field>
+        <field name="model">wizard.ansible.execute</field>
+        <field name="arch" type="xml">
+            <form string="Scripts ansible" version="7.0">
+                <h2>"script ansible executer"</h2>
+                <field name="name"/>
+                <group>
+                    <group>
+                        <field name="log"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="scripts"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" string="Yes" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

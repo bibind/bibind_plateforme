@@ -1,7 +1,7 @@
 ## -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    odoo, Open Source Management Solution
 #    Copyright (C) 2012 ASPerience SARL (<http://www.asperience.fr>).
 #    All Rights Reserved
 #
@@ -20,12 +20,12 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api, _
-from openerp import pooler, tools
-from openerp.tools.translate import _
-from openerp.osv.expression import get_unaccent_wrapper
+from odoo import models, fields, api, _
+from odoo import tools
+from odoo.tools.translate import _
+from odoo.osv.expression import get_unaccent_wrapper
 
-from openerp import netsvc
+from odoo import netsvc
 import logging
 import json
 import re
@@ -86,7 +86,7 @@ class bibind_me(models.Model):
             'target': 'current',
         }
      
-    @api.multi
+
     def get_gitlab_id(self):
          gl = gitlab.Gitlab('https://lab.bibind.com/', '3Kb2LjfCW-Qn1RLyTP2y', ssl_verify=False)
          gl.auth()
@@ -265,7 +265,7 @@ class res_partner(models.Model):
                 
                 
 
-    @api.multi
+
     def onchange_api(self, is_company):
        
         return True

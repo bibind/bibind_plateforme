@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-	<data>
+<odoo>
+
+
 
      <record model="ir.ui.view" id="cloud_service_launch_script_form">
         <field name="name">launch.script.form</field>
@@ -40,7 +41,6 @@
     <record model="ir.actions.act_window" id="action_cloud_service_launch_script">
         <field name="name">Deploiement</field>
         <field name="res_model">launch.script</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
          	
@@ -51,7 +51,6 @@
 		 parent="menu_cloudservice_config"
 		 sequence="2" />
 
-         
-	</data>
-</openerp>
+
+</odoo>
 

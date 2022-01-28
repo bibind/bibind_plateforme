@@ -1,11 +1,11 @@
 /*---------------------------------------------------------
- * OpenERP web library
+ * odoo web library
  *---------------------------------------------------------*/
 
 (function() {
 
-var instance = openerp;
-openerp.web.views = {};
+var instance = odoo;
+odoo.web.views = {};
 var QWeb = instance.web.qweb,
     _t = instance.web._t;
 
@@ -310,7 +310,7 @@ instance.web.ActionManager = instance.web.Widget.extend({
         });
     },
     /**
-     * Execute an OpenERP action
+     * Execute an odoo action
      *
      * @param {Number|String|Object} Can be either an action id, a client action or an action descriptor.
      * @param {Object} [options]

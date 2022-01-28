@@ -1,0 +1,34 @@
+FROM odoo:15.0
+MAINTAINER Bibind <info@bibind.com>
+
+
+USER root
+RUN set -x; \
+        apt-get update \
+        && apt-get install -y --no-install-recommends  \
+        python-paramiko \
+         ca-certificates \
+            curl \
+            node-less \
+            node-clean-css \
+            python-pyinotify \
+            python-renderpm \
+            python-support \
+            python-pip \
+            python-lxml \
+            python-fpconst \
+            python-soappy \
+            python-bzrlib \
+            python-pygments \
+            python-mysqldb \
+            python-sphinx \
+            ansible \
+            && pip install awscli --ignore-installed six \
+            && pip install ovh  click \
+            && pip install pyaml \
+            && pip install gandi.cli
+
+COPY ovh.conf  /etc/
+
+
+USER odoo

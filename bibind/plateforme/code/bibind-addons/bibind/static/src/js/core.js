@@ -11,8 +11,8 @@ if (typeof(console) === "undefined") {
     });
 }
 
-var instance = openerp;
-openerp.web.core = {};
+var instance = odoo;
+odoo.web.core = {};
 
 var ControllerMixin = {
     /**
@@ -40,32 +40,32 @@ var ControllerMixin = {
         return false;
     },
     rpc: function(url, data, options) {
-        return this.alive(openerp.session.rpc(url, data, options));
+        return this.alive(odoo.session.rpc(url, data, options));
     }
 };
 
 /**
-    A class containing common utility methods useful when working with OpenERP as well as the PropertiesMixin.
+    A class containing common utility methods useful when working with odoo as well as the PropertiesMixin.
 */
-openerp.web.Controller = openerp.web.Class.extend(openerp.web.PropertiesMixin, ControllerMixin, {
+odoo.web.Controller = odoo.web.Class.extend(odoo.web.PropertiesMixin, ControllerMixin, {
     /**
      * Constructs the object and sets its parent if a parent is given.
      *
-     * @param {openerp.web.Controller} parent Binds the current instance to the given Controller instance.
+     * @param {odoo.web.Controller} parent Binds the current instance to the given Controller instance.
      * When that controller is destroyed by calling destroy(), the current instance will be
      * destroyed too. Can be null.
      */
     init: function(parent) {
-        openerp.web.PropertiesMixin.init.call(this);
+        odoo.web.PropertiesMixin.init.call(this);
         this.setParent(parent);
-        this.session = openerp.session;
+        this.session = odoo.session;
     },
 });
 
-openerp.web.Widget.include(_.extend({}, ControllerMixin, {
+odoo.web.Widget.include(_.extend({}, ControllerMixin, {
     init: function() {
         this._super.apply(this, arguments);
-        this.session = openerp.session;
+        this.session = odoo.session;
     },
 }));
 
@@ -79,7 +79,7 @@ instance.web.Registry = instance.web.Class.extend({
      * registry was created.
      *
      * An object path is simply a dotted name from the instance root to the
-     * object pointed to (e.g. ``"instance.web.Session"`` for an OpenERP
+     * object pointed to (e.g. ``"instance.web.Session"`` for an odoo
      * session object).
      *
      * @constructs instance.web.Registry
@@ -197,7 +197,7 @@ instance.web.py_eval = function(expr, context) {
 */
 instance.web.JsonRPC = instance.web.Session;
 
-/** Session openerp specific RPC class */
+/** Session odoo specific RPC class */
 instance.web.Session.include( /** @lends instance.web.Session# */{
     init: function() {
         this._super.apply(this, arguments);
@@ -335,7 +335,7 @@ instance.web.Session.include( /** @lends instance.web.Session# */{
                 self.on_modules_loaded();
                 self.trigger('module_loaded');
                 if (!Date.CultureInfo.pmDesignator) {
-                    // If no am/pm designator is specified but the openerp
+                    // If no am/pm designator is specified but the odoo
                     // datetime format uses %i, date.js won't be able to
                     // correctly format a date. See bug#938497.
                     Date.CultureInfo.amDesignator = 'AM';
@@ -350,7 +350,7 @@ instance.web.Session.include( /** @lends instance.web.Session# */{
     load_css: function (files) {
         var self = this;
         _.each(files, function (file) {
-            openerp.loadCSS(self.url(file, null));
+            odoo.loadCSS(self.url(file, null));
         });
     },
     load_js: function(files) {
@@ -360,7 +360,7 @@ instance.web.Session.include( /** @lends instance.web.Session# */{
             var file = files.shift();
             var url = self.url(file, null);
             console.log(url)
-            openerp.loadJS(url).done(d.resolve);
+            odoo.loadJS(url).done(d.resolve);
         } else {
             d.resolve();
         }
@@ -387,14 +387,14 @@ instance.web.Session.include( /** @lends instance.web.Session# */{
             instance[mod] = {};
           
             // init module mod
-            var fct = instance._openerp[mod];
+            var fct = instance._odoo[mod];
             if(typeof(fct) === "function") {
-                instance._openerp[mod] = {};
+                instance._odoo[mod] = {};
                 for (var k in fct) {
                 	 console.log(k)
-                    instance._openerp[mod][k] = fct[k];
+                    instance._odoo[mod][k] = fct[k];
                 }
-                fct(instance, instance._openerp[mod]);
+                fct(instance, instance._odoo[mod]);
             }
             this.module_loaded[mod] = true;
         }
@@ -572,24 +572,24 @@ $.fn.getAttributes = function() {
     }
     return o;
 };
-$.fn.openerpClass = function(additionalClass) {
+$.fn.odooClass = function(additionalClass) {
     // This plugin should be applied on top level elements
     additionalClass = additionalClass || '';
     if (!!$.browser.msie) {
-        additionalClass += ' openerp_ie';
+        additionalClass += ' odoo_ie';
     }
     return this.each(function() {
-        $(this).addClass('openerp ' + additionalClass);
+        $(this).addClass('odoo ' + additionalClass);
     });
 };
-$.fn.openerpBounce = function() {
+$.fn.odooBounce = function() {
     return this.each(function() {
         $(this).css('box-sizing', 'content-box').effect('bounce', {distance: 18, times: 5}, 250);
     });
 };
 
 /** Jquery extentions */
-$.Mutex = openerp.Mutex;
+$.Mutex = odoo.Mutex;
 
 $.async_when = function() {
     var async = false;
@@ -635,7 +635,7 @@ instance.session = new instance.web.Session();
  *
  * Useful when defining translatable strings in code evaluated before the
  * translation database is loaded, as class attributes or at the top-level of
- * an OpenERP Web module
+ * an odoo Web module
  *
  * @param {String} s string to translate
  * @returns {Object} lazy translation object
@@ -703,7 +703,7 @@ instance.session.on('module_loaded', this, function () {
 /** Setup blockui */
 if ($.blockUI) {
     $.blockUI.defaults.baseZ = 1100;
-    $.blockUI.defaults.message = '<div class="openerp oe_blockui_spin_container" style="background-color: transparent;">';
+    $.blockUI.defaults.message = '<div class="odoo oe_blockui_spin_container" style="background-color: transparent;">';
     $.blockUI.defaults.css.border = '0';
     $.blockUI.defaults.css["background-color"] = '';
 }

@@ -27,6 +27,48 @@ from libcloud.compute.drivers.openstack import OpenStackKeyPair
 from libcloud.compute.drivers.ovh import OvhNodeDriver
 import json
 
+
+BIBINDLOCATIONS = {
+    "BHS": {"id": "BHS", "name": "Beauharnois, Quebec ", "country": "CA"},
+    "BHS1": {"id": "BHS1", "name": "Beauharnois, Quebec 1", "country": "CA"},
+    "BHS2": {"id": "BHS2", "name": "Beauharnois, Quebec 2", "country": "CA"},
+    "BHS3": {"id": "BHS3", "name": "Beauharnois, Quebec 3", "country": "CA"},
+    "BHS4": {"id": "BHS4", "name": "Beauharnois, Quebec 4", "country": "CA"},
+    "BHS5": {"id": "BHS5", "name": "Beauharnois, Quebec 5", "country": "CA"},
+    "BHS6": {"id": "BHS6", "name": "Beauharnois, Quebec 6", "country": "CA"},
+    "DC1": {"id": "DC1", "name": "Paris DC1", "country": "FR"},
+    "DE": {"id": "DE", "name": "Frankfurt ", "country": "DE"},
+     "DE1": {"id": "DE1", "name": "Frankfurt 1", "country": "DE"},
+    "GRA": {"id": "GRA", "name": "Gravelines ", "country": "FR"},
+    "GRA1": {"id": "GRA1", "name": "Gravelines 1", "country": "FR"},
+    "GRA2": {"id": "GRA2", "name": "Gravelines 2", "country": "FR"},
+    "GRA7": {"id": "GRA7", "name": "Gravelines 7", "country": "FR"},
+    "GSW": {"id": "GSW", "name": "Paris GSW", "country": "FR"},
+    "HIL1": {"id": "HIL1", "name": "Hillsboro, Oregon 1", "country": "US"},
+    "UK": {"id": "LON", "name": "London ", "country": "UK"},
+    "UK1": {"id": "LON1", "name": "London 1", "country": "UK"},
+    "P19": {"id": "P19", "name": "Paris P19", "country": "FR"},
+    "RBX": {"id": "RBX", "name": "Roubaix ", "country": "FR"},
+    "RBX1": {"id": "RBX1", "name": "Roubaix 1", "country": "FR"},
+    "RBX2": {"id": "RBX2", "name": "Roubaix 2", "country": "FR"},
+    "RBX3": {"id": "RBX3", "name": "Roubaix 3", "country": "FR"},
+    "RBX4": {"id": "RBX4", "name": "Roubaix 4", "country": "FR"},
+    "RBX5": {"id": "RBX5", "name": "Roubaix 5", "country": "FR"},
+    "RBX6": {"id": "RBX6", "name": "Roubaix 6", "country": "FR"},
+    "RBX7": {"id": "RBX7", "name": "Roubaix 7", "country": "FR"},
+    "SBG": {"id": "SBG", "name": "Strasbourg ", "country": "FR"},
+    "SBG1": {"id": "SBG1", "name": "Strasbourg 1", "country": "FR"},
+    "SBG2": {"id": "SBG2", "name": "Strasbourg 2", "country": "FR"},
+    "SBG3": {"id": "SBG3", "name": "Strasbourg 3", "country": "FR"},
+    "SBG4": {"id": "SBG4", "name": "Strasbourg 4", "country": "FR"},
+    "SBG5": {"id": "SB53", "name": "Strasbourg 5", "country": "FR"},
+    "SGP1": {"id": "SGP1", "name": "Singapore 1", "country": "SG"},
+    "SYD1": {"id": "SYD1", "name": "Sydney 1", "country": "AU"},
+    "VIN1": {"id": "VIN1", "name": "Vint Hill, Virginia 1", "country": "US"},
+    "WAW": {"id": "WAW", "name": "Warsaw ", "country": "PL"},
+    "WAW1": {"id": "WAW1", "name": "Warsaw 1", "country": "PL"},
+}
+
 class BibindNodeDriver(OvhNodeDriver):
     """
     Libcloud driver for the Ovh API
@@ -39,6 +81,7 @@ class BibindNodeDriver(OvhNodeDriver):
     name = "Ovh"
     website = 'https://www.ovh.com/'
     connectionCls = OvhConnection
+    connectionCls.LOCATIONS = BIBINDLOCATIONS
     features = {'create_node': ['ssh_key']}
     api_name = 'ovh'
 
@@ -104,6 +147,20 @@ class BibindNodeDriver(OvhNodeDriver):
         response = self.connection.request(action, method='GET')
         return self._to_node(response.object)
 
+    def ex_get_json_node(self, node_id):
+            """
+            Get a individual node.
+
+            :keyword node_id: Node's ID
+            :type    node_id: ``str``
+
+            :return: response.parse_body()
+            :type  : :json
+            """
+            action = self._get_project_action('instance/%s' % node_id)
+            response = self.connection.request(action, method='GET')
+            return response.parse_body()
+
     def create_node(self, name, image, size, location, ex_keyname=None, **kwargs):
         """
         Create a new node
@@ -164,7 +221,7 @@ class BibindNodeDriver(OvhNodeDriver):
         Get an individual size (flavor).
 
         :keyword size_id: Size's ID
-        :type    size_id: ``str``
+        :rtype    size_id: ``str``
 
         :return: Size
         :rtype: :class:`NodeSize`
@@ -172,7 +229,7 @@ class BibindNodeDriver(OvhNodeDriver):
         action = self._get_project_action('flavor/%s' % size_id)
         response = self.connection.request(action)
         return self._to_size(response.object)
-    
+
     def ex_get_size_json_extra(self, size_id):
         """
         Get an individual size (flavor).
@@ -181,11 +238,13 @@ class BibindNodeDriver(OvhNodeDriver):
         :type    size_id: ``str``
 
         :return: Size
-        :rtype: :class:`NodeSize`
+        :type: :class:`NodeSize`
         """
         action = self._get_project_action('flavor/%s' % size_id)
         response = self.connection.request(action)
         return response.parse_body()
+    
+
 
     def list_images(self, location=None, ex_size=None):
         """
@@ -490,8 +549,11 @@ class BibindNodeDriver(OvhNodeDriver):
     def _to_volumes(self, objs):
         return [self._to_volume(obj) for obj in objs]
 
+    def index_in_list(a_list, index):
+            print(index < len(a_list))
+
     def _to_location(self, obj):
-        location = self.connection.LOCATIONS[obj]
+        location = self.connectionCls.LOCATIONS[obj]
         return NodeLocation(driver=self, **location)
 
     def _to_locations(self, objs):

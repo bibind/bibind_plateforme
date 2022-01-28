@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    odoo, Open Source Management Solution
 #    Copyright (C) 2012 ASPerience SARL (<http://www.asperience.fr>).
 #    All Rights Reserved
 #
@@ -23,17 +23,17 @@
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import time, os, random, string
-from openerp import pooler
-from openerp import SUPERUSER_ID
 
-from openerp.exceptions import Warning
-from openerp import models, fields, api, _
-from openerp import pooler, tools
-from openerp.tools.translate import _
-from openerp.osv.expression import get_unaccent_wrapper
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
-import openerp.addons.decimal_precision as dp
-from openerp import netsvc
+from odoo import SUPERUSER_ID
+
+from odoo.exceptions import Warning
+from odoo import models, fields, api, _
+
+from odoo.tools.translate import _
+from odoo.osv.expression import get_unaccent_wrapper
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
+import odoo.addons.decimal_precision as dp
+from odoo import netsvc
 import logging
 import json
 import re
@@ -78,10 +78,10 @@ class bibind_services(models.Model):
     
     bibind_organisation =fields.Many2one('bibind.me.organisation', 'Societe proprietaire du service')
     
-    bibind_admin_ids = fields.Many2many('bibind.user')
-    bibind_techniques_ids = fields.Many2many('bibind.user')
-    bibind_facturation_ids = fields.Many2many('bibind.user')
-    bibind_team_ids = fields.Many2many('bibind.user')
+    bibind_admin_ids = fields.Many2one('bibind.user', 'Admininistrateur du service')
+    bibind_techniques_ids = fields.Many2one('bibind.user', 'REsponsable technique du service')
+    bibind_facturation_ids = fields.Many2one('bibind.user', 'Responsable de la facturation')
+    bibind_team_ids = fields.Many2many('bibind.user', 'Equipe')
     
     product_id = fields.Many2one('product.template', string="produits du service", required=True)
     

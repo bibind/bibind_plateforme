@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    odoo, Open Source Management Solution
 #    Copyright (C) 2012 ASPerience SARL (<http://www.asperience.fr>).
 #    All Rights Reserved
 #
@@ -25,15 +25,14 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from jinja2 import Environment, FileSystemLoader
 import time, os, random, string
-from openerp import pooler
-from openerp import SUPERUSER_ID
-from openerp.osv import fields, osv
-from openerp import pooler, tools
-from openerp.tools.translate import _
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
-import openerp.addons.decimal_precision as dp
-from openerp import netsvc
-from openerp import models, fields, api, _
+
+from odoo import SUPERUSER_ID
+
+from odoo.tools.translate import _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
+import odoo.addons.decimal_precision as dp
+from odoo import netsvc
+from odoo import models, fields, api, _
 import logging
 import json
 import re
@@ -213,7 +212,7 @@ class bibind_api_container(models.Model ):
         )
         return result
    
-    @api.multi
+
     @api.model
     def get_rancher_environnement(self, delivery):
         
